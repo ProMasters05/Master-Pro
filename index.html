@@ -1,0 +1,1529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#0b0c0f" />
+<meta name="color-scheme" content="dark" />
+<meta name="description" content="Master Pro: browser-based mastering with measured loudness, a 5-band EQ, platform targets and lossless export. Your audio never leaves your device." />
+<meta property="og:title" content="Master Pro | Mastering Studio" />
+<meta property="og:description" content="Measured loudness, 5-band EQ, platform targets, lossless export. Private by design." />
+<meta property="og:type" content="website" />
+<title>Master Pro | Mastering Studio</title>
+<style>
+:root {
+  --bg: #0b0c0f;
+  --panel: #111317;
+  --panel-2: #161920;
+  --panel-3: #1c2029;
+  --line: #222733;
+  --line-2: #2d3342;
+  --text: #e9ebf0;
+  --text-2: #aab0be;
+  --text-3: #6f7686;
+  --accent: #3f74ff;
+  --accent-2: #8fb0ff;
+  --accent-dim: rgba(63,116,255,.14);
+  --ok: #3ddc97;
+  --warn: #ffb547;
+  --bad: #ff5d6c;
+  --r: 12px;
+  --font: ui-sans-serif, -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+  --safe-b: env(safe-area-inset-bottom, 0px);
+  --ease: cubic-bezier(.2,.8,.2,1);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+html { -webkit-text-size-adjust: 100%; }
+body { background: var(--bg); color: var(--text); font-family: var(--font); font-size: 14px; line-height: 1.4; min-height: 100dvh; padding-bottom: calc(92px + var(--safe-b)); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+button { font-family: inherit; color: inherit; }
+button:focus-visible, [tabindex]:focus-visible, input:focus-visible, canvas:focus-visible, .file-btn:focus-within { outline: 2px solid var(--accent-2); outline-offset: 2px; }
+.ic { width: 1em; height: 1em; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
+.ic.solid { fill: currentColor; stroke: none; }
+.num { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+.hide { display: none !important; }
+
+/* Top bar */
+.topbar { position: sticky; top: 0; z-index: 100; background: rgba(11,12,15,.85); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid var(--line); }
+.topbar-in { max-width: 1280px; margin: 0 auto; height: 56px; padding: 0 16px; display: flex; align-items: center; gap: 10px; }
+.brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: .95rem; letter-spacing: -.01em; margin-right: auto; }
+.mark { width: 28px; height: 28px; border-radius: 8px; display: grid; place-items: center; background: var(--accent); color: #fff; }
+.mark .ic { width: 16px; height: 16px; stroke-width: 2.4; }
+.brand small { color: var(--text-3); font-weight: 600; font-size: .7rem; letter-spacing: .08em; text-transform: uppercase; }
+.iconbtn { width: 34px; height: 34px; display: grid; place-items: center; border-radius: 9px; border: 1px solid var(--line); background: var(--panel); color: var(--text-2); cursor: pointer; font-size: 1rem; transition: background .15s, color .15s, border-color .15s; }
+.iconbtn:hover:not([disabled]) { background: var(--panel-3); color: var(--text); border-color: var(--line-2); }
+.iconbtn[disabled] { opacity: .35; cursor: default; }
+.pill { display: inline-flex; align-items: center; gap: 8px; height: 34px; padding: 0 12px; border-radius: 9px; border: 1px solid var(--line); background: var(--panel); color: var(--text-2); font-size: .78rem; font-weight: 600; cursor: pointer; white-space: nowrap; }
+.pill:hover { border-color: var(--line-2); color: var(--text); }
+.pill .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--ok); }
+.pill.empty .dot { background: var(--bad); }
+.pill.pro { color: var(--accent-2); border-color: rgba(63,116,255,.45); background: var(--accent-dim); cursor: default; }
+.pill.pro .dot { background: var(--accent-2); }
+
+/* Buttons */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 38px; padding: 0 16px; border-radius: 9px; border: 1px solid var(--line-2); background: var(--panel-2); color: var(--text); font-size: .82rem; font-weight: 600; cursor: pointer; transition: background .15s, border-color .15s, transform .1s; text-decoration: none; white-space: nowrap; }
+.btn:hover:not([disabled]) { background: var(--panel-3); }
+.btn:active:not([disabled]) { transform: scale(.98); }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+.btn.primary:hover:not([disabled]) { background: #5584ff; }
+.btn.ghost { background: transparent; }
+.btn.sm { height: 30px; padding: 0 11px; font-size: .75rem; border-radius: 8px; }
+.btn.block { width: 100%; }
+.btn[disabled] { opacity: .5; cursor: not-allowed; }
+.file-btn { position: relative; overflow: hidden; }
+.file-btn input { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; }
+.tag-pro { font-size: .58rem; font-weight: 800; letter-spacing: .08em; padding: 2px 5px; border-radius: 4px; background: var(--accent-dim); color: var(--accent-2); border: 1px solid rgba(63,116,255,.4); vertical-align: 1px; }
+
+/* Layout */
+.app { max-width: 1280px; margin: 0 auto; padding: 16px; display: grid; gap: 16px; grid-template-columns: minmax(0,1fr); }
+@media (min-width: 1000px) {
+  .app { grid-template-columns: minmax(0,1fr) 420px; align-items: start; }
+  .inspector { position: sticky; top: 72px; max-height: calc(100dvh - 72px - 100px); overflow: hidden; display: flex; flex-direction: column; }
+  .inspector .panels { overflow-y: auto; }
+}
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: var(--r); }
+.workspace { display: grid; gap: 16px; min-width: 0; }
+
+/* Empty state */
+.empty { text-align: center; padding: 56px 20px 48px; border: 1px dashed var(--line-2); border-radius: 16px; background: var(--panel); transition: border-color .2s, background .2s; }
+.empty.drag { border-color: var(--accent); background: var(--accent-dim); }
+.empty .big { width: 52px; height: 52px; margin: 0 auto 16px; border-radius: 14px; display: grid; place-items: center; font-size: 1.4rem; background: var(--panel-3); color: var(--accent-2); border: 1px solid var(--line-2); }
+.empty h2 { font-size: 1.25rem; font-weight: 700; letter-spacing: -.02em; margin-bottom: 6px; }
+.empty p { color: var(--text-2); font-size: .85rem; max-width: 380px; margin: 0 auto 20px; }
+.empty .formats { margin-top: 18px; font-size: .72rem; color: var(--text-3); display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+.empty .formats span { display: inline-flex; align-items: center; gap: 6px; }
+.empty .formats .ic { color: var(--ok); }
+
+/* Stage */
+.stage { padding: 14px; }
+.stage-head { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+.stage-head .nm { min-width: 0; margin-right: auto; }
+.stage-head .nm b { display: block; font-size: .9rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.stage-head .nm span { font-size: .72rem; color: var(--text-3); }
+.chip { font-size: .64rem; font-weight: 700; letter-spacing: .08em; padding: 4px 8px; border-radius: 6px; border: 1px solid var(--line-2); color: var(--text-2); background: var(--panel-2); white-space: nowrap; }
+.chip.on { color: var(--ok); border-color: rgba(61,220,151,.35); background: rgba(61,220,151,.07); }
+.chip.byp { color: var(--warn); border-color: rgba(255,181,71,.4); background: rgba(255,181,71,.07); }
+canvas { display: block; width: 100%; }
+#wave { height: 128px; background: var(--bg); border: 1px solid var(--line); border-radius: 9px; cursor: pointer; touch-action: none; }
+#spectrum { height: 110px; background: var(--bg); border: 1px solid var(--line); border-radius: 9px; margin-top: 10px; }
+.meter-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 12px; }
+.mt { min-width: 0; }
+.mt-h { display: flex; justify-content: space-between; font-size: .66rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--text-3); margin-bottom: 5px; }
+.mt-h b { color: var(--text-2); font-weight: 600; letter-spacing: 0; text-transform: none; }
+.mt-bar { height: 6px; border-radius: 3px; background: var(--panel-3); overflow: hidden; }
+.mt-fill { height: 100%; width: 0; border-radius: 3px; background: linear-gradient(90deg, var(--ok), var(--warn) 78%, var(--bad)); transition: width .05s linear; }
+.mt-fill.gr { background: var(--accent-2); margin-left: auto; }
+
+.stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+@media (max-width: 560px) { .stats { grid-template-columns: repeat(2, 1fr); } }
+.stat { padding: 12px 14px; }
+.stat .k { font-size: .64rem; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; color: var(--text-3); }
+.stat .v { font-size: 1.35rem; font-weight: 600; margin-top: 4px; letter-spacing: -.02em; }
+.stat .v small { font-size: .7rem; color: var(--text-3); font-weight: 500; margin-left: 3px; }
+.stat .d { font-size: .7rem; color: var(--text-3); margin-top: 2px; min-height: 1em; }
+.stat.hl .v { color: var(--accent-2); }
+.stat .d.good { color: var(--ok); }
+
+/* Inspector */
+.tabs { display: flex; gap: 2px; padding: 6px; border-bottom: 1px solid var(--line); overflow-x: auto; scrollbar-width: none; flex-shrink: 0; }
+.tabs::-webkit-scrollbar { display: none; }
+.tab { flex: 1 0 auto; height: 32px; padding: 0 12px; border: none; background: none; border-radius: 8px; font-size: .78rem; font-weight: 600; color: var(--text-3); cursor: pointer; white-space: nowrap; }
+.tab:hover { color: var(--text-2); }
+.tab.active { background: var(--panel-3); color: var(--text); }
+.panel { display: none; padding: 16px; }
+.panel.active { display: block; animation: fadein .25s var(--ease); }
+@keyframes fadein { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+.group { margin-bottom: 22px; }
+.group:last-child { margin-bottom: 0; }
+.group-h { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; font-size: .68rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--text-3); }
+.group-h button { background: none; border: none; color: var(--text-2); font-size: .72rem; font-weight: 600; letter-spacing: 0; text-transform: none; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+.group-h button:hover { color: var(--text); }
+.hint-text { font-size: .74rem; color: var(--text-3); line-height: 1.5; }
+
+/* Profiles */
+.profiles { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+.profile { text-align: left; padding: 11px 12px; border-radius: 10px; background: var(--panel-2); border: 1px solid var(--line); cursor: pointer; transition: border-color .15s, background .15s; }
+.profile:hover { border-color: var(--line-2); }
+.profile.sel { border-color: var(--accent); background: var(--accent-dim); }
+.profile b { display: block; font-size: .82rem; font-weight: 650; margin-bottom: 2px; }
+.profile span { font-size: .7rem; color: var(--text-3); }
+
+/* Chips / segmented */
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.cchip { height: 30px; padding: 0 12px; border-radius: 8px; border: 1px solid var(--line); background: var(--panel-2); font-size: .75rem; font-weight: 600; color: var(--text-2); cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
+.cchip:hover { border-color: var(--line-2); color: var(--text); }
+.cchip.sel { border-color: var(--accent); color: #fff; background: var(--accent-dim); }
+.cchip .x { color: var(--text-3); margin-left: 2px; }
+.seg { display: inline-flex; padding: 2px; gap: 2px; background: var(--panel-2); border: 1px solid var(--line); border-radius: 9px; }
+.seg button { height: 28px; padding: 0 12px; border: none; background: none; border-radius: 7px; font-size: .74rem; font-weight: 650; color: var(--text-3); cursor: pointer; white-space: nowrap; }
+.seg button.on { background: var(--panel-3); color: var(--text); box-shadow: inset 0 0 0 1px var(--line-2); }
+.seg button[aria-pressed="true"].orig { color: var(--warn); }
+.preset-save { display: flex; gap: 8px; margin-top: 10px; }
+.preset-save input { flex: 1; min-width: 0; height: 34px; padding: 0 10px; border-radius: 8px; border: 1px solid var(--line-2); background: var(--bg); color: var(--text); font-size: .8rem; }
+
+/* Fields / sliders */
+.field { margin-bottom: 14px; }
+.field-h { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 4px; font-size: .8rem; font-weight: 600; }
+.field-h .hint { display: block; font-size: .68rem; font-weight: 400; color: var(--text-3); margin-top: 1px; }
+.field-h .val { font-size: .76rem; color: var(--accent-2); }
+input[type=range] { -webkit-appearance: none; appearance: none; width: 100%; height: 24px; background: transparent; cursor: pointer; --p: 50%; }
+input[type=range]::-webkit-slider-runnable-track { height: 4px; border-radius: 2px; background: linear-gradient(90deg, var(--accent) var(--p), var(--panel-3) var(--p)); }
+input[type=range]::-moz-range-track { height: 4px; border-radius: 2px; background: var(--panel-3); }
+input[type=range]::-moz-range-progress { height: 4px; border-radius: 2px; background: var(--accent); }
+input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; border-radius: 50%; margin-top: -6px; background: #fff; border: 0; box-shadow: 0 1px 6px rgba(0,0,0,.6), 0 0 0 1px rgba(0,0,0,.3); }
+input[type=range]::-moz-range-thumb { width: 16px; height: 16px; border-radius: 50%; background: #fff; border: 0; }
+input[type=range][disabled] { opacity: .35; cursor: default; }
+
+/* Balance */
+.bal-row { display: grid; grid-template-columns: 64px 1fr 52px; align-items: center; gap: 10px; font-size: .74rem; margin-bottom: 7px; }
+.bal-row .nm { color: var(--text-2); font-weight: 600; }
+.bal-track { position: relative; height: 6px; border-radius: 3px; background: var(--panel-3); }
+.bal-track::after { content: ""; position: absolute; left: 50%; top: -3px; bottom: -3px; width: 1px; background: var(--line-2); }
+.bal-fill { position: absolute; top: 0; bottom: 0; border-radius: 3px; }
+.bal-row .dv { text-align: right; color: var(--text-3); }
+
+/* EQ */
+#eq { height: 210px; background: var(--bg); border: 1px solid var(--line); border-radius: 9px; touch-action: none; cursor: crosshair; }
+.bands { display: flex; gap: 6px; margin: 12px 0 14px; }
+.bands button { flex: 1; min-width: 0; height: 40px; border-radius: 9px; border: 1px solid var(--line); background: var(--panel-2); color: var(--text-3); font-size: .66rem; font-weight: 700; cursor: pointer; line-height: 1.15; padding: 0 2px; }
+.bands button b { display: block; font-size: .8rem; color: var(--text-2); }
+.bands button.sel { border-color: var(--accent); background: var(--accent-dim); color: var(--accent-2); }
+.bands button.sel b { color: #fff; }
+
+/* Pads */
+.pads { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.pad { aspect-ratio: 1; border-radius: 12px; border: 1px solid var(--line-2); background: var(--panel-2); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; cursor: pointer; font-size: .64rem; font-weight: 650; color: var(--text-2); user-select: none; -webkit-user-select: none; touch-action: manipulation; transition: background .08s, transform .08s, border-color .1s; }
+.pad .ic { font-size: 1.3rem; color: var(--accent-2); }
+.pad .key { font-family: var(--mono); font-size: .6rem; color: var(--text-3); border: 1px solid var(--line-2); border-radius: 4px; padding: 0 5px; }
+.pad.hit, .pad:active { background: var(--accent); border-color: var(--accent); color: #fff; transform: scale(.95); }
+.pad.hit .ic, .pad:active .ic, .pad.hit .key, .pad:active .key { color: #fff; }
+
+/* Export */
+.xcard { padding: 14px; border: 1px solid var(--line); border-radius: 10px; background: var(--panel-2); margin-bottom: 10px; }
+.xcard-h { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+.xcard-h .ico { width: 36px; height: 36px; border-radius: 9px; display: grid; place-items: center; background: var(--panel-3); border: 1px solid var(--line-2); color: var(--accent-2); font-size: 1.05rem; flex-shrink: 0; }
+.xcard-h b { display: block; font-size: .88rem; }
+.xcard-h span { font-size: .72rem; color: var(--text-3); }
+.xcard-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+.logo-row { display: flex; align-items: center; gap: 12px; }
+.logo-thumb { width: 52px; height: 52px; border-radius: 10px; background: var(--bg); border: 1px solid var(--line-2); display: grid; place-items: center; color: var(--text-3); overflow: hidden; flex-shrink: 0; font-size: 1.2rem; }
+.logo-thumb img { width: 100%; height: 100%; object-fit: cover; }
+.summary { font-size: .74rem; color: var(--text-2); background: var(--bg); border: 1px solid var(--line); border-radius: 9px; padding: 10px 12px; line-height: 1.6; margin-bottom: 12px; }
+.summary b { color: var(--text); font-weight: 600; }
+
+/* Transport */
+.transport { position: fixed; left: 0; right: 0; bottom: 0; z-index: 200; background: rgba(13,14,18,.9); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); border-top: 1px solid var(--line); padding-bottom: var(--safe-b); }
+.prog { position: absolute; top: -1px; left: 0; right: 0; height: 3px; cursor: pointer; }
+.prog i { display: block; height: 100%; width: 0; background: var(--accent-2); }
+.transport-in { max-width: 1280px; margin: 0 auto; padding: 10px 16px; display: flex; align-items: center; gap: 8px; }
+.play { width: 44px; height: 44px; border-radius: 50%; border: none; background: var(--text); color: #0b0c0f; display: grid; place-items: center; font-size: 1.05rem; cursor: pointer; flex-shrink: 0; transition: transform .1s; }
+.play:active { transform: scale(.93); }
+.tinfo { min-width: 0; flex: 1; padding: 0 4px; }
+.tinfo .t { font-size: .78rem; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.tinfo .c { font-size: .72rem; color: var(--text-3); }
+.tbtn { height: 34px; min-width: 34px; padding: 0 9px; border-radius: 9px; border: 1px solid var(--line); background: var(--panel); color: var(--text-2); cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 6px; font-size: .72rem; font-weight: 700; }
+.tbtn:hover { border-color: var(--line-2); color: var(--text); }
+.tbtn[aria-pressed="true"] { color: var(--accent-2); border-color: rgba(63,116,255,.5); background: var(--accent-dim); }
+.tbtn .ic { font-size: 1rem; }
+@media (max-width: 520px) { .brand small, .hide-sm { display: none; } .tbtn.skip { display: none; } }
+
+/* Modals */
+.modal { position: fixed; inset: 0; z-index: 300; display: none; align-items: flex-end; justify-content: center; background: rgba(4,5,7,.7); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+.modal.active { display: flex; animation: fadein .2s ease; }
+.sheet { width: 100%; max-width: 460px; max-height: 94dvh; overflow-y: auto; background: var(--panel); border: 1px solid var(--line-2); border-bottom: none; border-radius: 18px 18px 0 0; padding: 24px 20px calc(22px + var(--safe-b)); position: relative; }
+@media (min-width: 560px) { .modal { align-items: center; padding: 20px; } .sheet { border-radius: 18px; border-bottom: 1px solid var(--line-2); } }
+.sheet h3 { font-size: 1.2rem; font-weight: 700; letter-spacing: -.02em; }
+.sheet .lead { font-size: .82rem; color: var(--text-2); margin-top: 6px; line-height: 1.5; }
+.xbtn { position: absolute; top: 12px; right: 12px; }
+.badge-lg { width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; background: var(--accent); color: #fff; font-size: 1.3rem; margin-bottom: 14px; }
+.compare { margin: 16px 0; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; font-size: .78rem; }
+.compare > div { display: grid; grid-template-columns: 1fr 70px 70px; align-items: center; padding: 9px 12px; border-bottom: 1px solid var(--line); }
+.compare > div:last-child { border-bottom: none; }
+.compare .h { background: var(--panel-2); font-size: .64rem; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; color: var(--text-3); }
+.compare .c { text-align: center; color: var(--text-3); }
+.compare .c.p { color: var(--accent-2); font-weight: 600; }
+.compare .ic { color: var(--ok); }
+.plans { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 14px; }
+.plan { position: relative; text-align: center; padding: 14px 6px 12px; border-radius: 10px; background: var(--panel-2); border: 1px solid var(--line-2); cursor: pointer; }
+.plan.sel { border-color: var(--accent); background: var(--accent-dim); }
+.plan .pn { font-size: .64rem; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; color: var(--text-3); }
+.plan.sel .pn { color: var(--accent-2); }
+.plan .pp { font-size: 1.2rem; font-weight: 700; margin: 4px 0 1px; letter-spacing: -.02em; }
+.plan .pt { font-size: .64rem; color: var(--text-3); }
+.plan .pb { position: absolute; top: -8px; left: 50%; transform: translateX(-50%); font-size: .54rem; font-weight: 800; letter-spacing: .08em; padding: 2px 7px; border-radius: 999px; background: var(--accent); color: #fff; white-space: nowrap; }
+.fine { font-size: .68rem; color: var(--text-3); text-align: center; margin-top: 12px; line-height: 1.5; }
+.fine button { background: none; border: none; color: var(--text-2); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; font-size: inherit; }
+.ring { width: 52px; height: 52px; border-radius: 50%; margin: 0 auto 14px; display: grid; place-items: center; font-size: 1.3rem; background: var(--panel-3); color: var(--accent-2); border: 1px solid var(--line-2); }
+.ring.spin { animation: pulse 1.3s ease-in-out infinite; }
+@keyframes pulse { 0%,100% { box-shadow: 0 0 0 0 var(--accent-dim); } 50% { box-shadow: 0 0 0 12px transparent; } }
+.ring.done { color: var(--ok); border-color: rgba(61,220,151,.4); }
+.center { text-align: center; }
+.bar { height: 6px; border-radius: 3px; background: var(--panel-3); overflow: hidden; margin: 18px 0 6px; }
+.bar i { display: block; height: 100%; width: 0; background: var(--accent); transition: width .2s linear; }
+.stack { display: grid; gap: 8px; margin-top: 16px; }
+.toasts { position: fixed; left: 0; right: 0; bottom: calc(100px + var(--safe-b)); z-index: 400; display: flex; flex-direction: column; align-items: center; gap: 8px; pointer-events: none; padding: 0 16px; }
+.toast { background: var(--panel-3); border: 1px solid var(--line-2); font-size: .78rem; font-weight: 600; padding: 9px 14px; border-radius: 9px; box-shadow: 0 10px 30px rgba(0,0,0,.5); animation: fadein .25s var(--ease); max-width: 100%; }
+.toast.error { border-color: rgba(255,93,108,.5); }
+.toast.ok { border-color: rgba(61,220,151,.4); }
+footer { max-width: 1280px; margin: 8px auto 0; padding: 0 16px; font-size: .7rem; color: var(--text-3); text-align: center; }
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l11-6.5a1 1 0 0 0 0-1.72l-11-6.5A1 1 0 0 0 8 5.5z" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-pause" viewBox="0 0 24 24"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-skip" viewBox="0 0 24 24"><path d="M6 5v14M19 5v14L9 12z"/></symbol>
+  <symbol id="i-loop" viewBox="0 0 24 24"><path d="m17 2 3 3-3 3M4 11V9a4 4 0 0 1 4-4h12M7 22l-3-3 3-3M20 13v2a4 4 0 0 1-4 4H4"/></symbol>
+  <symbol id="i-undo" viewBox="0 0 24 24"><path d="M9 14 4 9l5-5M4 9h10a6 6 0 0 1 0 12h-3"/></symbol>
+  <symbol id="i-redo" viewBox="0 0 24 24"><path d="m15 14 5-5-5-5M20 9H10a6 6 0 0 0 0 12h3"/></symbol>
+  <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 15V4m0 0L8 8m4-4 4 4M5 15v3a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-3"/></symbol>
+  <symbol id="i-music" viewBox="0 0 24 24"><path d="M9 18V6l11-2v12"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="17.5" cy="16" r="2.5"/></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 4v11m0 0 4-4m-4 4-4-4M5 20h14"/></symbol>
+  <symbol id="i-crown" viewBox="0 0 24 24"><path d="M3 8l4.5 4L12 5l4.5 7L21 8l-2 11H5z"/></symbol>
+  <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 3 5 13.5h6L10 21l9-11.5h-6z"/></symbol>
+  <symbol id="i-image" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="9" cy="10" r="1.8"/><path d="m21 16-5-5-8 8"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
+  <symbol id="i-film" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M8 4v16M16 4v16M3 9h5M3 15h5M16 9h5M16 15h5"/></symbol>
+  <symbol id="i-wave" viewBox="0 0 24 24"><path d="M3 12h2M7 7v10M11 4v16M15 8v8M19 10v4M21 12h0"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3 5 6v5c0 4.5 2.9 8.2 7 10 4.1-1.8 7-5.5 7-10V6z"/><path d="m9 12 2 2 4-4"/></symbol>
+  <symbol id="i-wand" viewBox="0 0 24 24"><path d="m15 4 1.5 3L20 8.5 16.5 10 15 13l-1.5-3L10 8.5 13.5 7zM5 14l.8 1.7 1.7.8-1.7.8L5 19l-.8-1.7-1.7-.8 1.7-.8z"/></symbol>
+  <symbol id="i-save" viewBox="0 0 24 24"><path d="M5 4h11l3 3v13H5zM8 4v5h7V4M8 20v-6h8v6"/></symbol>
+  <symbol id="i-gun" viewBox="0 0 24 24"><path d="M13 3 5 13.5h6L10 21l9-11.5h-6z"/></symbol>
+  <symbol id="i-stop" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M9 12h6"/></symbol>
+  <symbol id="i-horn" viewBox="0 0 24 24"><path d="M4 9v6h3l7 4V5L7 9zM18 8.5a5 5 0 0 1 0 7"/></symbol>
+  <symbol id="i-slide" viewBox="0 0 24 24"><path d="M3 7c5 0 5 10 9 10s4-10 9-10"/></symbol>
+  <symbol id="i-laser" viewBox="0 0 24 24"><path d="M4 20 20 4M14 4h6v6"/></symbol>
+  <symbol id="i-scratch" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="2.5"/><path d="M12 4a8 8 0 0 1 8 8"/></symbol>
+  <symbol id="i-glitch" viewBox="0 0 24 24"><path d="M4 8h7M13 8h7M4 12h3M9 12h11M4 16h10M16 16h4"/></symbol>
+  <symbol id="i-riser" viewBox="0 0 24 24"><path d="M4 19 20 5m0 0h-7m7 0v7"/></symbol>
+</svg>
+
+<header class="topbar">
+  <div class="topbar-in">
+    <div class="brand">
+      <div class="mark" aria-hidden="true"><svg class="ic"><use href="#i-wave"/></svg></div>
+      <span>Master Pro</span><small>Studio</small>
+    </div>
+    <button class="iconbtn" id="btn-undo" aria-label="Undo" title="Undo (Ctrl/Cmd+Z)" disabled><svg class="ic"><use href="#i-undo"/></svg></button>
+    <button class="iconbtn" id="btn-redo" aria-label="Redo" title="Redo (Ctrl/Cmd+Shift+Z)" disabled><svg class="ic"><use href="#i-redo"/></svg></button>
+    <button class="pill" id="credit-pill"><span class="dot"></span><span id="credit-text">2 left</span></button>
+    <button class="btn primary hide-sm" id="btn-export-top"><svg class="ic"><use href="#i-download"/></svg>Export</button>
+  </div>
+</header>
+
+<div class="app">
+  <section class="workspace">
+
+    <div class="empty" id="empty">
+      <div class="big"><svg class="ic"><use href="#i-music"/></svg></div>
+      <h2>Master your track</h2>
+      <p>Drop an audio or video file to start. Hear the result live, fine-tune it, then export.</p>
+      <label class="btn primary file-btn"><svg class="ic"><use href="#i-upload"/></svg>Choose a file
+        <input type="file" id="file-input" accept="audio/*,video/mp4" aria-label="Choose an audio or video file" />
+      </label>
+      <div class="formats"><span><svg class="ic"><use href="#i-shield"/></svg>Processed on your device</span><span>MP3 · WAV · M4A · FLAC · MP4</span></div>
+    </div>
+
+    <div class="card stage hide" id="stage">
+      <div class="stage-head">
+        <div class="nm"><b id="tc-name">Track</b><span class="num" id="tc-meta"></span></div>
+        <span class="chip on" id="tc-chip">MASTERED</span>
+        <label class="btn sm ghost file-btn"><svg class="ic"><use href="#i-upload"/></svg><span class="hide-sm">Replace</span>
+          <input type="file" id="file-replace" accept="audio/*,video/mp4" aria-label="Replace track" />
+        </label>
+      </div>
+      <canvas id="wave" tabindex="0" role="slider" aria-label="Seek position. Drag the edge markers to trim."></canvas>
+      <canvas id="spectrum" aria-hidden="true"></canvas>
+      <div class="meter-row">
+        <div class="mt"><div class="mt-h">Peak <b class="num" id="m-peak">-∞ dBFS</b></div><div class="mt-bar"><div class="mt-fill" id="f-peak"></div></div></div>
+        <div class="mt"><div class="mt-h">Comp GR <b class="num" id="m-cgr">0.0 dB</b></div><div class="mt-bar"><div class="mt-fill gr" id="f-cgr"></div></div></div>
+        <div class="mt"><div class="mt-h">Limiter GR <b class="num" id="m-lgr">0.0 dB</b></div><div class="mt-bar"><div class="mt-fill gr" id="f-lgr"></div></div></div>
+      </div>
+    </div>
+
+    <div class="stats hide" id="stats"></div>
+  </section>
+
+  <aside class="card inspector">
+    <nav class="tabs" role="tablist" aria-label="Inspector">
+      <button class="tab active" role="tab" data-tab="master">Master</button>
+      <button class="tab" role="tab" data-tab="tone">Tone</button>
+      <button class="tab" role="tab" data-tab="dynamics">Dynamics</button>
+      <button class="tab" role="tab" data-tab="edit">Edit</button>
+      <button class="tab" role="tab" data-tab="fx">FX</button>
+      <button class="tab" role="tab" data-tab="export">Export</button>
+    </nav>
+    <div class="panels">
+
+      <!-- MASTER -->
+      <div class="panel active" id="panel-master">
+        <div class="group">
+          <div class="group-h">Profile</div>
+          <div class="profiles" id="profiles" role="radiogroup" aria-label="Mastering profile"></div>
+        </div>
+        <div class="group">
+          <div class="group-h">Loudness target <span class="num" id="target-info"></span></div>
+          <div class="chips" id="targets"></div>
+          <p class="hint-text" style="margin-top:8px">Measures your master and sets the loudness push to land on the target. Streaming targets also lower the ceiling to -1 dB.</p>
+        </div>
+        <div class="group">
+          <div class="group-h">Auto tone <button id="btn-apply-tone" class="hide">Apply suggestion</button></div>
+          <div id="balance"><p class="hint-text">Load a track to compare its tonal balance with a reference curve.</p></div>
+        </div>
+        <div class="group">
+          <div class="group-h">My presets <span class="tag-pro">PRO</span></div>
+          <div class="chips" id="presets"></div>
+          <div class="preset-save">
+            <input type="text" id="preset-name" maxlength="28" placeholder="Name this sound" aria-label="Preset name" />
+            <button class="btn sm" id="btn-save-preset"><svg class="ic"><use href="#i-save"/></svg>Save</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- TONE -->
+      <div class="panel" id="panel-tone">
+        <div class="group">
+          <div class="group-h">Equalizer <button id="btn-eq-flat">Flatten</button></div>
+          <canvas id="eq" tabindex="0" aria-label="Equalizer. Drag points to change frequency and gain. Scroll to change Q."></canvas>
+          <div class="bands" id="bands"></div>
+          <div class="field"><div class="field-h"><label for="eq-f">Frequency</label><output class="num val" id="ov-f"></output></div><input type="range" id="eq-f" min="0" max="1000" step="1" /></div>
+          <div class="field"><div class="field-h"><label for="eq-g">Gain</label><output class="num val" id="ov-g"></output></div><input type="range" id="eq-g" min="-12" max="12" step="0.5" /></div>
+          <div class="field"><div class="field-h"><label for="eq-q">Q<span class="hint" id="q-hint">Bandwidth of the bell</span></label><output class="num val" id="ov-q"></output></div><input type="range" id="eq-q" min="0.3" max="8" step="0.1" /></div>
+        </div>
+        <div class="group">
+          <div class="group-h">Stereo</div>
+          <div id="grp-width"></div>
+        </div>
+      </div>
+
+      <!-- DYNAMICS -->
+      <div class="panel" id="panel-dynamics">
+        <div class="group"><div class="group-h">Compressor</div><div id="grp-comp"></div></div>
+        <div class="group"><div class="group-h">Colour &amp; loudness</div><div id="grp-loud"></div></div>
+        <div class="group"><div class="group-h">Output</div><div id="grp-out"></div></div>
+      </div>
+
+      <!-- EDIT -->
+      <div class="panel" id="panel-edit">
+        <div class="group">
+          <div class="group-h">Trim <button id="btn-trim-reset">Reset</button></div>
+          <div id="grp-trim"></div>
+          <div class="chips"><button class="cchip" id="btn-set-in">Set start at playhead</button><button class="cchip" id="btn-set-out">Set end at playhead</button></div>
+        </div>
+        <div class="group"><div class="group-h">Fades <span class="hint-text">applied on export</span></div><div id="grp-fade"></div></div>
+        <div class="group">
+          <div class="group-h">Playback</div>
+          <div class="chips"><button class="cchip" id="btn-loop-edit" aria-pressed="false"><svg class="ic"><use href="#i-loop"/></svg>Loop region</button></div>
+          <p class="hint-text" style="margin-top:8px">Drag the edge markers on the waveform to trim. Everything outside the region is excluded from exports.</p>
+        </div>
+      </div>
+
+      <!-- FX -->
+      <div class="panel" id="panel-fx">
+        <div class="group">
+          <div class="group-h">Producer FX <span class="hint-text">Tap or press 1-8</span></div>
+          <div class="pads" id="pads"></div>
+          <p class="hint-text" style="margin-top:12px">Synthesized live in your browser. No samples to download, no latency. Handy for auditioning drops and transitions against your master.</p>
+        </div>
+      </div>
+
+      <!-- EXPORT -->
+      <div class="panel" id="panel-export">
+        <div class="summary" id="export-summary"></div>
+
+        <div class="xcard">
+          <div class="xcard-h"><div class="ico"><svg class="ic"><use href="#i-wave"/></svg></div><div><b>WAV</b><span>Lossless, dithered. Best for distribution.</span></div></div>
+          <div class="xcard-row">
+            <div class="seg" id="seg-wav"><button data-v="16" class="on">16-bit</button><button data-v="24">24-bit <span class="tag-pro">PRO</span></button></div>
+            <button class="btn primary sm" data-export="wav"><svg class="ic"><use href="#i-download"/></svg>Export WAV</button>
+          </div>
+        </div>
+        <div class="xcard">
+          <div class="xcard-h"><div class="ico"><svg class="ic"><use href="#i-music"/></svg></div><div><b>MP3</b><span>Small files that play everywhere.</span></div></div>
+          <div class="xcard-row">
+            <div class="seg" id="seg-mp3"><button data-v="128">128</button><button data-v="192" class="on">192</button><button data-v="320">320 <span class="tag-pro">PRO</span></button></div>
+            <button class="btn primary sm" data-export="mp3"><svg class="ic"><use href="#i-download"/></svg>Export MP3</button>
+          </div>
+        </div>
+        <div class="xcard">
+          <div class="xcard-h"><div class="ico"><svg class="ic"><use href="#i-film"/></svg></div><div><b>Visualizer video <span class="tag-pro">PRO</span></b><span>Spectrum animation with your artwork, ready to post.</span></div></div>
+          <div class="logo-row" style="margin-bottom:12px">
+            <div class="logo-thumb" id="logo-thumb"><svg class="ic"><use href="#i-image"/></svg></div>
+            <label class="btn sm file-btn">Choose artwork<input type="file" id="logo-input" accept="image/*" aria-label="Choose cover artwork" /></label>
+          </div>
+          <button class="btn primary sm block" data-export="mp4"><svg class="ic"><use href="#i-film"/></svg>Export video</button>
+        </div>
+        <p class="hint-text" id="export-note"></p>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<footer>Master Pro runs entirely in your browser. Your music never leaves your device.</footer>
+
+<!-- TRANSPORT -->
+<div class="transport">
+  <div class="prog" id="prog" aria-hidden="true"><i id="prog-fill"></i></div>
+  <div class="transport-in">
+    <button class="play" id="btn-play" aria-label="Play"><svg class="ic solid" id="play-ic"><use href="#i-play"/></svg></button>
+    <button class="tbtn skip" id="btn-restart" aria-label="Back to start"><svg class="ic"><use href="#i-skip"/></svg></button>
+    <div class="tinfo">
+      <div class="t" id="track-name">No track loaded</div>
+      <div class="c num"><span id="time-cur">0:00</span> / <span id="time-dur">0:00</span></div>
+    </div>
+    <button class="tbtn" id="btn-loop" aria-pressed="false" aria-label="Loop region" title="Loop region (L)"><svg class="ic"><use href="#i-loop"/></svg></button>
+    <button class="tbtn" id="btn-lm" aria-pressed="false" title="Match levels so A/B is fair (M)">LM</button>
+    <div class="seg" role="group" aria-label="Compare">
+      <button id="ab-master" class="on" aria-pressed="true">Master</button>
+      <button id="ab-orig" class="orig" aria-pressed="false" title="Hear the original (B)">Original</button>
+    </div>
+  </div>
+</div>
+
+<!-- EXPORT MODAL -->
+<div class="modal" id="export-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <div class="sheet center">
+    <div class="ring spin" id="ring"><svg class="ic" id="ring-ic"><use href="#i-bolt"/></svg></div>
+    <h3 id="modal-title">Rendering…</h3>
+    <p class="lead" id="modal-sub"></p>
+    <div class="bar"><i id="render-bar"></i></div>
+    <div class="num hint-text" id="render-label">0%</div>
+    <div class="stack" id="modal-actions"></div>
+  </div>
+</div>
+
+<!-- PAYWALL -->
+<div class="modal" id="paywall" role="dialog" aria-modal="true" aria-labelledby="pw-title">
+  <div class="sheet">
+    <button class="iconbtn xbtn" id="pw-close" aria-label="Close"><svg class="ic"><use href="#i-close"/></svg></button>
+    <div class="badge-lg"><svg class="ic"><use href="#i-crown"/></svg></div>
+    <h3 id="pw-title">Go Master Pro</h3>
+    <p class="lead" id="pw-lead"></p>
+    <div class="compare" id="compare"></div>
+    <div class="plans" id="plans" role="radiogroup" aria-label="Plan"></div>
+    <button class="btn primary block" id="pw-cta" style="height:46px;font-size:.9rem">Continue</button>
+    <p class="fine" id="pw-pack"></p>
+    <p class="fine" id="pw-fine"></p>
+  </div>
+</div>
+
+<div class="toasts" id="toasts" aria-live="polite"></div>
+
+<script>
+'use strict';
+
+/* ============================================================
+   CONFIG
+   CHECKOUT: paste a Stripe Payment Link (or any checkout URL) per plan.
+   While a link is empty the paywall runs in DEMO mode and unlocks Pro
+   locally so you can preview the flow. A client-only paywall can be
+   bypassed: for real revenue, verify the purchase on a server (Stripe
+   webhook / session lookup) before flipping the Pro flag.
+   ============================================================ */
+const CONFIG = {
+  FREE_CREDITS: 2,
+  TRIAL_DAYS: 0,                 // set to e.g. 7 if your Stripe prices include a trial
+  CHECKOUT: { monthly: '', yearly: '', lifetime: '', pack: '' },
+  PLANS: {
+    monthly:  { name: 'Monthly',  price: '$9.99',  per: 'per month' },
+    yearly:   { name: 'Yearly',   price: '$59.99', per: 'per year', badge: 'SAVE 50%' },
+    lifetime: { name: 'Lifetime', price: '$149',   per: 'one time' }
+  },
+  PACK: { label: '5 exports for $4.99', credits: 5 },
+  DEFAULT_PLAN: 'yearly'
+};
+
+/* ---------- helpers ---------- */
+const $  = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+const dbToGain = db => Math.pow(10, db / 20);
+const tick = () => new Promise(r => setTimeout(r, 0));
+const fmtTime = s => { s = Math.max(0, s || 0); return Math.floor(s / 60) + ':' + String(Math.floor(s % 60)).padStart(2, '0'); };
+const fmtTime2 = s => { s = Math.max(0, s || 0); return Math.floor(s / 60) + ':' + (s % 60).toFixed(2).padStart(5, '0'); };
+const fmtHz = f => f >= 1000 ? (f / 1000).toFixed(f >= 10000 ? 1 : 2).replace(/\.?0+$/, '') + ' kHz' : Math.round(f) + ' Hz';
+const store = {
+  get(k, d) { try { const v = localStorage.getItem('masterpro.' + k); return v === null ? d : JSON.parse(v); } catch { return d; } },
+  set(k, v) { try { localStorage.setItem('masterpro.' + k, JSON.stringify(v)); } catch {} }
+};
+const icon = (id, cls = '') => `<svg class="ic ${cls}"><use href="#${id}"/></svg>`;
+function track(name, props) { try { if (window.plausible) window.plausible(name, { props }); if (window.gtag) window.gtag('event', name, props || {}); } catch {} }
+function toast(msg, type = '') {
+  const el = document.createElement('div'); el.className = 'toast ' + type; el.textContent = msg; $('#toasts').appendChild(el);
+  setTimeout(() => { el.style.transition = 'opacity .3s'; el.style.opacity = '0'; setTimeout(() => el.remove(), 300); }, 2600);
+}
+
+/* DSP-BEGIN */
+function fft(re, im) {
+  const n = re.length;
+  for (let i = 1, j = 0; i < n; i++) {
+    let bit = n >> 1; for (; j & bit; bit >>= 1) j ^= bit; j ^= bit;
+    if (i < j) { let t = re[i]; re[i] = re[j]; re[j] = t; t = im[i]; im[i] = im[j]; im[j] = t; }
+  }
+  for (let len = 2; len <= n; len <<= 1) {
+    const ang = -2 * Math.PI / len, wr = Math.cos(ang), wi = Math.sin(ang), h = len >> 1;
+    for (let i = 0; i < n; i += len) {
+      let cr = 1, ci = 0;
+      for (let j = 0; j < h; j++) {
+        const a = i + j, b = a + h;
+        const vr = re[b] * cr - im[b] * ci, vi = re[b] * ci + im[b] * cr;
+        re[b] = re[a] - vr; im[b] = im[a] - vi; re[a] += vr; im[a] += vi;
+        const nr = cr * wr - ci * wi; ci = cr * wi + ci * wr; cr = nr;
+      }
+    }
+  }
+}
+/* ITU-R BS.1770 K-weighting, coefficients derived for any sample rate */
+function kCoeffs(fs) {
+  const G = 3.999843853973347, Q1 = 0.7071752369554196, fc1 = 1681.9744509555319;
+  let K = Math.tan(Math.PI * fc1 / fs); const Vh = Math.pow(10, G / 20), Vb = Math.pow(Vh, 0.4996667741545416);
+  let a0 = 1 + K / Q1 + K * K;
+  const s1 = { b: [(Vh + Vb * K / Q1 + K * K) / a0, 2 * (K * K - Vh) / a0, (Vh - Vb * K / Q1 + K * K) / a0], a: [2 * (K * K - 1) / a0, (1 - K / Q1 + K * K) / a0] };
+  const Q2 = 0.5003270373253953, fc2 = 38.13547087613982;
+  K = Math.tan(Math.PI * fc2 / fs); a0 = 1 + K / Q2 + K * K;
+  const s2 = { b: [1, -2, 1], a: [2 * (K * K - 1) / a0, (1 - K / Q2 + K * K) / a0] };
+  return [s1, s2];
+}
+/* Integrated loudness (LUFS) with absolute + relative gating, plus sample peak */
+function measureLoudness(chs, sr, i0, i1) {
+  const chunk = Math.round(sr * 0.1), n = Math.floor((i1 - i0) / chunk);
+  let peak = 0;
+  if (n < 4) { for (const x of chs) for (let i = i0; i < i1; i++) { const v = Math.abs(x[i]); if (v > peak) peak = v; } return { lufs: -Infinity, peak: peak > 0 ? 20 * Math.log10(peak) : -Infinity }; }
+  const [s1, s2] = kCoeffs(sr), e = new Float64Array(n), w = chs.length === 1 ? 2 : 1;
+  const b10 = s1.b[0], b11 = s1.b[1], b12 = s1.b[2], a11 = s1.a[0], a12 = s1.a[1];
+  const b20 = s2.b[0], b21 = s2.b[1], b22 = s2.b[2], a21 = s2.a[0], a22 = s2.a[1];
+  for (const x of chs) {
+    let x1 = 0, x2 = 0, y1 = 0, y2 = 0, u1 = 0, u2 = 0, v1 = 0, v2 = 0;
+    for (let c = 0; c < n; c++) {
+      let acc = 0; const s = i0 + c * chunk;
+      for (let i = s; i < s + chunk; i++) {
+        const v = x[i], ap = v < 0 ? -v : v; if (ap > peak) peak = ap;
+        const y = b10 * v + b11 * x1 + b12 * x2 - a11 * y1 - a12 * y2; x2 = x1; x1 = v; y2 = y1; y1 = y;
+        const z = b20 * y + b21 * u1 + b22 * u2 - a21 * v1 - a22 * v2; u2 = u1; u1 = y; v2 = v1; v1 = z;
+        acc += z * z;
+      }
+      e[c] += acc * w;
+    }
+  }
+  const blocks = []; for (let c = 0; c + 4 <= n; c++) blocks.push((e[c] + e[c + 1] + e[c + 2] + e[c + 3]) / (4 * chunk));
+  const L = z => -0.691 + 10 * Math.log10(z);
+  const abs = blocks.filter(z => z > 0 && L(z) > -70);
+  const pk = peak > 0 ? 20 * Math.log10(peak) : -Infinity;
+  if (!abs.length) return { lufs: -Infinity, peak: pk };
+  const rel = L(abs.reduce((a, b) => a + b, 0) / abs.length) - 10;
+  const g = abs.filter(z => L(z) > rel);
+  return { lufs: L((g.length ? g : abs).reduce((a, b) => a + b, 0) / (g.length || abs.length)), peak: pk };
+}
+const BAL_BANDS = [['Sub', 30, 80, 3], ['Low', 80, 200, 5], ['Low-mid', 200, 500, 3], ['Mid', 500, 2000, 0], ['High-mid', 2000, 5000, -3], ['High', 5000, 10000, -7], ['Air', 10000, 16000, -12]];
+function spectralBalance(buf) {
+  const N = 4096, nb = N / 2, sr = buf.sampleRate;
+  if (buf.length < N * 2) return null;
+  const a = buf.getChannelData(0), b = buf.numberOfChannels > 1 ? buf.getChannelData(1) : a;
+  const win = new Float64Array(N); for (let i = 0; i < N; i++) win[i] = 0.5 - 0.5 * Math.cos(2 * Math.PI * i / (N - 1));
+  const count = Math.min(64, Math.floor(buf.length / N)), hop = count > 1 ? Math.floor((buf.length - N) / (count - 1)) : 0;
+  const p = new Float64Array(nb), re = new Float64Array(N), im = new Float64Array(N);
+  for (let w = 0; w < count; w++) {
+    const s = w * hop; for (let i = 0; i < N; i++) { re[i] = (a[s + i] + b[s + i]) * 0.5 * win[i]; im[i] = 0; }
+    fft(re, im); for (let k = 0; k < nb; k++) p[k] += re[k] * re[k] + im[k] * im[k];
+  }
+  const binHz = sr / N;
+  const lv = BAL_BANDS.map(([n, lo, hi, ref]) => {
+    let e = 0; const k0 = Math.max(1, Math.round(lo / binHz)), k1 = Math.min(nb - 1, Math.round(hi / binHz));
+    for (let k = k0; k < k1; k++) e += p[k];
+    return { n, db: 10 * Math.log10(e / Math.log2(hi / lo) + 1e-20), ref };
+  });
+  const mid = lv[3].db, bands = lv.map(l => ({ n: l.n, dev: (l.db - mid) - l.ref }));
+  const sg = d => clamp(Math.round(-d * 0.6 * 2) / 2, -4, 4);
+  const suggest = [sg((bands[0].dev + bands[1].dev) / 2), sg(bands[2].dev), sg(bands[4].dev), sg((bands[5].dev + bands[6].dev) / 2)];
+  const pts = 96, over = new Float32Array(pts);
+  for (let j = 0; j < pts; j++) {
+    const f0 = 20 * Math.pow(1000, j / pts), f1 = 20 * Math.pow(1000, (j + 1) / pts);
+    const k0 = Math.max(1, Math.floor(f0 / binHz)), k1 = Math.min(nb, Math.max(k0 + 1, Math.ceil(f1 / binHz)));
+    let e = 0; for (let k = k0; k < k1; k++) e += p[k]; over[j] = 10 * Math.log10(e / (k1 - k0) + 1e-20);
+  }
+  return { bands, suggest, over };
+}
+/* DSP-END */
+
+/* ============================================================
+   PROFILES & STATE
+   ============================================================ */
+const BAND_DEFS = [
+  { t: 'lowshelf',  f: 80,   q: 0.7, name: 'Sub' },
+  { t: 'peaking',   f: 250,  q: 1.0, name: 'Low-mid' },
+  { t: 'peaking',   f: 450,  q: 0.9, name: 'Mid carve' },
+  { t: 'peaking',   f: 3500, q: 1.0, name: 'Presence' },
+  { t: 'highshelf', f: 9000, q: 0.7, name: 'Air' }
+];
+const PROFILES = {
+  club:       { name: 'Club Hype',       desc: 'Heavy 808s, maximum loudness', g: [4, 0, -2, 0, 1.5],   dyn: { thr: -18, ratio: 4,   attack: 12, release: 180, drive: 2,   loud: 8, ceil: -0.2, width: 110 } },
+  aggressive: { name: 'Aggressive Trap', desc: 'Saturated vocals, punch',      g: [3, 0, -1.5, 1.5, 3], dyn: { thr: -22, ratio: 6,   attack: 8,  release: 140, drive: 6,   loud: 9, ceil: -0.3, width: 105 } },
+  radio:      { name: 'Radio / Clean',   desc: 'Balanced, crisp highs',        g: [1, 0, -1, 1, 2.5],   dyn: { thr: -16, ratio: 3,   attack: 15, release: 220, drive: 1,   loud: 5, ceil: -0.5, width: 100 } },
+  drill:      { name: 'Drill Grit',      desc: 'Sub boost, hard mids',         g: [6, 0, -3, 0.5, 1],   dyn: { thr: -20, ratio: 5,   attack: 10, release: 160, drive: 3,   loud: 8, ceil: -0.2, width: 100 } },
+  streaming:  { name: 'Streaming Safe',  desc: 'Gentle, headroom for codecs',  g: [1, 0, -0.5, 0.5, 1], dyn: { thr: -14, ratio: 2.5, attack: 20, release: 250, drive: 0.5, loud: 3, ceil: -1,   width: 100 } },
+  warm:       { name: 'Analog Warm',     desc: 'Soft saturation, smooth top',  g: [2, 0.5, -0.5, -0.5, 0], dyn: { thr: -17, ratio: 3, attack: 18, release: 200, drive: 4, loud: 5, ceil: -0.4, width: 100 } }
+};
+const TARGETS = [
+  { id: 'spotify', name: 'Spotify',     lufs: -14, ceil: -1 },
+  { id: 'apple',   name: 'Apple Music', lufs: -16, ceil: -1 },
+  { id: 'youtube', name: 'YouTube',     lufs: -14, ceil: -1 },
+  { id: 'club',    name: 'Loud / Club', lufs: -9,  ceil: -0.3 }
+];
+const state = {
+  credits: store.get('credits', CONFIG.FREE_CREDITS), pro: store.get('pro', false),
+  profile: 'club', base: 'club', eq: [], dyn: {}, target: null,
+  buffer: null, fileName: '', peaks: null, analysis: null,
+  trim: { start: 0, end: 0 }, fade: { in: 0, out: 0 }, loop: false,
+  playing: false, offset: 0, startedAt: 0, src: null,
+  bypass: false, levelMatch: false, logo: null, exporting: null,
+  fmt: { wav: 16, mp3: 192 },
+  meas: { orig: null, master: null, pending: false }
+};
+function applyProfile(k) {
+  const p = PROFILES[k]; state.profile = k; state.base = k;
+  state.eq = BAND_DEFS.map((b, i) => ({ ...b, g: p.g[i] })); state.dyn = { ...p.dyn }; state.target = null;
+}
+applyProfile('club');
+let selBand = 2;
+
+/* ============================================================
+   AUDIO ENGINE
+   ============================================================ */
+function makeSatCurve(amount) {
+  const n = 2048, c = new Float32Array(n), drive = 1 + amount * 0.7, mix = clamp(amount / 10, 0, 1), norm = Math.tanh(drive);
+  for (let i = 0; i < n; i++) { const x = (i / (n - 1)) * 2 - 1; c[i] = (1 - mix) * x + mix * (Math.tanh(x * drive) / norm); }
+  return c;
+}
+function makeClipCurve(ceilDb) {
+  const n = 4096, lim = dbToGain(ceilDb), c = new Float32Array(n);
+  for (let i = 0; i < n; i++) { const x = (i / (n - 1)) * 2 - 1; c[i] = clamp(x, -lim, lim); }
+  return c;
+}
+/* One chain shared by live playback, offline render, measurement and video */
+function buildChain(ac, eq, dyn) {
+  const inp = ac.createGain(); inp.channelCount = 2; inp.channelCountMode = 'explicit'; inp.channelInterpretation = 'speakers';
+  const bands = eq.map(b => { const f = ac.createBiquadFilter(); f.type = b.t; return f; });
+  const sat = ac.createWaveShaper(); sat.oversample = '4x';
+  const cmp = ac.createDynamicsCompressor(); cmp.knee.value = 8;
+  const split = ac.createChannelSplitter(2), merge = ac.createChannelMerger(2);
+  const mL = ac.createGain(), mR = ac.createGain(), sL = ac.createGain(), sR = ac.createGain();
+  mL.gain.value = 0.5; mR.gain.value = 0.5; sL.gain.value = 0.5; sR.gain.value = -0.5;
+  const mid = ac.createGain(), side = ac.createGain(), sideNeg = ac.createGain(), outL = ac.createGain(), outR = ac.createGain();
+  sideNeg.gain.value = -1;
+  split.connect(mL, 0); split.connect(sL, 0); split.connect(mR, 1); split.connect(sR, 1);
+  mL.connect(mid); mR.connect(mid); sL.connect(side); sR.connect(side);
+  mid.connect(outL); mid.connect(outR); side.connect(outL); side.connect(sideNeg); sideNeg.connect(outR);
+  outL.connect(merge, 0, 0); outR.connect(merge, 0, 1);
+  const push = ac.createGain();
+  const lim = ac.createDynamicsCompressor(); lim.knee.value = 0; lim.ratio.value = 20; lim.attack.value = 0.002; lim.release.value = 0.08;
+  const clip = ac.createWaveShaper(); clip.oversample = '4x';
+  let prev = inp; bands.forEach(f => { prev.connect(f); prev = f; });
+  prev.connect(sat); sat.connect(cmp); cmp.connect(split); merge.connect(push); push.connect(lim); lim.connect(clip);
+  const last = { drive: null, ceil: null };
+  const chain = {
+    input: inp, output: clip, nodes: { cmp, lim },
+    update(eqs, d, smooth) {
+      const t = ac.currentTime, set = (p, v) => smooth ? p.setTargetAtTime(v, t, 0.02) : (p.value = v);
+      eqs.forEach((b, i) => { const f = bands[i]; if (f.type !== b.t) f.type = b.t; set(f.frequency, b.f); set(f.gain, b.g); set(f.Q, b.q); });
+      set(cmp.threshold, d.thr); set(cmp.ratio, d.ratio); set(cmp.attack, d.attack / 1000); set(cmp.release, d.release / 1000);
+      set(side.gain, d.width / 100); set(push.gain, dbToGain(d.loud)); set(lim.threshold, d.ceil - 3);
+      if (last.drive !== d.drive) { sat.curve = makeSatCurve(d.drive); last.drive = d.drive; }
+      if (last.ceil !== d.ceil) { clip.curve = makeClipCurve(d.ceil); last.ceil = d.ceil; }
+    }
+  };
+  chain.update(eq, dyn, false);
+  return chain;
+}
+let ctx = null, live = null;
+function ensureCtx() {
+  if (!ctx) {
+    const AC = window.AudioContext || window.webkitAudioContext;
+    ctx = new AC({ latencyHint: 'interactive' }); live = {};
+    live.input = ctx.createGain(); live.chain = buildChain(ctx, state.eq, state.dyn);
+    live.dry = ctx.createGain(); live.wet = ctx.createGain(); live.bus = ctx.createGain();
+    live.analyser = ctx.createAnalyser(); live.analyser.fftSize = 2048; live.analyser.smoothingTimeConstant = 0.8;
+    live.input.connect(live.chain.input); live.chain.output.connect(live.wet); live.input.connect(live.dry);
+    live.wet.connect(live.bus); live.dry.connect(live.bus); live.bus.connect(live.analyser); live.analyser.connect(ctx.destination);
+    live.dry.gain.value = 0; live.wet.gain.value = 1;
+    live.pads = ctx.createGain(); live.pads.gain.value = 0.85;
+    const pc = ctx.createDynamicsCompressor(); pc.threshold.value = -10; pc.ratio.value = 8;
+    live.pads.connect(pc); pc.connect(ctx.destination); live.pads.connect(live.analyser);
+  }
+  if (ctx.state === 'suspended') ctx.resume();
+  return ctx;
+}
+function applyParams() { if (live) live.chain.update(state.eq, state.dyn, true); }
+function applyAB() {
+  if (!live) return;
+  let gW = 1, gD = 1;
+  const { orig, master } = state.meas;
+  if (state.levelMatch && orig && master && isFinite(orig.lufs) && isFinite(master.lufs)) {
+    const d = clamp(master.lufs - orig.lufs, -24, 24);
+    if (d > 0) gW = dbToGain(-d); else gD = dbToGain(d);
+  }
+  const t = ctx.currentTime;
+  live.wet.gain.setTargetAtTime(state.bypass ? 0 : gW, t, 0.015);
+  live.dry.gain.setTargetAtTime(state.bypass ? gD : 0, t, 0.015);
+}
+function setBypass(on) {
+  state.bypass = on; applyAB();
+  $('#ab-master').classList.toggle('on', !on); $('#ab-master').setAttribute('aria-pressed', !on);
+  $('#ab-orig').classList.toggle('on', on); $('#ab-orig').setAttribute('aria-pressed', on);
+  renderStatus();
+}
+function setLevelMatch(on) { state.levelMatch = on; $('#btn-lm').setAttribute('aria-pressed', on); applyAB(); toast(on ? 'Level match on: A/B is loudness-fair' : 'Level match off'); }
+
+/* ---------- transport ---------- */
+function regionLen() { return Math.max(0.01, state.trim.end - state.trim.start); }
+function curTime() {
+  if (!state.buffer) return 0;
+  if (!state.playing) return state.offset;
+  const pos = state.offset + (ctx.currentTime - state.startedAt);
+  if (state.loop) return state.trim.start + (((pos - state.trim.start) % regionLen()) + regionLen()) % regionLen();
+  return Math.min(state.trim.end, pos);
+}
+function play() {
+  if (!state.buffer) { toast('Load a track first'); return; }
+  ensureCtx(); if (state.playing) return;
+  const { start, end } = state.trim;
+  if (state.offset < start || state.offset >= end - 0.03) state.offset = start;
+  const src = ctx.createBufferSource(); src.buffer = state.buffer; src.connect(live.input);
+  src.onended = () => { if (state.src === src) { state.src = null; state.playing = false; state.offset = state.trim.start; syncPlayUI(); } };
+  if (state.loop) { src.loop = true; src.loopStart = start; src.loopEnd = end; src.start(0, state.offset); }
+  else src.start(0, state.offset, end - state.offset);
+  state.src = src; state.startedAt = ctx.currentTime; state.playing = true; syncPlayUI();
+}
+function stopSource() { if (state.src) { const s = state.src; state.src = null; s.onended = null; try { s.stop(); } catch {} } }
+function pause() { if (!state.playing) return; state.offset = curTime(); stopSource(); state.playing = false; syncPlayUI(); }
+function togglePlay() { state.playing ? pause() : play(); }
+function seek(t) {
+  if (!state.buffer) return;
+  const was = state.playing; if (was) { stopSource(); state.playing = false; }
+  state.offset = clamp(t, state.trim.start, state.trim.end - 0.02); if (was) play(); else syncPlayUI();
+}
+function setLoop(on) {
+  const was = state.playing, t = curTime(); if (was) { stopSource(); state.playing = false; }
+  state.loop = on; state.offset = t;
+  ['#btn-loop', '#btn-loop-edit'].forEach(s => $(s).setAttribute('aria-pressed', on));
+  if (was) play();
+}
+function syncPlayUI() {
+  $('#play-ic').innerHTML = `<use href="#${state.playing ? 'i-pause' : 'i-play'}"/>`;
+  $('#btn-play').setAttribute('aria-label', state.playing ? 'Pause' : 'Play');
+}
+
+/* ---------- loading ---------- */
+async function loadFile(file) {
+  if (!file) return;
+  const ac = ensureCtx(); toast('Decoding audio…');
+  try {
+    const data = await file.arrayBuffer();
+    const buf = await new Promise((res, rej) => { const p = ac.decodeAudioData(data, res, rej); if (p && p.catch) p.catch(rej); });
+    pause(); stopSource();
+    state.buffer = buf; state.fileName = file.name; state.trim = { start: 0, end: buf.duration }; state.offset = 0;
+    state.fade = { in: 0, out: 0 }; state.meas = { orig: null, master: null, pending: true }; origCache = {};
+    computePeaks();
+    $('#empty').classList.add('hide'); $('#stage').classList.remove('hide'); $('#stats').classList.remove('hide');
+    $('#tc-name').textContent = file.name; $('#track-name').textContent = file.name;
+    $('#tc-meta').textContent = `${fmtTime(buf.duration)} · ${(buf.sampleRate / 1000).toFixed(1)} kHz · ${buf.numberOfChannels === 1 ? 'Mono' : 'Stereo'}`;
+    $('#time-dur').textContent = fmtTime(buf.duration);
+    setupTrimSliders(); syncControls(); renderStatus(); renderStats(); fitCanvases();
+    hist.stack = []; hist.i = -1; pushHist();
+    setTimeout(() => { state.analysis = spectralBalance(buf); renderBalance(); }, 40);
+    scheduleMeasure(80);
+    track('track_loaded', { seconds: Math.round(buf.duration) });
+    toast('Track loaded. Press play to hear your master.', 'ok');
+  } catch (e) { toast('Could not read that file. Try MP3, WAV, M4A or MP4.', 'error'); }
+}
+function computePeaks() {
+  const b = state.buffer, bins = 420, out = new Float32Array(bins);
+  const c0 = b.getChannelData(0), c1 = b.numberOfChannels > 1 ? b.getChannelData(1) : c0, per = Math.floor(b.length / bins) || 1;
+  for (let i = 0; i < bins; i++) {
+    let m = 0; const s = i * per, e = Math.min(s + per, b.length), step = Math.max(1, Math.floor(per / 64));
+    for (let j = s; j < e; j += step) { const v = Math.max(Math.abs(c0[j]), Math.abs(c1[j])); if (v > m) m = v; }
+    out[i] = m;
+  }
+  state.peaks = out;
+}
+
+/* ---------- measurement ---------- */
+let origCache = {}, measTimer = 0, measToken = 0;
+function measureWindow() {
+  const { start, end } = state.trim, len = end - start, win = Math.min(len, 90);
+  return { start: start + (len - win) / 2, dur: win };
+}
+function measureOriginal(seg) {
+  const key = seg.start.toFixed(2) + '|' + seg.dur.toFixed(2); if (origCache[key]) return origCache[key];
+  const b = state.buffer, sr = b.sampleRate, i0 = Math.floor(seg.start * sr), i1 = Math.min(b.length, i0 + Math.floor(seg.dur * sr));
+  const chs = []; for (let c = 0; c < Math.min(2, b.numberOfChannels); c++) chs.push(b.getChannelData(c));
+  return (origCache[key] = measureLoudness(chs, sr, i0, i1));
+}
+async function renderSegment(seg) {
+  const b = state.buffer, oc = new OfflineAudioContext(2, Math.max(1, Math.round(seg.dur * b.sampleRate)), b.sampleRate);
+  const src = oc.createBufferSource(); src.buffer = b; const chain = buildChain(oc, state.eq, state.dyn);
+  src.connect(chain.input); chain.output.connect(oc.destination); src.start(0, seg.start, seg.dur);
+  return oc.startRendering();
+}
+function measureRendered(r) { return measureLoudness([r.getChannelData(0), r.getChannelData(1)], r.sampleRate, 0, r.length); }
+function scheduleMeasure(delay = 600) {
+  if (!state.buffer) return; clearTimeout(measTimer); state.meas.pending = true; renderStats();
+  measTimer = setTimeout(runMeasure, delay);
+}
+async function runMeasure() {
+  const token = ++measToken; if (!state.buffer) return;
+  try {
+    const seg = measureWindow(), o = measureOriginal(seg); await tick();
+    const r = await renderSegment(seg); if (token !== measToken) return;
+    const m = measureRendered(r); state.meas = { orig: o, master: m, pending: false }; renderStats(); applyAB();
+  } catch (e) { state.meas.pending = false; renderStats(); }
+}
+async function matchTarget(t) {
+  if (!state.buffer) { toast('Load a track first', 'error'); return; }
+  if (state.exporting || state.matching) return; state.matching = true; renderTargets();
+  try {
+    state.dyn.ceil = t.ceil; state.target = t.id;
+    const seg = measureWindow(); let reached = null;
+    for (let i = 0; i < 4; i++) {
+      state.dyn.loud = clamp(state.dyn.loud, 0, 18);
+      const m = measureRendered(await renderSegment(seg)); reached = m.lufs; if (!isFinite(m.lufs)) break;
+      const delta = t.lufs - m.lufs; if (Math.abs(delta) < 0.3) break;
+      const next = clamp(state.dyn.loud + delta, 0, 18); if (next === state.dyn.loud) break; state.dyn.loud = next;
+    }
+    if (state.profile !== 'custom') { state.profile = 'custom'; renderProfiles(); renderStatus(); }
+    syncControls(); applyParams(); scheduleMeasure(0); pushHist(); track('target_matched', { target: t.id });
+    toast(reached !== null && Math.abs(reached - t.lufs) > 1 ? `Closest reachable: about ${reached.toFixed(1)} LUFS` : `Matched ${t.name}: ${t.lufs} LUFS`, 'ok');
+  } catch { toast('Could not measure this track', 'error'); }
+  state.matching = false; renderTargets();
+}
+
+/* ============================================================
+   SOUNDBOARD
+   ============================================================ */
+const PADS = [
+  { id: 'gunshot', label: 'Gunshot', ic: 'i-gun' }, { id: 'tapestop', label: 'Tape Stop', ic: 'i-stop' },
+  { id: 'airhorn', label: 'Airhorn', ic: 'i-horn' }, { id: 'slide', label: '808 Slide', ic: 'i-slide' },
+  { id: 'laser', label: 'Laser', ic: 'i-laser' }, { id: 'scratch', label: 'Scratch', ic: 'i-scratch' },
+  { id: 'glitch', label: 'Glitch', ic: 'i-glitch' }, { id: 'riser', label: 'Riser', ic: 'i-riser' }
+];
+function noiseBuf(ac, sec) { const n = Math.floor(ac.sampleRate * sec), b = ac.createBuffer(1, n, ac.sampleRate), d = b.getChannelData(0); for (let i = 0; i < n; i++) d[i] = Math.random() * 2 - 1; return b; }
+function env(g, t, a, peak, d) { g.gain.cancelScheduledValues(t); g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(peak, t + a); g.gain.exponentialRampToValueAtTime(0.0001, t + a + d); }
+const SYNTH = {
+  gunshot(ac, out, t) {
+    const n = ac.createBufferSource(); n.buffer = noiseBuf(ac, 0.6);
+    const lp = ac.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.setValueAtTime(7000, t); lp.frequency.exponentialRampToValueAtTime(350, t + 0.35);
+    const g = ac.createGain(); env(g, t, 0.002, 1, 0.38); n.connect(lp); lp.connect(g); g.connect(out); n.start(t); n.stop(t + 0.6);
+    const o = ac.createOscillator(); o.type = 'sine'; o.frequency.setValueAtTime(160, t); o.frequency.exponentialRampToValueAtTime(38, t + 0.22);
+    const og = ac.createGain(); env(og, t, 0.002, 1, 0.26); o.connect(og); og.connect(out); o.start(t); o.stop(t + 0.35);
+  },
+  tapestop(ac, out, t) {
+    const o = ac.createOscillator(); o.type = 'sawtooth'; o.frequency.setValueAtTime(520, t); o.frequency.exponentialRampToValueAtTime(24, t + 1.3);
+    const lp = ac.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.setValueAtTime(4000, t); lp.frequency.exponentialRampToValueAtTime(120, t + 1.3);
+    const g = ac.createGain(); g.gain.setValueAtTime(0.35, t); g.gain.exponentialRampToValueAtTime(0.0001, t + 1.35);
+    o.connect(lp); lp.connect(g); g.connect(out); o.start(t); o.stop(t + 1.4);
+  },
+  airhorn(ac, out, t) {
+    const g = ac.createGain(); g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.5, t + 0.03); g.gain.setValueAtTime(0.5, t + 0.85); g.gain.exponentialRampToValueAtTime(0.0001, t + 1.1);
+    const lp = ac.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 3200;
+    const lfo = ac.createOscillator(); lfo.frequency.value = 6; const lg = ac.createGain(); lg.gain.value = 9; lfo.connect(lg);
+    [415, 466, 622].forEach(f => { const o = ac.createOscillator(); o.type = 'sawtooth'; o.frequency.value = f; lg.connect(o.detune); o.connect(lp); o.start(t); o.stop(t + 1.15); });
+    lfo.start(t); lfo.stop(t + 1.15); lp.connect(g); g.connect(out);
+  },
+  slide(ac, out, t) {
+    const o = ac.createOscillator(); o.type = 'sine'; o.frequency.setValueAtTime(130, t); o.frequency.exponentialRampToValueAtTime(36, t + 0.95);
+    const sh = ac.createWaveShaper(); sh.curve = makeSatCurve(5);
+    const g = ac.createGain(); g.gain.setValueAtTime(0.95, t); g.gain.exponentialRampToValueAtTime(0.0001, t + 1.0);
+    o.connect(sh); sh.connect(g); g.connect(out); o.start(t); o.stop(t + 1.05);
+  },
+  laser(ac, out, t) {
+    const o = ac.createOscillator(); o.type = 'square'; o.frequency.setValueAtTime(2600, t); o.frequency.exponentialRampToValueAtTime(160, t + 0.28);
+    const g = ac.createGain(); g.gain.setValueAtTime(0.22, t); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.3);
+    o.connect(g); g.connect(out); o.start(t); o.stop(t + 0.32);
+  },
+  scratch(ac, out, t) {
+    const n = ac.createBufferSource(); n.buffer = noiseBuf(ac, 0.6);
+    const bp = ac.createBiquadFilter(); bp.type = 'bandpass'; bp.Q.value = 3.5; bp.frequency.setValueAtTime(700, t);
+    [[0.08, 3200], [0.16, 500], [0.26, 2800], [0.36, 900], [0.46, 2400]].forEach(([dt, f]) => bp.frequency.exponentialRampToValueAtTime(f, t + dt));
+    const g = ac.createGain(); g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.8, t + 0.02); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.55);
+    n.connect(bp); bp.connect(g); g.connect(out); n.start(t); n.stop(t + 0.6);
+  },
+  glitch(ac, out, t) {
+    for (let i = 0; i < 9; i++) {
+      const st = t + i * 0.045, o = ac.createOscillator(); o.type = Math.random() > .5 ? 'square' : 'sawtooth'; o.frequency.value = 120 + Math.random() * 1800;
+      const g = ac.createGain(); g.gain.setValueAtTime(Math.random() > .3 ? 0.22 : 0.0001, st); g.gain.setValueAtTime(0.0001, st + 0.04);
+      o.connect(g); g.connect(out); o.start(st); o.stop(st + 0.045);
+    }
+  },
+  riser(ac, out, t) {
+    const n = ac.createBufferSource(); n.buffer = noiseBuf(ac, 2.2);
+    const hp = ac.createBiquadFilter(); hp.type = 'highpass'; hp.frequency.setValueAtTime(200, t); hp.frequency.exponentialRampToValueAtTime(9000, t + 2);
+    const g = ac.createGain(); g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.7, t + 1.95); g.gain.linearRampToValueAtTime(0.0001, t + 2.05);
+    n.connect(hp); hp.connect(g); g.connect(out); n.start(t); n.stop(t + 2.1);
+    const o = ac.createOscillator(); o.type = 'sawtooth'; o.frequency.setValueAtTime(180, t); o.frequency.exponentialRampToValueAtTime(1400, t + 2);
+    const og = ac.createGain(); og.gain.setValueAtTime(0.0001, t); og.gain.exponentialRampToValueAtTime(0.18, t + 1.95); og.gain.linearRampToValueAtTime(0.0001, t + 2.05);
+    o.connect(og); og.connect(out); o.start(t); o.stop(t + 2.1);
+  }
+};
+function triggerPad(id) {
+  const ac = ensureCtx(); SYNTH[id](ac, live.pads, ac.currentTime + 0.005);
+  const el = $(`.pad[data-pad="${id}"]`); if (el) { el.classList.add('hit'); setTimeout(() => el.classList.remove('hit'), 140); }
+  if (navigator.vibrate) try { navigator.vibrate(8); } catch {}
+}
+
+/* ============================================================
+   EXPORT
+   ============================================================ */
+function writeStr(v, o, s) { for (let i = 0; i < s.length; i++) v.setUint8(o + i, s.charCodeAt(i)); }
+function encodeWav(buf, bits) {
+  const ch = buf.numberOfChannels, len = buf.length, sr = buf.sampleRate, bps = bits / 8, size = len * ch * bps;
+  const ab = new ArrayBuffer(44 + size), v = new DataView(ab);
+  writeStr(v, 0, 'RIFF'); v.setUint32(4, 36 + size, true); writeStr(v, 8, 'WAVE'); writeStr(v, 12, 'fmt ');
+  v.setUint32(16, 16, true); v.setUint16(20, 1, true); v.setUint16(22, ch, true); v.setUint32(24, sr, true);
+  v.setUint32(28, sr * ch * bps, true); v.setUint16(32, ch * bps, true); v.setUint16(34, bits, true);
+  writeStr(v, 36, 'data'); v.setUint32(40, size, true);
+  const data = []; for (let c = 0; c < ch; c++) data.push(buf.getChannelData(c));
+  let o = 44;
+  for (let i = 0; i < len; i++) for (let c = 0; c < ch; c++) {
+    let s = data[c][i];
+    if (bits === 16) { s += (Math.random() - Math.random()) / 32768; s = clamp(s, -1, 1); v.setInt16(o, s < 0 ? s * 0x8000 : s * 0x7FFF, true); o += 2; }
+    else { s = clamp(s, -1, 1); const n = Math.round(s < 0 ? s * 0x800000 : s * 0x7FFFFF); v.setUint8(o, n & 255); v.setUint8(o + 1, (n >> 8) & 255); v.setUint8(o + 2, (n >> 16) & 255); o += 3; }
+  }
+  return new Blob([ab], { type: 'audio/wav' });
+}
+function toInt16(f) { const o = new Int16Array(f.length); for (let i = 0; i < f.length; i++) { const s = clamp(f[i], -1, 1); o[i] = s < 0 ? s * 0x8000 : s * 0x7FFF; } return o; }
+function loadLame() {
+  if (window.lamejs) return Promise.resolve();
+  return new Promise((res, rej) => { const s = document.createElement('script'); s.src = 'https://cdnjs.cloudflare.com/ajax/libs/lamejs/1.2.1/lame.min.js'; s.onload = res; s.onerror = () => rej(new Error('encoder')); document.head.appendChild(s); });
+}
+async function encodeMp3(buf, kbps, onProgress, job) {
+  await loadLame();
+  const enc = new lamejs.Mp3Encoder(2, buf.sampleRate, kbps), L = toInt16(buf.getChannelData(0)), R = buf.numberOfChannels > 1 ? toInt16(buf.getChannelData(1)) : L, out = [], bs = 1152;
+  for (let i = 0, n = 0; i < L.length; i += bs, n++) {
+    if (job.cancel) throw new Error('cancelled');
+    const chunk = enc.encodeBuffer(L.subarray(i, i + bs), R.subarray(i, i + bs)); if (chunk.length) out.push(new Uint8Array(chunk));
+    if (n % 150 === 0) { onProgress(i / L.length); await tick(); }
+  }
+  const end = enc.flush(); if (end.length) out.push(new Uint8Array(end));
+  return new Blob(out, { type: 'audio/mpeg' });
+}
+function scheduleFades(g, t0, d) {
+  const fi = Math.min(state.fade.in, d / 2), fo = Math.min(state.fade.out, d / 2);
+  g.gain.setValueAtTime(fi > 0 ? 0 : 1, t0); if (fi > 0) g.gain.linearRampToValueAtTime(1, t0 + fi);
+  if (fo > 0) { g.gain.setValueAtTime(1, t0 + d - fo); g.gain.linearRampToValueAtTime(0, t0 + d); }
+}
+async function renderMaster() {
+  const b = state.buffer, { start, end } = state.trim, d = end - start, sr = b.sampleRate;
+  const oc = new OfflineAudioContext(2, Math.max(1, Math.round(d * sr)), sr);
+  const src = oc.createBufferSource(); src.buffer = b; const chain = buildChain(oc, state.eq, state.dyn), fade = oc.createGain();
+  src.connect(chain.input); chain.output.connect(fade); fade.connect(oc.destination); scheduleFades(fade, 0, d); src.start(0, start, d);
+  return oc.startRendering();
+}
+function pickVideoMime() {
+  const list = ['video/mp4;codecs=avc1.42E01E,mp4a.40.2', 'video/mp4', 'video/webm;codecs=vp9,opus', 'video/webm;codecs=vp8,opus', 'video/webm'];
+  return list.find(m => window.MediaRecorder && MediaRecorder.isTypeSupported(m)) || '';
+}
+async function renderVideo(job, setProgress) {
+  if (!window.MediaRecorder || !HTMLCanvasElement.prototype.captureStream) throw new Error('Video export is not supported in this browser. Try Chrome, Edge or Safari 17+.');
+  const mime = pickVideoMime(); if (!mime) throw new Error('No supported video format in this browser.');
+  const ac = ensureCtx(); pause();
+  const { start, end } = state.trim, dur = end - start;
+  const dest = ac.createMediaStreamDestination(), src = ac.createBufferSource(); src.buffer = state.buffer;
+  const chain = buildChain(ac, state.eq, state.dyn), fade = ac.createGain(), an = ac.createAnalyser(); an.fftSize = 512; an.smoothingTimeConstant = 0.75;
+  src.connect(chain.input); chain.output.connect(fade); fade.connect(an); an.connect(dest);
+  const W = 720, H = 720, cv = document.createElement('canvas'); cv.width = W; cv.height = H; const g = cv.getContext('2d');
+  const stream = cv.captureStream(30); dest.stream.getAudioTracks().forEach(t => stream.addTrack(t));
+  const rec = new MediaRecorder(stream, { mimeType: mime, videoBitsPerSecond: 4000000, audioBitsPerSecond: 192000 });
+  const chunks = []; rec.ondataavailable = e => { if (e.data && e.data.size) chunks.push(e.data); };
+  const done = new Promise(res => { rec.onstop = res; });
+  const freq = new Uint8Array(an.frequencyBinCount), title = state.fileName.replace(/\.[^.]+$/, '');
+  let t0 = 0, raf = 0, ended = false;
+  function frame() {
+    an.getByteFrequencyData(freq);
+    const bass = freq.slice(0, 6).reduce((a, b) => a + b, 0) / 6 / 255;
+    const bg = g.createRadialGradient(W / 2, H / 2, 40, W / 2, H / 2, W * 0.75); bg.addColorStop(0, '#12151d'); bg.addColorStop(1, '#07080b'); g.fillStyle = bg; g.fillRect(0, 0, W, H);
+    const glow = g.createRadialGradient(W / 2, H / 2, 60, W / 2, H / 2, 360); glow.addColorStop(0, `rgba(63,116,255,${0.08 + bass * 0.3})`); glow.addColorStop(1, 'rgba(63,116,255,0)'); g.fillStyle = glow; g.fillRect(0, 0, W, H);
+    const cx = W / 2, cy = H / 2 - 20, R = 128 + bass * 12, bars = 96;
+    for (let i = 0; i < bars; i++) {
+      const a = (i / bars) * Math.PI * 2 - Math.PI / 2, idx = Math.floor(Math.pow(i / bars, 1.6) * 110) + 1, v = freq[idx] / 255, len = 8 + v * 120;
+      g.strokeStyle = `rgba(${90 + v * 50 | 0},${140 + v * 90 | 0},255,${0.5 + v * 0.5})`; g.lineWidth = 4; g.lineCap = 'round';
+      g.beginPath(); g.moveTo(cx + Math.cos(a) * (R + 14), cy + Math.sin(a) * (R + 14)); g.lineTo(cx + Math.cos(a) * (R + 14 + len), cy + Math.sin(a) * (R + 14 + len)); g.stroke();
+    }
+    g.save(); g.beginPath(); g.arc(cx, cy, R, 0, Math.PI * 2); g.closePath(); g.clip();
+    if (state.logo) { const s = Math.max(R * 2 / state.logo.width, R * 2 / state.logo.height), w = state.logo.width * s, h = state.logo.height * s; g.drawImage(state.logo, cx - w / 2, cy - h / 2, w, h); }
+    else { g.fillStyle = '#3f74ff'; g.fillRect(cx - R, cy - R, R * 2, R * 2); g.fillStyle = '#fff'; g.font = '800 110px system-ui, sans-serif'; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText('M', cx, cy + 4); }
+    g.restore();
+    g.lineWidth = 3; g.strokeStyle = 'rgba(143,176,255,.85)'; g.beginPath(); g.arc(cx, cy, R, 0, Math.PI * 2); g.stroke();
+    g.textAlign = 'center'; g.textBaseline = 'alphabetic'; g.fillStyle = '#e9ebf0'; g.font = '700 30px system-ui, sans-serif';
+    let tt = title; while (g.measureText(tt).width > W - 120 && tt.length > 4) tt = tt.slice(0, -2); if (tt !== title) tt += '…';
+    g.fillText(tt, cx, H - 92); g.fillStyle = '#6f7686'; g.font = '600 16px system-ui, sans-serif'; g.fillText('MASTERED WITH MASTER PRO', cx, H - 62);
+    const prog = clamp((ac.currentTime - t0) / dur, 0, 1);
+    g.fillStyle = '#222733'; g.fillRect(60, H - 34, W - 120, 4); g.fillStyle = '#8fb0ff'; g.fillRect(60, H - 34, (W - 120) * prog, 4); setProgress(prog);
+    if (!ended) raf = requestAnimationFrame(frame);
+  }
+  src.onended = () => { setTimeout(() => { ended = true; if (rec.state !== 'inactive') rec.stop(); }, 350); };
+  rec.start(250); t0 = ac.currentTime + 0.05; scheduleFades(fade, t0, dur); src.start(t0, start, dur); frame();
+  const poll = setInterval(() => { if (job.cancel) { ended = true; try { src.onended = null; src.stop(); } catch {} if (rec.state !== 'inactive') rec.stop(); } }, 150);
+  await done; clearInterval(poll); cancelAnimationFrame(raf);
+  try { chain.output.disconnect(); an.disconnect(); } catch {}
+  if (job.cancel) throw new Error('cancelled');
+  return { blob: new Blob(chunks, { type: mime.split(';')[0] }), ext: mime.startsWith('video/mp4') ? 'mp4' : 'webm' };
+}
+function openModal(id) { $(id).classList.add('active'); }
+function closeModal(id) { $(id).classList.remove('active'); }
+function gate(type) {
+  if (type === 'mp4' && !state.pro) { openPaywall('video'); return false; }
+  if (type === 'wav' && state.fmt.wav === 24 && !state.pro) { openPaywall('bits'); return false; }
+  if (type === 'mp3' && state.fmt.mp3 === 320 && !state.pro) { openPaywall('kbps'); return false; }
+  if (!state.pro && state.credits <= 0) { openPaywall('credits'); return false; }
+  return true;
+}
+async function startExport(type) {
+  if (!state.buffer) { toast('Load a track first', 'error'); return; }
+  if (!gate(type)) return;
+  const job = { cancel: false }; state.exporting = job; track('export_start', { type });
+  const ring = $('#ring'), bar = $('#render-bar'), label = $('#render-label');
+  const setP = p => { const pct = Math.round(clamp(p, 0, 1) * 100); bar.style.width = pct + '%'; label.textContent = pct + '%'; };
+  ring.className = 'ring spin'; $('#ring-ic').innerHTML = '<use href="#i-bolt"/>';
+  $('#modal-title').textContent = type === 'mp4' ? 'Rendering video…' : type === 'mp3' ? 'Encoding MP3…' : 'Rendering master…';
+  $('#modal-sub').textContent = type === 'mp4' ? 'Rendering in real time. Keep this tab open until it finishes.' : 'Applying your full signal chain.';
+  setP(0); $('#modal-actions').innerHTML = '<button class="btn block ghost" id="btn-cancel">Cancel</button>';
+  $('#btn-cancel').onclick = () => { job.cancel = true; closeModal('#export-modal'); }; openModal('#export-modal');
+  try {
+    let blob, ext;
+    if (type === 'mp4') ({ blob, ext } = await renderVideo(job, p => setP(p)));
+    else {
+      pause(); setP(0.05); await tick();
+      const r = await renderMaster(); if (job.cancel) throw new Error('cancelled'); setP(type === 'mp3' ? 0.3 : 0.8);
+      if (type === 'wav') { blob = encodeWav(r, state.fmt.wav); ext = 'wav'; }
+      else {
+        try { blob = await encodeMp3(r, state.fmt.mp3, p => setP(0.3 + p * 0.7), job); ext = 'mp3'; }
+        catch (e) { if (e.message === 'cancelled') throw e; blob = encodeWav(r, 16); ext = 'wav'; toast('MP3 encoder unavailable. Exported WAV instead.'); }
+      }
+    }
+    setP(1);
+    if (!state.pro) { state.credits = Math.max(0, state.credits - 1); store.set('credits', state.credits); renderCredits(); }
+    const url = URL.createObjectURL(blob), base = (state.fileName.replace(/\.[^.]+$/, '') || 'master').replace(/["<>]/g, '');
+    ring.className = 'ring done'; $('#ring-ic').innerHTML = '<use href="#i-check"/>';
+    $('#modal-title').textContent = 'Your master is ready'; $('#modal-sub').textContent = `${(blob.size / 1048576).toFixed(1)} MB · ${ext.toUpperCase()}`;
+    $('#modal-actions').innerHTML = `<a class="btn primary block" href="${url}" download="${base}-master.${ext}">${icon('i-download')} Download ${ext.toUpperCase()}</a><button class="btn block ghost" id="btn-done">Done</button>`;
+    $('#btn-done').onclick = () => { closeModal('#export-modal'); setTimeout(() => URL.revokeObjectURL(url), 60000); }; track('export_done', { type, ext });
+  } catch (e) {
+    if (e.message === 'cancelled') closeModal('#export-modal');
+    else { ring.className = 'ring'; $('#ring-ic').innerHTML = '<use href="#i-close"/>'; $('#modal-title').textContent = 'Export failed'; $('#modal-sub').textContent = e.message || 'Something went wrong. Please try again.'; $('#modal-actions').innerHTML = '<button class="btn block" id="btn-done">Close</button>'; $('#btn-done').onclick = () => closeModal('#export-modal'); }
+  } finally { state.exporting = null; }
+}
+
+/* ============================================================
+   PAYWALL
+   ============================================================ */
+let selectedPlan = CONFIG.DEFAULT_PLAN;
+function renderPaywall() {
+  $('#plans').innerHTML = Object.entries(CONFIG.PLANS).map(([k, p]) => `<div class="plan ${k === selectedPlan ? 'sel' : ''}" role="radio" aria-checked="${k === selectedPlan}" tabindex="0" data-plan="${k}">${p.badge ? `<span class="pb">${p.badge}</span>` : ''}<div class="pn">${p.name}</div><div class="pp">${p.price}</div><div class="pt">${p.per}</div></div>`).join('');
+  const trial = CONFIG.TRIAL_DAYS > 0;
+  $('#pw-cta').innerHTML = `${icon('i-crown')} ${trial ? `Start ${CONFIG.TRIAL_DAYS}-day free trial` : `Continue with ${CONFIG.PLANS[selectedPlan].name}`}`;
+  $('#pw-pack').innerHTML = `Just need one more? <button id="btn-pack">${CONFIG.PACK.label}</button>`;
+  const demo = !CONFIG.CHECKOUT[selectedPlan];
+  $('#pw-fine').innerHTML = demo ? 'Demo mode: no payment is taken. Add your checkout links in <code>CONFIG.CHECKOUT</code> to go live.' : 'Cancel anytime. Secure checkout.';
+}
+function openPaywall(reason) {
+  const copy = {
+    credits: ['You\'ve used your free exports', 'Go Pro for unlimited exports, higher quality formats and video.'],
+    video: ['Video export is a Pro feature', 'Turn your master into a shareable visualizer video with your artwork.'],
+    bits: ['24-bit WAV is a Pro feature', 'Export at full studio resolution for further mixing or distribution.'],
+    kbps: ['320 kbps MP3 is a Pro feature', 'Get the highest quality MP3 for streaming platforms and DJ sets.'],
+    presets: ['Custom presets are a Pro feature', 'Save your signature sound and recall it on any track in one tap.'],
+    default: ['Go Master Pro', 'Everything unlocked, with no limits.']
+  }[reason || 'default'];
+  $('#pw-title').textContent = copy[0]; $('#pw-lead').textContent = copy[1];
+  const rows = [['Live mastering, EQ, loudness meters', 1, 1], ['Exports', '2', 'Unlimited'], ['WAV 24-bit &amp; MP3 320 kbps', 0, 1], ['Visualizer video export', 0, 1], ['Custom presets', 0, 1]];
+  const cell = v => v === 1 ? icon('i-check') : v === 0 ? '&ndash;' : v;
+  $('#compare').innerHTML = `<div class="h"><span>Feature</span><span class="c">Free</span><span class="c p">Pro</span></div>` + rows.map(r => `<div><span>${r[0]}</span><span class="c">${cell(r[1])}</span><span class="c p">${cell(r[2])}</span></div>`).join('');
+  renderPaywall(); openModal('#paywall'); track('paywall_view', { reason: reason || 'default' });
+}
+function grantPro() { state.pro = true; store.set('pro', true); renderCredits(); closeModal('#paywall'); track('pro_unlocked_demo'); toast('Welcome to Master Pro. Everything is unlocked.', 'ok'); }
+function checkout() { const url = CONFIG.CHECKOUT[selectedPlan]; track('checkout_click', { plan: selectedPlan }); if (url) { window.location.href = url; return; } grantPro(); }
+function buyPack() { const url = CONFIG.CHECKOUT.pack; track('pack_click'); if (url) { window.location.href = url; return; } state.credits += CONFIG.PACK.credits; store.set('credits', state.credits); renderCredits(); closeModal('#paywall'); toast(`Added ${CONFIG.PACK.credits} exports (demo)`, 'ok'); }
+function renderCredits() {
+  const pill = $('#credit-pill'), t = $('#credit-text');
+  pill.classList.toggle('pro', state.pro); pill.classList.toggle('empty', !state.pro && state.credits <= 0);
+  if (state.pro) { t.textContent = 'PRO'; pill.setAttribute('aria-label', 'Master Pro active'); }
+  else { t.textContent = `${state.credits} left`; pill.setAttribute('aria-label', `${state.credits} free exports left. Open upgrade options`); }
+  renderExportSummary();
+}
+
+/* ============================================================
+   CONTROLS (sliders bound to state paths)
+   ============================================================ */
+const META = {};
+function reg(path, label, hint, min, max, step, unit, o = {}) { META[path] = { label, hint, min, max, step, unit, ...o }; return path; }
+const G_COMP = [reg('dyn.thr', 'Threshold', 'Level where compression starts', -40, -4, 1, ' dB', { sign: true }), reg('dyn.ratio', 'Ratio', 'How hard it squeezes', 1, 12, 0.5, ':1'), reg('dyn.attack', 'Attack', 'Lets transients punch through', 1, 80, 1, ' ms'), reg('dyn.release', 'Release', 'How fast it recovers', 30, 600, 10, ' ms')];
+const G_LOUD = [reg('dyn.drive', 'Saturation', 'Warm harmonic drive', 0, 10, 0.5, ''), reg('dyn.loud', 'Loudness push', 'Gain into the limiter', 0, 18, 0.5, ' dB', { sign: true })];
+const G_OUT = [reg('dyn.ceil', 'Ceiling', 'Absolute peak limit', -3, 0, 0.1, ' dB', { sign: true })];
+const G_WIDTH = [reg('dyn.width', 'Stereo width', '100% is unchanged, 0% is mono', 0, 200, 5, '%')];
+const G_TRIM = [reg('trim.start', 'Start', '', 0, 100, 0.01, '', { fmt: fmtTime2 }), reg('trim.end', 'End', '', 0, 100, 0.01, '', { fmt: fmtTime2 })];
+const G_FADE = [reg('fade.in', 'Fade in', '', 0, 10, 0.1, ' s'), reg('fade.out', 'Fade out', '', 0, 10, 0.1, ' s')];
+function getPath(p) { const [a, b] = p.split('.'); return state[a][b]; }
+function setPath(p, v) { const [a, b] = p.split('.'); state[a][b] = v; }
+function sliderHTML(path) {
+  const m = META[path];
+  return `<div class="field"><div class="field-h"><label for="s-${path}">${m.label}${m.hint ? `<span class="hint">${m.hint}</span>` : ''}</label><output class="num val" data-val="${path}"></output></div><input type="range" id="s-${path}" data-path="${path}" min="${m.min}" max="${m.max}" step="${m.step}" /></div>`;
+}
+function fmtMeta(path, v) {
+  const m = META[path]; if (m.fmt) return m.fmt(v);
+  const n = +v, s = m.step < 1 ? n.toFixed(1) : String(Math.round(n)); return (m.sign && n > 0 ? '+' : '') + s + m.unit;
+}
+function syncControl(el) {
+  const path = el.dataset.path, m = META[path], v = getPath(path);
+  el.value = v; el.style.setProperty('--p', ((v - el.min) / (el.max - el.min || 1)) * 100 + '%');
+  const out = $(`[data-val="${path}"]`); if (out) out.textContent = fmtMeta(path, v);
+}
+function syncControls() {
+  $$('input[data-path]').forEach(syncControl); renderEqUI(); computeEqCurve();
+  renderExportSummary();
+}
+function setupTrimSliders() {
+  const d = state.buffer ? state.buffer.duration : 100;
+  $$('input[data-path^="trim."]').forEach(el => { el.max = d; });
+  syncControls();
+}
+function markCustom() { if (state.profile !== 'custom') { state.profile = 'custom'; renderProfiles(); renderStatus(); } state.target = null; renderTargets(); }
+let histTimer = 0;
+function histSoon() { clearTimeout(histTimer); histTimer = setTimeout(pushHist, 400); }
+function onParamsChanged() { markCustom(); applyParams(); scheduleMeasure(); histSoon(); }
+document.addEventListener('input', e => {
+  const el = e.target; if (!el.dataset || !el.dataset.path) return;
+  const path = el.dataset.path; let v = parseFloat(el.value);
+  if (path === 'trim.start') v = Math.min(v, state.trim.end - 0.5);
+  if (path === 'trim.end') v = Math.max(v, state.trim.start + 0.5);
+  setPath(path, v); syncControl(el);
+  if (path.startsWith('trim.')) { $$('input[data-path^="trim."]').forEach(syncControl); renderExportSummary(); }
+  else if (path.startsWith('dyn.')) onParamsChanged();
+  else renderExportSummary();
+});
+document.addEventListener('change', e => { const el = e.target; if (el.dataset && el.dataset.path && el.dataset.path.startsWith('trim.')) onTrimCommit(); });
+function onTrimCommit() {
+  if (!state.buffer) return;
+  if (state.playing) { const t = clamp(curTime(), state.trim.start, state.trim.end - 0.05); stopSource(); state.playing = false; state.offset = t; play(); }
+  else state.offset = clamp(state.offset, state.trim.start, state.trim.end - 0.02);
+  scheduleMeasure(300); renderExportSummary();
+}
+
+/* ---------- history ---------- */
+const hist = { stack: [], i: -1, lock: false };
+const snap = () => JSON.stringify({ eq: state.eq, dyn: state.dyn, profile: state.profile, base: state.base });
+function pushHist() {
+  if (hist.lock) return; const s = snap(); if (hist.stack[hist.i] === s) return;
+  hist.stack = hist.stack.slice(0, hist.i + 1); hist.stack.push(s); if (hist.stack.length > 60) hist.stack.shift(); hist.i = hist.stack.length - 1; updateHistBtns();
+}
+function restoreHist(i) {
+  if (i < 0 || i >= hist.stack.length) return; hist.lock = true; clearTimeout(histTimer);
+  const o = JSON.parse(hist.stack[i]); state.eq = o.eq; state.dyn = o.dyn; state.profile = o.profile; state.base = o.base; hist.i = i;
+  renderProfiles(); renderStatus(); syncControls(); applyParams(); scheduleMeasure(); renderTargets(); hist.lock = false; updateHistBtns();
+}
+function updateHistBtns() { $('#btn-undo').disabled = hist.i <= 0; $('#btn-redo').disabled = hist.i >= hist.stack.length - 1; }
+
+/* ---------- profiles, targets, presets, balance ---------- */
+function renderProfiles() {
+  $('#profiles').innerHTML = Object.entries(PROFILES).map(([k, p]) => `<div class="profile ${k === state.profile ? 'sel' : ''}" role="radio" aria-checked="${k === state.profile}" tabindex="0" data-profile="${k}"><b>${p.name}</b><span>${p.desc}</span></div>`).join('');
+}
+function selectProfile(k) { applyProfile(k); renderProfiles(); syncControls(); applyParams(); renderStatus(); renderTargets(); scheduleMeasure(); pushHist(); track('profile', { k }); }
+function renderTargets() {
+  $('#targets').innerHTML = TARGETS.map(t => `<button class="cchip ${state.target === t.id ? 'sel' : ''}" data-target="${t.id}" ${state.matching ? 'disabled' : ''}>${t.name} <span class="num">${t.lufs}</span></button>`).join('');
+  $('#target-info').textContent = state.matching ? 'measuring…' : '';
+}
+function loadPresets() { return store.get('presets', []); }
+function renderPresets() {
+  const list = loadPresets();
+  $('#presets').innerHTML = list.length ? list.map((p, i) => `<button class="cchip" data-preset="${i}">${p.name.replace(/[<>&"]/g, '')}<span class="x" data-del="${i}" role="button" aria-label="Delete preset">${icon('i-close')}</span></button>`).join('') : '<span class="hint-text">Save your signature sound once, reuse it on every track.</span>';
+}
+function savePreset() {
+  if (!state.pro) { openPaywall('presets'); return; }
+  const name = $('#preset-name').value.trim(); if (!name) { toast('Give your preset a name', 'error'); return; }
+  const list = loadPresets(); list.push({ name, eq: state.eq, dyn: state.dyn, base: state.base }); store.set('presets', list.slice(-24));
+  $('#preset-name').value = ''; renderPresets(); toast('Preset saved', 'ok'); track('preset_saved');
+}
+function loadPreset(i) {
+  const p = loadPresets()[i]; if (!p) return; state.eq = JSON.parse(JSON.stringify(p.eq)); state.dyn = { ...p.dyn }; state.profile = 'custom'; state.base = p.base || 'club'; state.target = null;
+  renderProfiles(); syncControls(); applyParams(); renderStatus(); renderTargets(); scheduleMeasure(); pushHist(); toast(`Loaded "${p.name}"`);
+}
+function renderBalance() {
+  const a = state.analysis, box = $('#balance');
+  if (!a) { box.innerHTML = '<p class="hint-text">' + (state.buffer ? 'Track too short to analyze.' : 'Load a track to compare its tonal balance with a reference curve.') + '</p>'; $('#btn-apply-tone').classList.add('hide'); return; }
+  box.innerHTML = a.bands.map(b => {
+    const w = clamp(Math.abs(b.dev) / 12, 0, 1) * 50, hot = b.dev > 0, col = Math.abs(b.dev) < 2 ? 'var(--ok)' : hot ? 'var(--warn)' : 'var(--accent-2)';
+    return `<div class="bal-row"><span class="nm">${b.n}</span><div class="bal-track"><div class="bal-fill" style="background:${col};width:${w}%;${hot ? 'left:50%' : `left:${50 - w}%`}"></div></div><span class="dv num">${b.dev > 0 ? '+' : ''}${b.dev.toFixed(1)}</span></div>`;
+  }).join('') + '<p class="hint-text" style="margin-top:8px">Positive means louder than a typical release. Reference curve is an approximate pop and hip-hop average.</p>';
+  $('#btn-apply-tone').classList.remove('hide');
+}
+function applyTone() {
+  const a = state.analysis; if (!a) return; const idx = [0, 1, 3, 4];
+  idx.forEach((bi, k) => { state.eq[bi].g = clamp(a.suggest[k], -12, 12); });
+  onParamsChanged(); syncControls(); toast('Applied a gentle tonal correction', 'ok'); track('auto_tone');
+}
+function renderStatus() {
+  const chip = $('#tc-chip');
+  if (!state.buffer) return;
+  if (state.bypass) { chip.className = 'chip byp'; chip.textContent = 'ORIGINAL'; } else { chip.className = 'chip on'; chip.textContent = state.profile === 'custom' ? 'CUSTOM MASTER' : PROFILES[state.profile].name.toUpperCase(); }
+}
+function renderStats() {
+  const { orig, master, pending } = state.meas, f = v => v && isFinite(v.lufs) ? v.lufs.toFixed(1) : '—';
+  const pk = master && isFinite(master.peak) ? master.peak.toFixed(1) : '—';
+  const plr = master && isFinite(master.peak) && isFinite(master.lufs) ? (master.peak - master.lufs).toFixed(1) : '—';
+  const dl = orig && master && isFinite(orig.lufs) && isFinite(master.lufs) ? master.lufs - orig.lufs : null;
+  const tgt = TARGETS.find(t => t.id === state.target);
+  $('#stats').innerHTML = `
+    <div class="card stat hl"><div class="k">Master loudness</div><div class="v num">${pending ? '…' : f(master)}<small>LUFS</small></div><div class="d ${tgt && master && Math.abs(master.lufs - tgt.lufs) < 0.6 ? 'good' : ''}">${tgt ? 'Target ' + tgt.lufs + ' (' + tgt.name + ')' : 'Integrated'}</div></div>
+    <div class="card stat"><div class="k">Original</div><div class="v num">${f(orig)}<small>LUFS</small></div><div class="d">${dl === null || pending ? '' : (dl > 0 ? '+' : '') + dl.toFixed(1) + ' LU after mastering'}</div></div>
+    <div class="card stat"><div class="k">Peak</div><div class="v num">${pending ? '…' : pk}<small>dBFS</small></div><div class="d">Sample peak</div></div>
+    <div class="card stat"><div class="k">Dynamics (PLR)</div><div class="v num">${pending ? '…' : plr}<small>dB</small></div><div class="d">Peak to loudness</div></div>`;
+}
+function renderExportSummary() {
+  const el = $('#export-summary'); if (!el) return;
+  const dur = state.buffer ? state.trim.end - state.trim.start : 0, tgt = TARGETS.find(t => t.id === state.target);
+  el.innerHTML = state.buffer
+    ? `<b>${state.profile === 'custom' ? 'Custom master' : PROFILES[state.profile].name}</b> · ${fmtTime(dur)} region · ${state.meas.master && isFinite(state.meas.master.lufs) ? state.meas.master.lufs.toFixed(1) + ' LUFS' : 'measuring…'}${tgt ? ' · ' + tgt.name + ' target' : ''}${state.fade.in || state.fade.out ? ' · fades' : ''}`
+    : 'Load a track to see your export summary.';
+  $('#export-note').textContent = state.pro ? 'Pro is active: unlimited exports.' : `Free plan: ${state.credits} export${state.credits === 1 ? '' : 's'} left. 24-bit, 320 kbps and video need Pro.`;
+}
+
+/* ============================================================
+   EQ EDITOR
+   ============================================================ */
+const EQ_MIN = 20, EQ_MAX = 20000, EQ_DB = 15, FREQS = new Float32Array(200);
+for (let i = 0; i < FREQS.length; i++) FREQS[i] = EQ_MIN * Math.pow(EQ_MAX / EQ_MIN, i / (FREQS.length - 1));
+const fx = (f, W) => Math.log(f / EQ_MIN) / Math.log(EQ_MAX / EQ_MIN) * W;
+const xf = (x, W) => EQ_MIN * Math.pow(EQ_MAX / EQ_MIN, clamp(x / W, 0, 1));
+const gy = (g, H) => H / 2 - (g / EQ_DB) * (H / 2);
+const yg = (y, H) => clamp(((H / 2 - y) / (H / 2)) * EQ_DB, -12, 12);
+let respCtx = null, respFilters = null, eqCurve = new Float32Array(FREQS.length);
+function computeEqCurve() {
+  try {
+    if (!respCtx) { const OC = window.OfflineAudioContext || window.webkitOfflineAudioContext; respCtx = new OC(1, 1, 48000); respFilters = BAND_DEFS.map(() => respCtx.createBiquadFilter()); }
+    const mag = new Float32Array(FREQS.length), ph = new Float32Array(FREQS.length); eqCurve.fill(0);
+    state.eq.forEach((b, i) => { const f = respFilters[i]; f.type = b.t; f.frequency.value = b.f; f.gain.value = b.g; f.Q.value = b.q; f.getFrequencyResponse(FREQS, mag, ph); for (let k = 0; k < mag.length; k++) eqCurve[k] += 20 * Math.log10(mag[k] || 1e-6); });
+  } catch {}
+}
+function renderEqUI() {
+  $('#bands').innerHTML = state.eq.map((b, i) => `<button class="${i === selBand ? 'sel' : ''}" data-band="${i}" aria-label="${b.name} band"><b>${i + 1}</b>${b.name}</button>`).join('');
+  const b = state.eq[selBand]; if (!b) return;
+  const fe = $('#eq-f'), ge = $('#eq-g'), qe = $('#eq-q');
+  fe.value = Math.round(1000 * Math.log(b.f / EQ_MIN) / Math.log(EQ_MAX / EQ_MIN)); ge.value = b.g; qe.value = b.q;
+  [fe, ge, qe].forEach(el => el.style.setProperty('--p', ((el.value - el.min) / (el.max - el.min)) * 100 + '%'));
+  $('#ov-f').textContent = fmtHz(b.f); $('#ov-g').textContent = (b.g > 0 ? '+' : '') + b.g.toFixed(1) + ' dB'; $('#ov-q').textContent = b.q.toFixed(1);
+  const shelf = b.t !== 'peaking'; qe.disabled = shelf; $('#q-hint').textContent = shelf ? 'Shelves have a fixed slope' : 'Bandwidth of the bell';
+}
+function onEqChange() { markCustom(); computeEqCurve(); renderEqUI(); applyParams(); scheduleMeasure(); histSoon(); }
+$('#bands').addEventListener('click', e => { const b = e.target.closest('[data-band]'); if (b) { selBand = +b.dataset.band; renderEqUI(); } });
+$('#eq-f').addEventListener('input', e => { state.eq[selBand].f = Math.round(EQ_MIN * Math.pow(EQ_MAX / EQ_MIN, e.target.value / 1000)); onEqChange(); });
+$('#eq-g').addEventListener('input', e => { state.eq[selBand].g = parseFloat(e.target.value); onEqChange(); });
+$('#eq-q').addEventListener('input', e => { state.eq[selBand].q = parseFloat(e.target.value); onEqChange(); });
+$('#btn-eq-flat').addEventListener('click', () => { state.eq.forEach(b => b.g = 0); onEqChange(); pushHist(); });
+const eqc = $('#eq'); let eqDrag = null;
+eqc.addEventListener('pointerdown', e => {
+  const r = eqc.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top; let best = -1, bd = 26;
+  state.eq.forEach((b, i) => { const d = Math.hypot(fx(b.f, r.width) - x, gy(b.g, r.height) - y); if (d < bd) { bd = d; best = i; } });
+  if (best >= 0) { selBand = best; eqDrag = best; eqc.setPointerCapture(e.pointerId); renderEqUI(); }
+});
+eqc.addEventListener('pointermove', e => {
+  if (eqDrag === null) return; const r = eqc.getBoundingClientRect(), b = state.eq[eqDrag];
+  b.f = Math.round(clamp(xf(e.clientX - r.left, r.width), 20, 20000)); b.g = Math.round(yg(e.clientY - r.top, r.height) * 2) / 2; onEqChange();
+});
+eqc.addEventListener('pointerup', () => { eqDrag = null; pushHist(); });
+eqc.addEventListener('dblclick', () => { state.eq[selBand].g = 0; onEqChange(); pushHist(); });
+eqc.addEventListener('wheel', e => { e.preventDefault(); const b = state.eq[selBand]; if (b.t !== 'peaking') return; b.q = clamp(Math.round((b.q - Math.sign(e.deltaY) * 0.1) * 10) / 10, 0.3, 8); onEqChange(); }, { passive: false });
+
+/* ============================================================
+   CANVAS DRAWING
+   ============================================================ */
+function fit(c) {
+  const dpr = Math.min(window.devicePixelRatio || 1, 2), w = c.clientWidth, h = c.clientHeight; if (!w) return 0;
+  if (c.width !== Math.round(w * dpr) || c.height !== Math.round(h * dpr)) { c.width = Math.round(w * dpr); c.height = Math.round(h * dpr); } return dpr;
+}
+const wave = $('#wave'), spec = $('#spectrum');
+function fitCanvases() { [wave, spec, eqc].forEach(fit); }
+function drawWave() {
+  const dpr = fit(wave); if (!dpr || !state.peaks) return;
+  const g = wave.getContext('2d'), W = wave.width, H = wave.height, n = state.peaks.length, bw = W / n, dur = state.buffer.duration, mid = H / 2;
+  g.clearRect(0, 0, W, H);
+  const ts = state.trim.start / dur, te = state.trim.end / dur, prog = curTime() / dur;
+  for (let i = 0; i < n; i++) {
+    const p = i / n, inside = p >= ts && p <= te, h = Math.max(2 * dpr, state.peaks[i] * (H - 10 * dpr)), x = i * bw;
+    g.fillStyle = !inside ? '#1a1e27' : p <= prog ? '#8fb0ff' : '#3a4256';
+    g.fillRect(x + bw * 0.16, mid - h / 2, Math.max(1, bw * 0.68), h);
+  }
+  const fi = state.fade.in / dur * W, fo = state.fade.out / dur * W, xs = ts * W, xe = te * W;
+  g.strokeStyle = 'rgba(255,181,71,.8)'; g.lineWidth = 1.5 * dpr;
+  if (fi > 0) { g.beginPath(); g.moveTo(xs, H); g.lineTo(xs + fi, 4 * dpr); g.stroke(); }
+  if (fo > 0) { g.beginPath(); g.moveTo(xe - fo, 4 * dpr); g.lineTo(xe, H); g.stroke(); }
+  g.fillStyle = '#e9ebf0'; g.fillRect(prog * W - dpr, 0, 2 * dpr, H);
+  g.fillStyle = '#3f74ff'; [xs, xe].forEach((x, i) => { g.fillRect(x - dpr, 0, 2 * dpr, H); g.fillRect(i === 0 ? x - dpr : x - 9 * dpr, 0, 10 * dpr, 14 * dpr); });
+}
+let specPts = null;
+function computeSpecPoints(n) {
+  if (!live) return null; const a = live.analyser, d = new Uint8Array(a.frequencyBinCount), nyq = ctx.sampleRate / 2; a.getByteFrequencyData(d);
+  const out = new Float32Array(n); let prev = 0;
+  for (let j = 0; j < n; j++) {
+    const f = EQ_MIN * Math.pow(EQ_MAX / EQ_MIN, j / (n - 1)), k = Math.min(d.length - 1, Math.round(f / nyq * d.length)); let m = 0;
+    for (let q = Math.min(prev, k); q <= k; q++) m = Math.max(m, d[q]); out[j] = m / 255; prev = k;
+  }
+  return out;
+}
+function fillSpec(g, pts, W, H, grad) {
+  g.beginPath(); g.moveTo(0, H);
+  for (let j = 0; j < pts.length; j++) g.lineTo(j / (pts.length - 1) * W, H - pts[j] * (H - 4));
+  g.lineTo(W, H); g.closePath(); g.fillStyle = grad; g.fill();
+}
+function gridLines(g, W, H, labels, dpr) {
+  g.strokeStyle = '#1b2029'; g.lineWidth = dpr; g.fillStyle = '#4b5263'; g.font = `${10 * dpr}px ${getComputedStyle(document.body).fontFamily}`;
+  [50, 100, 200, 500, 1000, 2000, 5000, 10000].forEach(f => { const x = fx(f, W); g.beginPath(); g.moveTo(x, 0); g.lineTo(x, H); g.stroke(); if (labels) g.fillText(f >= 1000 ? f / 1000 + 'k' : f, x + 3 * dpr, H - 4 * dpr); });
+}
+function drawSpectrum() {
+  const dpr = fit(spec); if (!dpr) return; const g = spec.getContext('2d'), W = spec.width, H = spec.height; g.clearRect(0, 0, W, H);
+  gridLines(g, W, H, true, dpr); if (!specPts) return;
+  const grad = g.createLinearGradient(0, H, 0, 0); grad.addColorStop(0, 'rgba(63,116,255,.10)'); grad.addColorStop(1, 'rgba(143,176,255,.65)'); fillSpec(g, specPts, W, H, grad);
+}
+function drawEq() {
+  const dpr = fit(eqc); if (!dpr) return; const g = eqc.getContext('2d'), W = eqc.width, H = eqc.height; g.clearRect(0, 0, W, H);
+  gridLines(g, W, H, true, dpr);
+  g.strokeStyle = '#1b2029'; g.lineWidth = dpr; [-12, -6, 0, 6, 12].forEach(db => { const y = gy(db, H); g.strokeStyle = db === 0 ? '#2a3140' : '#1b2029'; g.beginPath(); g.moveTo(0, y); g.lineTo(W, y); g.stroke(); });
+  if (state.analysis) {
+    const o = state.analysis.over, mx = Math.max(...o), mn = mx - 70, pts = new Float32Array(o.length);
+    for (let i = 0; i < o.length; i++) pts[i] = clamp((o[i] - mn) / 70, 0, 1) * 0.75;
+    fillSpec(g, pts, W, H, 'rgba(170,176,190,.10)');
+  }
+  if (specPts) fillSpec(g, specPts, W, H, 'rgba(63,116,255,.14)');
+  g.beginPath(); for (let i = 0; i < FREQS.length; i++) { const x = fx(FREQS[i], W), y = gy(clamp(eqCurve[i], -EQ_DB, EQ_DB), H); i ? g.lineTo(x, y) : g.moveTo(x, y); }
+  g.strokeStyle = '#8fb0ff'; g.lineWidth = 2 * dpr; g.stroke();
+  g.lineTo(W, H / 2); g.lineTo(0, H / 2); g.closePath(); g.fillStyle = 'rgba(63,116,255,.12)'; g.fill();
+  state.eq.forEach((b, i) => {
+    const x = fx(b.f, W), y = gy(b.g, H), sel = i === selBand;
+    g.beginPath(); g.arc(x, y, (sel ? 10 : 8) * dpr, 0, Math.PI * 2); g.fillStyle = sel ? '#3f74ff' : '#161920'; g.fill(); g.lineWidth = 2 * dpr; g.strokeStyle = sel ? '#fff' : '#8fb0ff'; g.stroke();
+    g.fillStyle = '#fff'; g.font = `700 ${10 * dpr}px ui-sans-serif, system-ui`; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText(i + 1, x, y + dpr * 0.5); g.textAlign = 'start'; g.textBaseline = 'alphabetic';
+  });
+}
+const tbuf = new Float32Array(2048); let peakHold = 0;
+const grVal = n => { const r = n.reduction; return typeof r === 'number' ? r : (r && r.value) || 0; };
+function updateMeters() {
+  if (!live) return;
+  live.analyser.getFloatTimeDomainData(tbuf); let m = 0; for (let i = 0; i < tbuf.length; i++) { const v = Math.abs(tbuf[i]); if (v > m) m = v; }
+  peakHold = Math.max(m, peakHold * 0.94); const db = peakHold > 0.00003 ? 20 * Math.log10(peakHold) : -Infinity;
+  $('#m-peak').textContent = isFinite(db) ? db.toFixed(1) + ' dBFS' : '-∞ dBFS'; $('#f-peak').style.width = isFinite(db) ? clamp((db + 48) / 48, 0, 1) * 100 + '%' : '0%';
+  const c = Math.min(0, grVal(live.chain.nodes.cmp)), l = Math.min(0, grVal(live.chain.nodes.lim));
+  $('#m-cgr').textContent = c.toFixed(1) + ' dB'; $('#f-cgr').style.width = clamp(-c / 20, 0, 1) * 100 + '%';
+  $('#m-lgr').textContent = l.toFixed(1) + ' dB'; $('#f-lgr').style.width = clamp(-l / 20, 0, 1) * 100 + '%';
+}
+function loop() {
+  if (!document.hidden) {
+    const t = curTime(), dur = state.buffer ? state.buffer.duration : 0, active = $('.tab.active').dataset.tab;
+    specPts = live ? computeSpecPoints(120) : null;
+    if (state.buffer) { drawWave(); drawSpectrum(); updateMeters(); }
+    if (active === 'tone') drawEq();
+    $('#prog-fill').style.width = dur ? ((t - state.trim.start) / regionLen()) * 100 + '%' : '0%';
+    $('#time-cur').textContent = fmtTime(t);
+  }
+  requestAnimationFrame(loop);
+}
+
+/* ============================================================
+   UI WIRING
+   ============================================================ */
+function switchTab(id) {
+  $$('.tab').forEach(b => { const on = b.dataset.tab === id; b.classList.toggle('active', on); b.setAttribute('aria-selected', on); });
+  $$('.panel').forEach(p => p.classList.toggle('active', p.id === 'panel-' + id));
+  if (id === 'tone') requestAnimationFrame(() => { fit(eqc); drawEq(); });
+}
+function goExport() { switchTab('export'); const a = $('.inspector'); if (window.innerWidth < 1000) a.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+$$('.tab').forEach(b => b.addEventListener('click', () => switchTab(b.dataset.tab)));
+$('#btn-export-top').addEventListener('click', goExport);
+$('#btn-play').addEventListener('click', togglePlay);
+$('#btn-restart').addEventListener('click', () => seek(state.trim.start));
+$('#btn-loop').addEventListener('click', () => setLoop(!state.loop));
+$('#btn-loop-edit').addEventListener('click', () => setLoop(!state.loop));
+$('#btn-lm').addEventListener('click', () => { if (!state.buffer) { toast('Load a track first'); return; } setLevelMatch(!state.levelMatch); });
+$('#ab-master').addEventListener('click', () => setBypass(false));
+$('#ab-orig').addEventListener('click', () => { if (!state.buffer) { toast('Load a track first'); return; } setBypass(true); });
+$('#btn-undo').addEventListener('click', () => restoreHist(hist.i - 1));
+$('#btn-redo').addEventListener('click', () => restoreHist(hist.i + 1));
+$('#file-input').addEventListener('change', e => { loadFile(e.target.files[0]); e.target.value = ''; });
+$('#file-replace').addEventListener('change', e => { loadFile(e.target.files[0]); e.target.value = ''; });
+$('#credit-pill').addEventListener('click', () => { if (!state.pro) openPaywall(state.credits <= 0 ? 'credits' : 'default'); });
+$('#pw-close').addEventListener('click', () => closeModal('#paywall'));
+$('#pw-cta').addEventListener('click', checkout);
+$('#pw-pack').addEventListener('click', e => { if (e.target.id === 'btn-pack') buyPack(); });
+$('#profiles').addEventListener('click', e => { const c = e.target.closest('.profile'); if (c) selectProfile(c.dataset.profile); });
+$('#profiles').addEventListener('keydown', e => { if ((e.key === 'Enter' || e.key === ' ') && e.target.dataset.profile) { e.preventDefault(); selectProfile(e.target.dataset.profile); } });
+$('#targets').addEventListener('click', e => { const c = e.target.closest('[data-target]'); if (c) matchTarget(TARGETS.find(t => t.id === c.dataset.target)); });
+$('#plans').addEventListener('click', e => { const c = e.target.closest('.plan'); if (c) { selectedPlan = c.dataset.plan; renderPaywall(); } });
+$('#plans').addEventListener('keydown', e => { if ((e.key === 'Enter' || e.key === ' ') && e.target.dataset.plan) { e.preventDefault(); selectedPlan = e.target.dataset.plan; renderPaywall(); } });
+$('#btn-apply-tone').addEventListener('click', applyTone);
+$('#btn-save-preset').addEventListener('click', savePreset);
+$('#presets').addEventListener('click', e => { const d = e.target.closest('[data-del]'); if (d) { e.stopPropagation(); const l = loadPresets(); l.splice(+d.dataset.del, 1); store.set('presets', l); renderPresets(); return; } const c = e.target.closest('[data-preset]'); if (c) loadPreset(+c.dataset.preset); });
+$('#btn-trim-reset').addEventListener('click', () => { if (!state.buffer) return; state.trim = { start: 0, end: state.buffer.duration }; syncControls(); onTrimCommit(); });
+$('#btn-set-in').addEventListener('click', () => { if (!state.buffer) return; state.trim.start = Math.min(curTime(), state.trim.end - 0.5); syncControls(); onTrimCommit(); });
+$('#btn-set-out').addEventListener('click', () => { if (!state.buffer) return; state.trim.end = Math.max(curTime(), state.trim.start + 0.5); syncControls(); onTrimCommit(); });
+$('#pads').addEventListener('pointerdown', e => { const b = e.target.closest('.pad'); if (b) { e.preventDefault(); triggerPad(b.dataset.pad); } });
+$('#pads').addEventListener('click', e => { const b = e.target.closest('.pad'); if (b && e.detail === 0) triggerPad(b.dataset.pad); });
+$$('[data-export]').forEach(b => b.addEventListener('click', () => startExport(b.dataset.export)));
+$('#seg-wav').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; const v = +b.dataset.v; if (v === 24 && !state.pro) { openPaywall('bits'); return; } state.fmt.wav = v; $$('#seg-wav button').forEach(x => x.classList.toggle('on', x === b)); });
+$('#seg-mp3').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; const v = +b.dataset.v; if (v === 320 && !state.pro) { openPaywall('kbps'); return; } state.fmt.mp3 = v; $$('#seg-mp3 button').forEach(x => x.classList.toggle('on', x === b)); });
+$('#logo-input').addEventListener('change', e => {
+  const f = e.target.files[0]; if (!f) return; const img = new Image();
+  img.onload = () => { state.logo = img; const t = $('#logo-thumb'); t.innerHTML = ''; t.appendChild(img.cloneNode()); toast('Artwork added', 'ok'); };
+  img.onerror = () => toast('Could not read that image', 'error'); img.src = URL.createObjectURL(f); e.target.value = '';
+});
+
+/* drag & drop anywhere */
+let dragN = 0;
+window.addEventListener('dragenter', e => { e.preventDefault(); dragN++; $('#empty').classList.add('drag'); });
+window.addEventListener('dragleave', e => { e.preventDefault(); if (--dragN <= 0) { dragN = 0; $('#empty').classList.remove('drag'); } });
+window.addEventListener('dragover', e => e.preventDefault());
+window.addEventListener('drop', e => { e.preventDefault(); dragN = 0; $('#empty').classList.remove('drag'); const f = e.dataTransfer && e.dataTransfer.files[0]; if (f) loadFile(f); });
+
+/* waveform: seek + trim handles */
+let waveDrag = null;
+function waveX(e) { const r = wave.getBoundingClientRect(); return { x: e.clientX - r.left, w: r.width }; }
+wave.addEventListener('pointerdown', e => {
+  if (!state.buffer) return; const { x, w } = waveX(e), d = state.buffer.duration, xs = state.trim.start / d * w, xe = state.trim.end / d * w;
+  wave.setPointerCapture(e.pointerId);
+  if (Math.abs(x - xs) < 12 && Math.abs(x - xs) <= Math.abs(x - xe)) waveDrag = 'start'; else if (Math.abs(x - xe) < 12) waveDrag = 'end'; else { waveDrag = 'seek'; seek(clamp(x / w, 0, 1) * d); }
+});
+wave.addEventListener('pointermove', e => {
+  if (!waveDrag || !state.buffer) return; const { x, w } = waveX(e), t = clamp(x / w, 0, 1) * state.buffer.duration;
+  if (waveDrag === 'seek') seek(t);
+  else { if (waveDrag === 'start') state.trim.start = clamp(t, 0, state.trim.end - 0.5); else state.trim.end = clamp(t, state.trim.start + 0.5, state.buffer.duration); $$('input[data-path^="trim."]').forEach(syncControl); renderExportSummary(); }
+});
+wave.addEventListener('pointerup', () => { if (waveDrag === 'start' || waveDrag === 'end') onTrimCommit(); waveDrag = null; });
+wave.addEventListener('keydown', e => { if (!state.buffer) return; if (e.key === 'ArrowRight') seek(curTime() + 5); if (e.key === 'ArrowLeft') seek(curTime() - 5); });
+$('#prog').addEventListener('click', e => { if (!state.buffer) return; const r = $('#prog').getBoundingClientRect(); seek(state.trim.start + clamp((e.clientX - r.left) / r.width, 0, 1) * regionLen()); });
+
+/* keyboard */
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') { if (!state.exporting) closeModal('#export-modal'); closeModal('#paywall'); return; }
+  if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'z') { e.preventDefault(); restoreHist(e.shiftKey ? hist.i + 1 : hist.i - 1); return; }
+  if (e.metaKey || e.ctrlKey || e.altKey) return;
+  const tag = (e.target.tagName || '').toLowerCase(); if (tag === 'input' && e.target.type !== 'range') return;
+  const k = e.key.toLowerCase();
+  if (e.code === 'Space' && tag !== 'button' && e.target.getAttribute('role') !== 'radio') { e.preventDefault(); togglePlay(); }
+  else if (k === 'b' && state.buffer) setBypass(!state.bypass);
+  else if (k === 'l' && state.buffer) setLoop(!state.loop);
+  else if (k === 'm' && state.buffer) setLevelMatch(!state.levelMatch);
+  else if (/^[1-8]$/.test(k) && $('.tab.active').dataset.tab === 'fx') triggerPad(PADS[+k - 1].id);
+});
+['#export-modal', '#paywall'].forEach(id => $(id).addEventListener('click', e => { if (e.target.id === id.slice(1) && !(id === '#export-modal' && state.exporting)) closeModal(id); }));
+window.addEventListener('resize', fitCanvases);
+
+/* ---------- init ---------- */
+$('#grp-comp').innerHTML = G_COMP.map(sliderHTML).join('');
+$('#grp-loud').innerHTML = G_LOUD.map(sliderHTML).join('');
+$('#grp-out').innerHTML = G_OUT.map(sliderHTML).join('');
+$('#grp-width').innerHTML = G_WIDTH.map(sliderHTML).join('');
+$('#grp-trim').innerHTML = G_TRIM.map(sliderHTML).join('');
+$('#grp-fade').innerHTML = G_FADE.map(sliderHTML).join('');
+$('#pads').innerHTML = PADS.map((p, i) => `<button class="pad" data-pad="${p.id}" aria-label="${p.label}">${icon(p.ic)}<span>${p.label}</span><span class="key">${i + 1}</span></button>`).join('');
+renderProfiles(); renderTargets(); renderPresets(); renderBalance(); renderStats(); syncControls(); renderCredits(); syncPlayUI(); pushHist();
+requestAnimationFrame(loop);
+</script>
+</body>
+</html>
