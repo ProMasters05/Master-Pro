@@ -5,9 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <meta name="theme-color" content="#0b0c0f" />
 <meta name="color-scheme" content="dark" />
-<meta name="description" content="Master Pro: browser-based mastering with measured loudness, a 5-band EQ, platform targets and lossless export. Your audio never leaves your device." />
+<meta name="description" content="Master your music online for free. Real-time audio mastering, MP3/WAV exports, MP4 soundtrack import, visualizer videos and pro mastering tools. Files stay on your device." />
+<meta name="keywords" content="free online audio mastering, music mastering, MP3 mastering, WAV mastering, MP4 audio extractor, music visualizer" />
+<meta name="robots" content="index,follow" />
+<meta property="og:site_name" content="Master Pro" />
+<meta name="twitter:card" content="summary_large_image" />
 <meta property="og:title" content="Master Pro | Mastering Studio" />
-<meta property="og:description" content="Measured loudness, 5-band EQ, platform targets, lossless export. Private by design." />
+<meta property="og:description" content="Try the mastering studio free. No account, no upload, and real-time A/B preview. Your audio stays on your device." />
 <meta property="og:type" content="website" />
 <title>Master Pro | Mastering Studio</title>
 <style>
@@ -81,14 +85,19 @@ button:focus-visible, [tabindex]:focus-visible, input:focus-visible, canvas:focu
   .inspector { position: sticky; top: 72px; max-height: calc(100dvh - 72px - 100px); overflow: hidden; display: flex; flex-direction: column; }
   .inspector .panels { overflow-y: auto; }
 }
-.card { background: var(--panel); border: 1px solid var(--line); border-radius: var(--r); }
+.card { background: linear-gradient(155deg, rgba(20,23,30,.98), rgba(15,17,22,.98)); border: 1px solid var(--line); border-radius: var(--r); box-shadow:0 12px 36px rgba(0,0,0,.12); }
 .workspace { display: grid; gap: 16px; min-width: 0; }
 
 /* Empty state */
-.empty { text-align: center; padding: 56px 20px 48px; border: 1px dashed var(--line-2); border-radius: 16px; background: var(--panel); transition: border-color .2s, background .2s; }
+.empty { position: relative; isolation: isolate; overflow: hidden; text-align: center; padding: 64px 20px 52px; border: 1px dashed var(--line-2); border-radius: 16px; background: var(--panel); transition: border-color .2s, background .2s; }
+.empty::before { content:""; position:absolute; z-index:-1; width:460px; height:260px; left:50%; top:-190px; transform:translateX(-50%); background:radial-gradient(ellipse, rgba(63,116,255,.17), transparent 68%); pointer-events:none; }
 .empty.drag { border-color: var(--accent); background: var(--accent-dim); }
 .empty .big { width: 52px; height: 52px; margin: 0 auto 16px; border-radius: 14px; display: grid; place-items: center; font-size: 1.4rem; background: var(--panel-3); color: var(--accent-2); border: 1px solid var(--line-2); }
-.empty h2 { font-size: 1.25rem; font-weight: 700; letter-spacing: -.02em; margin-bottom: 6px; }
+.empty h2 { font-size: clamp(1.55rem, 4vw, 2.15rem); font-weight: 800; letter-spacing: -.045em; margin-bottom: 8px; }
+.hero-title span { background:linear-gradient(100deg,#f1f4ff 8%,#8fb0ff 42%,#b7a5ff 68%,#f1f4ff 92%); background-size:220% auto; color:transparent; background-clip:text; -webkit-background-clip:text; animation:shimmer-text 7s linear infinite; }
+@keyframes shimmer-text { to { background-position:220% center; } }
+.eyebrow { display:inline-flex; align-items:center; gap:7px; margin-bottom:12px; color:var(--accent-2); font-size:.65rem; font-weight:800; letter-spacing:.16em; text-transform:uppercase; }
+.eyebrow::before { content:""; width:6px; height:6px; border-radius:50%; background:var(--ok); box-shadow:0 0 12px rgba(61,220,151,.65); }
 .empty p { color: var(--text-2); font-size: .85rem; max-width: 380px; margin: 0 auto 20px; }
 .empty .formats { margin-top: 18px; font-size: .72rem; color: var(--text-3); display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
 .empty .formats span { display: inline-flex; align-items: center; gap: 6px; }
@@ -159,6 +168,8 @@ canvas { display: block; width: 100%; }
 .seg button.on { background: var(--panel-3); color: var(--text); box-shadow: inset 0 0 0 1px var(--line-2); }
 .seg button[aria-pressed="true"].orig { color: var(--warn); }
 .preset-save { display: flex; gap: 8px; margin-top: 10px; }
+.preset-tools { display:flex; align-items:center; justify-content:space-between; gap:8px; margin:-2px 0 9px; }
+.preset-tools select { max-width:150px; height:30px; padding:0 8px; border:1px solid var(--line-2); border-radius:8px; color:var(--text-2); background:var(--panel-2); font:600 .68rem var(--font); }
 .preset-save input { flex: 1; min-width: 0; height: 34px; padding: 0 10px; border-radius: 8px; border: 1px solid var(--line-2); background: var(--bg); color: var(--text); font-size: .8rem; }
 
 /* Fields / sliders */
@@ -232,6 +243,7 @@ input[type=range][disabled] { opacity: .35; cursor: default; }
 .modal.active { display: flex; animation: fadein .2s ease; }
 .sheet { width: 100%; max-width: 460px; max-height: 94dvh; overflow-y: auto; background: var(--panel); border: 1px solid var(--line-2); border-bottom: none; border-radius: 18px 18px 0 0; padding: 24px 20px calc(22px + var(--safe-b)); position: relative; }
 @media (min-width: 560px) { .modal { align-items: center; padding: 20px; } .sheet { border-radius: 18px; border-bottom: 1px solid var(--line-2); } }
+@media (max-width:420px) { .plans { gap:5px; } .plan { padding:14px 4px 11px; } .plan .pt { font-size:.58rem; } .plan .pb { font-size:.48rem; } }
 .sheet h3 { font-size: 1.2rem; font-weight: 700; letter-spacing: -.02em; }
 .sheet .lead { font-size: .82rem; color: var(--text-2); margin-top: 6px; line-height: 1.5; }
 .xbtn { position: absolute; top: 12px; right: 12px; }
@@ -244,11 +256,12 @@ input[type=range][disabled] { opacity: .35; cursor: default; }
 .compare .c.p { color: var(--accent-2); font-weight: 600; }
 .compare .ic { color: var(--ok); }
 .plans { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 14px; }
-.plan { position: relative; text-align: center; padding: 14px 6px 12px; border-radius: 10px; background: var(--panel-2); border: 1px solid var(--line-2); cursor: pointer; }
-.plan.sel { border-color: var(--accent); background: var(--accent-dim); }
+.plan { position: relative; text-align: center; padding: 16px 7px 13px; min-width:0; transition:border-color .18s,background .18s,transform .18s; border-radius: 10px; background: var(--panel-2); border: 1px solid var(--line-2); cursor: pointer; }
+.plan.sel { border-color: var(--accent); background:linear-gradient(155deg,rgba(63,116,255,.2),rgba(63,116,255,.06)); box-shadow:inset 0 0 0 1px rgba(143,176,255,.12),0 8px 24px rgba(31,78,190,.12); transform:translateY(-2px); }
+.plan:hover { border-color:rgba(143,176,255,.65); }
 .plan .pn { font-size: .64rem; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; color: var(--text-3); }
 .plan.sel .pn { color: var(--accent-2); }
-.plan .pp { font-size: 1.2rem; font-weight: 700; margin: 4px 0 1px; letter-spacing: -.02em; }
+.plan .pp { font-size: clamp(1rem, 3vw, 1.28rem); font-weight: 750; margin: 4px 0 1px; letter-spacing: -.02em; }
 .plan .pt { font-size: .64rem; color: var(--text-3); }
 .plan .pb { position: absolute; top: -8px; left: 50%; transform: translateX(-50%); font-size: .54rem; font-weight: 800; letter-spacing: .08em; padding: 2px 7px; border-radius: 999px; background: var(--accent); color: #fff; white-space: nowrap; }
 .fine { font-size: .68rem; color: var(--text-3); text-align: center; margin-top: 12px; line-height: 1.5; }
@@ -267,7 +280,46 @@ input[type=range][disabled] { opacity: .35; cursor: default; }
 .toast.ok { border-color: rgba(61,220,151,.4); }
 footer { max-width: 1280px; margin: 8px auto 0; padding: 0 16px; font-size: .7rem; color: var(--text-3); text-align: center; }
 @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+
+/* Studio polish / helpful onboarding */
+.app { max-width: 1380px; gap: 20px; padding: 22px 20px 18px; }
+@media (min-width: 1000px) { .app { grid-template-columns: minmax(0,1.18fr) minmax(390px,.82fr); gap: 20px; } }
+.topbar-in, .transport-in { max-width: 1380px; }
+.topbar { background: rgba(9,11,16,.88); }
+.mark { box-shadow: 0 0 22px rgba(63,116,255,.32); }
+.card { border-color: rgba(103,119,153,.18); box-shadow: 0 18px 50px rgba(0,0,0,.22); }
+.empty { padding: clamp(42px,7vw,76px) 24px 46px; border-color: rgba(143,176,255,.25); background: radial-gradient(ellipse at 50% 0%,rgba(63,116,255,.09),transparent 54%),#101319; }
+.empty h2 { line-height: 1.08; }
+.empty p { max-width: 470px; line-height: 1.65; }
+.hero-points { display:flex; justify-content:center; flex-wrap:wrap; gap:8px; margin:0 auto 20px; }
+.hero-points span { border:1px solid var(--line-2); background:rgba(255,255,255,.025); border-radius:999px; padding:6px 10px; color:var(--text-2); font-size:.68rem; }
+.hero-points b { color:var(--ok); font-weight:700; }
+.load-status { min-height:20px; margin:12px auto 0; color:var(--accent-2); font-size:.74rem; font-weight:600; }
+.preset-tools { flex-wrap:wrap; }
+.preset-tools input { min-width:100px; flex:1; height:30px; padding:0 9px; border:1px solid var(--line-2); border-radius:8px; color:var(--text); background:var(--panel-2); font:600 .68rem var(--font); }
+.preset-tools select { max-width:130px; }
+.faq-wrap { max-width:1380px; margin:22px auto 120px; padding:0 20px; }
+.faq-head { display:flex; align-items:end; justify-content:space-between; gap:16px; margin:0 0 14px; }
+.faq-head h2 { font-size:1.2rem; letter-spacing:-.03em; }
+.faq-head p { color:var(--text-3); font-size:.72rem; }
+.faq-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
+.faq-item { padding:16px; border:1px solid var(--line); border-radius:12px; background:linear-gradient(145deg,#12161e,#0f1116); }
+.faq-item h3 { font-size:.82rem; margin-bottom:6px; }
+.faq-item p { color:var(--text-2); font-size:.74rem; line-height:1.6; }
+.faq-item strong { color:var(--text); }
+.share-cta { display:flex; align-items:center; justify-content:center; gap:10px; flex-wrap:wrap; margin:18px 0 0; color:var(--text-3); font-size:.72rem; }
+.share-cta .btn { height:32px; }
+#btn-share { border-color:rgba(143,176,255,.28); }
+.stage { border-color:rgba(143,176,255,.2); }
+.btn.primary { box-shadow:0 5px 18px rgba(63,116,255,.16); }
+.btn.primary:hover:not([disabled]) { box-shadow:0 7px 24px rgba(63,116,255,.28); }
+@media (max-width:700px) { .app { padding:12px; gap:12px; } .faq-wrap { padding:0 12px; } .faq-grid { grid-template-columns:1fr; } .faq-head { display:block; } .faq-head p { margin-top:5px; } }
+@media (prefers-reduced-motion: reduce) { .hero-title span { animation:none; } }
+
 </style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Master Pro","applicationCategory":"MultimediaApplication","operatingSystem":"Any modern browser","description":"Browser-based music mastering with live preview, A/B comparison, MP3/WAV export and local MP4 soundtrack import.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD","description":"Free tier includes two exports."}}
+</script>
 </head>
 <body>
 
@@ -309,6 +361,7 @@ footer { max-width: 1280px; margin: 8px auto 0; padding: 0 16px; font-size: .7re
     </div>
     <button class="iconbtn" id="btn-undo" aria-label="Undo" title="Undo (Ctrl/Cmd+Z)" disabled><svg class="ic"><use href="#i-undo"/></svg></button>
     <button class="iconbtn" id="btn-redo" aria-label="Redo" title="Redo (Ctrl/Cmd+Shift+Z)" disabled><svg class="ic"><use href="#i-redo"/></svg></button>
+    <button class="pill" id="btn-share" title="Share Master Pro">↗ <span class="hide-sm">Share</span></button>
     <button class="pill" id="credit-pill"><span class="dot"></span><span id="credit-text">2 left</span></button>
     <button class="btn primary hide-sm" id="btn-export-top"><svg class="ic"><use href="#i-download"/></svg>Export</button>
   </div>
@@ -319,20 +372,22 @@ footer { max-width: 1280px; margin: 8px auto 0; padding: 0 16px; font-size: .7re
 
     <div class="empty" id="empty">
       <div class="big"><svg class="ic"><use href="#i-music"/></svg></div>
-      <h2>Master your track</h2>
-      <p>Drop an audio or video file to start. Hear the result live, fine-tune it, then export.</p>
+      <div class="eyebrow">Browser-based mastering studio</div><h2 class="hero-title"><span>Make every track hit harder.</span></h2>
+      <p>Polish a track, compare the original against your master, and export when it sounds right. Start free — no account and no audio upload.</p>
+      <div class="hero-points"><span><b>✓</b> 2 free exports</span><span><b>✓</b> Live A/B preview</span><span><b>✓</b> Files stay on your device</span></div>
       <label class="btn primary file-btn"><svg class="ic"><use href="#i-upload"/></svg>Choose a file
-        <input type="file" id="file-input" accept="audio/*,video/mp4" aria-label="Choose an audio or video file" />
+        <input type="file" id="file-input" accept="audio/*,video/mp4,video/webm,video/quicktime,.mp3,.wav,.wave,.m4a,.aac,.ogg,.oga,.opus,.flac,.webm,.mp4,.m4v,.mov" aria-label="Choose an audio or video file" />
       </label>
-      <div class="formats"><span><svg class="ic"><use href="#i-shield"/></svg>Processed on your device</span><span>MP3 · WAV · M4A · FLAC · MP4</span></div>
+      <div class="load-status" id="load-status" aria-live="polite"></div>
+      <div class="formats"><span><svg class="ic"><use href="#i-shield"/></svg>Processed on your device</span><span>MP3 · WAV · M4A · FLAC · MP4 · MOV · WEBM</span></div><p class="hint-text" style="margin:10px auto 0">MP4/MOV soundtrack extraction works in supported browsers (Chrome or Edge recommended; up to 15 minutes).</p>
     </div>
 
     <div class="card stage hide" id="stage">
       <div class="stage-head">
         <div class="nm"><b id="tc-name">Track</b><span class="num" id="tc-meta"></span></div>
-        <span class="chip on" id="tc-chip">MASTERED</span>
+        <span class="chip on" id="tc-chip">BALANCED MASTER</span><span class="hint-text" id="stage-load-status" aria-live="polite"></span>
         <label class="btn sm ghost file-btn"><svg class="ic"><use href="#i-upload"/></svg><span class="hide-sm">Replace</span>
-          <input type="file" id="file-replace" accept="audio/*,video/mp4" aria-label="Replace track" />
+          <input type="file" id="file-replace" accept="audio/*,video/mp4,video/webm,video/quicktime,.mp3,.wav,.wave,.m4a,.aac,.ogg,.oga,.opus,.flac,.webm,.mp4,.m4v,.mov" aria-label="Replace track" />
         </label>
       </div>
       <canvas id="wave" tabindex="0" role="slider" aria-label="Seek position. Drag the edge markers to trim."></canvas>
@@ -367,7 +422,7 @@ footer { max-width: 1280px; margin: 8px auto 0; padding: 0 16px; font-size: .7re
         <div class="group">
           <div class="group-h">Loudness target <span class="num" id="target-info"></span></div>
           <div class="chips" id="targets"></div>
-          <p class="hint-text" style="margin-top:8px">Measures your master and sets the loudness push to land on the target. Streaming targets also lower the ceiling to -1 dB.</p>
+          <p class="hint-text" style="margin-top:8px">Measures the rendered track and adjusts gain toward this reference. Loudness is a guide: always audition the result and avoid pushing a weak mix too hard.</p>
         </div>
         <div class="group">
           <div class="group-h">Auto tone <button id="btn-apply-tone" class="hide">Apply suggestion</button></div>
@@ -375,6 +430,7 @@ footer { max-width: 1280px; margin: 8px auto 0; padding: 0 16px; font-size: .7re
         </div>
         <div class="group">
           <div class="group-h">My presets <span class="tag-pro">PRO</span></div>
+          <div class="preset-tools"><input type="search" id="preset-search" placeholder="Search presets…" aria-label="Search presets" /><select id="preset-sort" aria-label="Sort presets"><option value="recent">Recently saved</option><option value="az">Name A–Z</option><option value="za">Name Z–A</option></select></div>
           <div class="chips" id="presets"></div>
           <div class="preset-save">
             <input type="text" id="preset-name" maxlength="28" placeholder="Name this sound" aria-label="Preset name" />
@@ -462,7 +518,17 @@ footer { max-width: 1280px; margin: 8px auto 0; padding: 0 16px; font-size: .7re
   </aside>
 </div>
 
-<footer>Master Pro runs entirely in your browser. Your music never leaves your device.</footer>
+<section class="faq-wrap" aria-labelledby="faq-title">
+  <div class="faq-head"><div><h2 id="faq-title">A better master, without the mystery.</h2><p>Quick answers before you start.</p></div></div>
+  <div class="faq-grid">
+    <article class="faq-item"><h3>Can I use Master Pro completely free?</h3><p>Yes. The mastering controls, live preview, A/B comparison and presets built into the app are available to try free. The free plan includes <strong>2 exports</strong>. Pro plans add unlimited exports, premium file settings and video export.</p></article>
+    <article class="faq-item"><h3>Do I need to create an account?</h3><p>No account is needed to load, preview or master a track. Your audio is processed locally in your browser and is not uploaded to a mastering server.</p></article>
+    <article class="faq-item"><h3>Can I upload an MP4 or MOV?</h3><p>Yes, in supported browsers. Master Pro extracts the soundtrack locally, then loads it into the mastering studio. Video codec support varies by browser; Chrome or Edge is recommended.</p></article>
+    <article class="faq-item"><h3>Will every track sound professional automatically?</h3><p>Every mix is different. Start with Balanced or Streaming Safe, listen on headphones and speakers, and use the Original/Master buttons at matched volume. A loudness target is a guide, not a guarantee of platform approval or a substitute for a mastering engineer.</p></article>
+  </div>
+  <div class="share-cta"><span>Know someone making music?</span><button class="btn sm" id="btn-share-footer">Share Master Pro ↗</button><span>Help another artist find their sound.</span></div>
+</section>
+<footer>Master Pro · Free to try · No account required · Audio stays on your device.</footer>
 
 <!-- TRANSPORT -->
 <div class="transport">
@@ -517,22 +583,22 @@ footer { max-width: 1280px; margin: 8px auto 0; padding: 0 16px; font-size: .7re
 
 /* ============================================================
    CONFIG
-   CHECKOUT: paste a Stripe Payment Link (or any checkout URL) per plan.
-   While a link is empty the paywall runs in DEMO mode and unlocks Pro
-   locally so you can preview the flow. A client-only paywall can be
-   bypassed: for real revenue, verify the purchase on a server (Stripe
-   webhook / session lookup) before flipping the Pro flag.
+   Add the matching Stripe Payment Links before accepting payments.
+   Pro entitlements must be verified by a server/webhook; never unlock
+   paid features from a client-side redirect or localStorage flag.
    ============================================================ */
 const CONFIG = {
   FREE_CREDITS: 2,
-  TRIAL_DAYS: 0,                 // set to e.g. 7 if your Stripe prices include a trial
-  CHECKOUT: { monthly: '', yearly: '', lifetime: '', pack: '' },
-  PLANS: {
-    monthly:  { name: 'Monthly',  price: '$9.99',  per: 'per month' },
-    yearly:   { name: 'Yearly',   price: '$59.99', per: 'per year', badge: 'SAVE 50%' },
-    lifetime: { name: 'Lifetime', price: '$149',   per: 'one time' }
+  CHECKOUT: {
+    monthly: '',  // Stripe subscription Payment Link: $9.99/month
+    yearly: '',   // Stripe subscription Payment Link: $85/year
+    lifetime: ''  // Stripe one-time Payment Link: $146
   },
-  PACK: { label: '5 exports for $4.99', credits: 5 },
+  PLANS: {
+    monthly: { name: 'Monthly', price: '$9.99', per: 'per month', badge: 'FLEXIBLE' },
+    yearly: { name: 'Yearly', price: '$85', per: 'per year · save 29%', badge: 'BEST VALUE' },
+    lifetime: { name: 'Lifetime', price: '$146', per: 'one-time payment', badge: 'OWN IT' }
+  },
   DEFAULT_PLAN: 'yearly'
 };
 
@@ -659,12 +725,13 @@ const BAND_DEFS = [
   { t: 'highshelf', f: 9000, q: 0.7, name: 'Air' }
 ];
 const PROFILES = {
-  club:       { name: 'Club Hype',       desc: 'Heavy 808s, maximum loudness', g: [4, 0, -2, 0, 1.5],   dyn: { thr: -18, ratio: 4,   attack: 12, release: 180, drive: 2,   loud: 8, ceil: -0.2, width: 110 } },
-  aggressive: { name: 'Aggressive Trap', desc: 'Saturated vocals, punch',      g: [3, 0, -1.5, 1.5, 3], dyn: { thr: -22, ratio: 6,   attack: 8,  release: 140, drive: 6,   loud: 9, ceil: -0.3, width: 105 } },
-  radio:      { name: 'Radio / Clean',   desc: 'Balanced, crisp highs',        g: [1, 0, -1, 1, 2.5],   dyn: { thr: -16, ratio: 3,   attack: 15, release: 220, drive: 1,   loud: 5, ceil: -0.5, width: 100 } },
-  drill:      { name: 'Drill Grit',      desc: 'Sub boost, hard mids',         g: [6, 0, -3, 0.5, 1],   dyn: { thr: -20, ratio: 5,   attack: 10, release: 160, drive: 3,   loud: 8, ceil: -0.2, width: 100 } },
-  streaming:  { name: 'Streaming Safe',  desc: 'Gentle, headroom for codecs',  g: [1, 0, -0.5, 0.5, 1], dyn: { thr: -14, ratio: 2.5, attack: 20, release: 250, drive: 0.5, loud: 3, ceil: -1,   width: 100 } },
-  warm:       { name: 'Analog Warm',     desc: 'Soft saturation, smooth top',  g: [2, 0.5, -0.5, -0.5, 0], dyn: { thr: -17, ratio: 3, attack: 18, release: 200, drive: 4, loud: 5, ceil: -0.4, width: 100 } }
+  balanced:   { name: 'Balanced Start', desc: 'Clean, restrained starting point', g: [0, 0, 0, 0, 0], dyn: { thr: -4, ratio: 1.5, attack: 24, release: 220, drive: 0, loud: 0.5, ceil: -1, width: 100 } },
+  club:       { name: 'Club Hype',       desc: 'Punchy low end, controlled loudness', g: [2.5, 0, -1.5, 0, 1], dyn: { thr: -10, ratio: 3, attack: 12, release: 180, drive: 1.5, loud: 4, ceil: -0.5, width: 105 } },
+  aggressive: { name: 'Aggressive Trap', desc: 'Forward vocals, hard-hitting drums', g: [2, 0, -1, 1, 2], dyn: { thr: -12, ratio: 4, attack: 8, release: 140, drive: 3, loud: 4, ceil: -0.5, width: 102 } },
+  radio:      { name: 'Radio / Clean',   desc: 'Balanced, crisp and controlled', g: [0.5, 0, -0.5, 0.8, 1.5], dyn: { thr: -8, ratio: 2.5, attack: 18, release: 220, drive: 0.5, loud: 2, ceil: -1, width: 100 } },
+  drill:      { name: 'Drill Grit',      desc: 'Firm sub weight and punch', g: [3, 0, -2, 0.5, 1], dyn: { thr: -10, ratio: 3, attack: 10, release: 160, drive: 2, loud: 4, ceil: -0.5, width: 100 } },
+  streaming:  { name: 'Streaming Safe',  desc: 'Gentle dynamics and codec headroom', g: [0.5, 0, -0.5, 0.5, 1], dyn: { thr: -6, ratio: 2, attack: 22, release: 250, drive: 0.5, loud: 1, ceil: -1, width: 100 } },
+  warm:       { name: 'Analog Warm',     desc: 'Soft harmonics and smooth top', g: [1, 0.5, -0.5, -0.3, 0.5], dyn: { thr: -8, ratio: 2.5, attack: 18, release: 220, drive: 2, loud: 2, ceil: -1, width: 100 } }
 };
 const TARGETS = [
   { id: 'spotify', name: 'Spotify',     lufs: -14, ceil: -1 },
@@ -673,8 +740,8 @@ const TARGETS = [
   { id: 'club',    name: 'Loud / Club', lufs: -9,  ceil: -0.3 }
 ];
 const state = {
-  credits: store.get('credits', CONFIG.FREE_CREDITS), pro: store.get('pro', false),
-  profile: 'club', base: 'club', eq: [], dyn: {}, target: null,
+  credits: store.get('credits', CONFIG.FREE_CREDITS), pro: false, // Pro access must be verified server-side.
+  profile: 'balanced', base: 'balanced', eq: [], dyn: {}, target: null,
   buffer: null, fileName: '', peaks: null, analysis: null,
   trim: { start: 0, end: 0 }, fade: { in: 0, out: 0 }, loop: false,
   playing: false, offset: 0, startedAt: 0, src: null,
@@ -686,7 +753,7 @@ function applyProfile(k) {
   const p = PROFILES[k]; state.profile = k; state.base = k;
   state.eq = BAND_DEFS.map((b, i) => ({ ...b, g: p.g[i] })); state.dyn = { ...p.dyn }; state.target = null;
 }
-applyProfile('club');
+applyProfile('balanced');
 let selBand = 2;
 
 /* ============================================================
@@ -698,8 +765,21 @@ function makeSatCurve(amount) {
   return c;
 }
 function makeClipCurve(ceilDb) {
-  const n = 4096, lim = dbToGain(ceilDb), c = new Float32Array(n);
-  for (let i = 0; i < n; i++) { const x = (i / (n - 1)) * 2 - 1; c[i] = clamp(x, -lim, lim); }
+  // Unity gain below the soft-knee region, then a smooth Hermite curve that
+  // approaches the requested ceiling without the old abrupt hard-clip edge.
+  // WaveShaper 4x oversampling helps reduce distortion/aliasing at the top.
+  const n = 4096, ceiling = dbToGain(ceilDb), knee = ceiling * 0.72;
+  const dx = 1 - knee, c = new Float32Array(n);
+  for (let i = 0; i < n; i++) {
+    const x = Math.abs((i / (n - 1)) * 2 - 1);
+    let y = x;
+    if (x > knee) {
+      const t = clamp((x - knee) / dx, 0, 1), t2 = t * t, t3 = t2 * t;
+      // Cubic Hermite: slope 1 at the knee, slope 0 at the ceiling.
+      y = (2*t3 - 3*t2 + 1) * knee + (t3 - 2*t2 + t) * dx + (-2*t3 + 3*t2) * ceiling;
+    }
+    c[i] = Math.sign((i / (n - 1)) * 2 - 1) * Math.min(ceiling, y);
+  }
   return c;
 }
 /* One chain shared by live playback, offline render, measurement and video */
@@ -752,7 +832,6 @@ function ensureCtx() {
     const pc = ctx.createDynamicsCompressor(); pc.threshold.value = -10; pc.ratio.value = 8;
     live.pads.connect(pc); pc.connect(ctx.destination); live.pads.connect(live.analyser);
   }
-  if (ctx.state === 'suspended') ctx.resume();
   return ctx;
 }
 function applyParams() { if (live) live.chain.update(state.eq, state.dyn, true); }
@@ -785,16 +864,28 @@ function curTime() {
   if (state.loop) return state.trim.start + (((pos - state.trim.start) % regionLen()) + regionLen()) % regionLen();
   return Math.min(state.trim.end, pos);
 }
-function play() {
+async function play() {
   if (!state.buffer) { toast('Load a track first'); return; }
-  ensureCtx(); if (state.playing) return;
-  const { start, end } = state.trim;
-  if (state.offset < start || state.offset >= end - 0.03) state.offset = start;
-  const src = ctx.createBufferSource(); src.buffer = state.buffer; src.connect(live.input);
-  src.onended = () => { if (state.src === src) { state.src = null; state.playing = false; state.offset = state.trim.start; syncPlayUI(); } };
-  if (state.loop) { src.loop = true; src.loopStart = start; src.loopEnd = end; src.start(0, state.offset); }
-  else src.start(0, state.offset, end - state.offset);
-  state.src = src; state.startedAt = ctx.currentTime; state.playing = true; syncPlayUI();
+  const ac = ensureCtx();
+  if (state.playing) return;
+  try {
+    // Resume before starting the source: browsers can otherwise start playback
+    // into a suspended AudioContext, which looks like a silent master preview.
+    if (ac.state !== 'running') await ac.resume();
+    if (ac.state !== 'running') throw new Error('Audio output is paused by the browser. Click play again to enable audio.');
+    live.chain.update(state.eq, state.dyn, false);
+    applyAB();
+    const { start, end } = state.trim;
+    if (state.offset < start || state.offset >= end - 0.03) state.offset = start;
+    const src = ac.createBufferSource(); src.buffer = state.buffer; src.connect(live.input);
+    src.onended = () => { if (state.src === src) { state.src = null; state.playing = false; state.offset = state.trim.start; syncPlayUI(); } };
+    if (state.loop) { src.loop = true; src.loopStart = start; src.loopEnd = end; src.start(0, state.offset); }
+    else src.start(0, state.offset, end - state.offset);
+    state.src = src; state.startedAt = ac.currentTime; state.playing = true; syncPlayUI();
+  } catch (err) {
+    state.playing = false; state.src = null; syncPlayUI();
+    toast(err.message || 'Could not start audio playback. Check your browser audio settings.', 'error');
+  }
 }
 function stopSource() { if (state.src) { const s = state.src; state.src = null; s.onended = null; try { s.stop(); } catch {} } }
 function pause() { if (!state.playing) return; state.offset = curTime(); stopSource(); state.playing = false; syncPlayUI(); }
@@ -816,27 +907,145 @@ function syncPlayUI() {
 }
 
 /* ---------- loading ---------- */
+let loadRequestId = 0;
+function setLoadStatus(message) {
+  const el = $('#load-status'), stageEl = $('#stage-load-status');
+  if (el) el.textContent = message || '';
+  if (stageEl) stageEl.textContent = message || '';
+}
+function isVideoFile(file, ext) {
+  return (file.type && file.type.startsWith('video/')) || ['mp4','m4v','mov','webm'].includes(ext);
+}
+async function extractVideoAudio(file, ac, requestId) {
+  const video = document.createElement('video');
+  const url = URL.createObjectURL(file);
+  video.preload = 'auto'; video.playsInline = true; video.controls = false; video.muted = false; video.volume = 1;
+  video.style.cssText = 'position:fixed;width:1px;height:1px;left:-10px;top:-10px;opacity:0;pointer-events:none';
+  document.body.appendChild(video);
+  let source = null, dest = null, recorder = null, timer = null;
+  const cleanup = () => {
+    clearInterval(timer);
+    try { video.pause(); } catch {}
+    try { if (source) source.disconnect(); } catch {}
+    try { if (dest) dest.stream.getTracks().forEach(t => t.stop()); } catch {}
+    try { video.removeAttribute('src'); video.load(); video.remove(); } catch {}
+    URL.revokeObjectURL(url);
+  };
+  try {
+    if (!window.MediaRecorder) throw new Error('This browser cannot record the extracted audio stream. Try the latest Chrome or Edge.');
+    video.src = url;
+    source = ac.createMediaElementSource(video);
+    dest = ac.createMediaStreamDestination();
+    source.connect(dest);
+    // MediaRecorder captures only the audio stream; the video itself is never uploaded.
+    const mimeOptions = ['audio/webm;codecs=opus','audio/webm','audio/mp4','audio/ogg;codecs=opus'];
+    const mime = mimeOptions.find(m => MediaRecorder.isTypeSupported(m));
+    recorder = mime ? new MediaRecorder(dest.stream, { mimeType: mime, audioBitsPerSecond: 192000 }) : new MediaRecorder(dest.stream);
+    const chunks = [];
+    recorder.ondataavailable = e => { if (e.data && e.data.size) chunks.push(e.data); };
+    const stopped = new Promise((resolve, reject) => {
+      recorder.onstop = resolve;
+      recorder.onerror = e => reject(e.error || new Error('The browser could not extract audio from this video.'));
+    });
+    // Attach completion handlers before playback so short clips cannot finish
+    // before the ended listener exists. Start recording and request playback
+    // immediately while the file-picker gesture is still fresh.
+    const ended = new Promise((resolve, reject) => {
+      video.addEventListener('ended', resolve, { once: true });
+      video.addEventListener('error', () => reject(new Error('Your browser could not decode this video. Try MP4 with H.264/AAC audio, or upload a WAV/MP3 soundtrack.')), { once: true });
+    });
+    recorder.start(500);
+    const resumePromise = ac.state === 'running' ? Promise.resolve() : ac.resume();
+    const playPromise = video.play();
+    setLoadStatus('Extracting the soundtrack from your video…');
+    timer = setInterval(() => {
+      if (requestId !== loadRequestId) { try { if (recorder.state !== 'inactive') recorder.stop(); } catch {} return; }
+      if (Number.isFinite(video.duration) && video.duration > 0) {
+        setLoadStatus(`Extracting soundtrack… ${Math.min(99, Math.round(video.currentTime / video.duration * 100))}%`);
+      }
+    }, 300);
+    await Promise.all([resumePromise, playPromise]);
+    if (Number.isFinite(video.duration) && video.duration > 15 * 60) {
+      try { recorder.stop(); } catch {}
+      throw new Error('For browser memory and processing limits, MP4/MOV imports are limited to 15 minutes. Trim the video or upload its soundtrack as WAV/MP3.');
+    }
+    if (video.ended) { /* A very short clip may have ended while play() resolved. */ }
+    else await ended;
+    if (recorder.state !== 'inactive') recorder.stop();
+    await stopped;
+    if (requestId !== loadRequestId) throw new Error('A newer file was selected.');
+    const recorded = new Blob(chunks, { type: recorder.mimeType || 'audio/webm' });
+    if (!recorded.size) throw new Error('No audio was captured. Check that the video contains an audio track.');
+    setLoadStatus('Decoding extracted audio…');
+    const audio = await ac.decodeAudioData((await recorded.arrayBuffer()).slice(0));
+    let peak = 0;
+    for (let c = 0; c < audio.numberOfChannels; c++) {
+      const d = audio.getChannelData(c), stride = Math.max(1, Math.floor(d.length / 100000));
+      for (let i = 0; i < d.length; i += stride) peak = Math.max(peak, Math.abs(d[i]));
+    }
+    if (peak < 1e-5) throw new Error('No usable soundtrack was found. The video may have no audio track or use an unsupported audio codec.');
+    return audio;
+  } catch (err) {
+    try { if (recorder && recorder.state !== 'inactive') recorder.stop(); } catch {}
+    throw err;
+  } finally { cleanup(); }
+}
 async function loadFile(file) {
   if (!file) return;
-  const ac = ensureCtx(); toast('Decoding audio…');
+  const requestId = ++loadRequestId;
+  const maxBytes = 150 * 1024 * 1024;
+  if (!file.size) { toast('That file is empty. Choose a valid file.', 'error'); return; }
+  if (file.size > maxBytes) { toast('That file is larger than 150 MB. Try a smaller or compressed file.', 'error'); return; }
+  const ext = (file.name.split('.').pop() || '').toLowerCase();
+  const videoFile = isVideoFile(file, ext);
+  const supportedExt = ['mp3','wav','wave','m4a','aac','ogg','oga','opus','flac','webm','mp4','m4v','mov'];
+  if (file.type && !file.type.startsWith('audio/') && !videoFile && !supportedExt.includes(ext)) {
+    toast('Unsupported file type. Choose MP3, WAV, M4A, AAC, OGG, OPUS, FLAC, WebM or MP4/MOV.', 'error'); return;
+  }
+  let ac;
+  try { ac = ensureCtx(); }
+  catch (err) { console.error('[Master Pro] Audio engine initialization failed:', err); toast('Your browser could not start the audio engine. Use the latest Chrome or Edge.', 'error'); return; }
+  toast(videoFile ? 'Extracting video soundtrack…' : 'Loading and decoding audio…');
+  setLoadStatus(videoFile ? 'Preparing local video soundtrack extraction…' : 'Loading audio…');
+  let buf;
   try {
-    const data = await file.arrayBuffer();
-    const buf = await new Promise((res, rej) => { const p = ac.decodeAudioData(data, res, rej); if (p && p.catch) p.catch(rej); });
+    if (videoFile) {
+      buf = await extractVideoAudio(file, ac, requestId);
+    } else {
+      const data = await file.arrayBuffer();
+      buf = await ac.decodeAudioData(data.slice(0));
+    }
+    if (!buf || !buf.length || !Number.isFinite(buf.duration) || buf.duration <= 0) throw new Error('The browser returned an empty audio buffer.');
+  } catch (err) {
+    console.error('[Master Pro] File import failed:', { name: err && err.name, message: err && err.message, fileName: file.name, fileType: file.type, fileSize: file.size }, err);
+    setLoadStatus('');
+    toast(err.message || `Could not read “${file.name}”. Try MP3 or WAV.`, 'error');
+    return;
+  }
+  if (requestId !== loadRequestId) return;
+  try {
     pause(); stopSource();
-    state.buffer = buf; state.fileName = file.name; state.trim = { start: 0, end: buf.duration }; state.offset = 0;
+    state.buffer = buf; state.fileName = file.name; state.analysis = null; peakHold = 0;
+    state.trim = { start: 0, end: buf.duration }; state.offset = 0;
     state.fade = { in: 0, out: 0 }; state.meas = { orig: null, master: null, pending: true }; origCache = {};
+    state.bypass = false; setBypass(false);
     computePeaks();
     $('#empty').classList.add('hide'); $('#stage').classList.remove('hide'); $('#stats').classList.remove('hide');
     $('#tc-name').textContent = file.name; $('#track-name').textContent = file.name;
-    $('#tc-meta').textContent = `${fmtTime(buf.duration)} · ${(buf.sampleRate / 1000).toFixed(1)} kHz · ${buf.numberOfChannels === 1 ? 'Mono' : 'Stereo'}`;
+    $('#tc-meta').textContent = `${fmtTime(buf.duration)} · ${(buf.sampleRate / 1000).toFixed(1)} kHz · ${buf.numberOfChannels === 1 ? 'Mono' : 'Stereo'}${videoFile ? ' · VIDEO AUDIO' : ''}`;
     $('#time-dur').textContent = fmtTime(buf.duration);
     setupTrimSliders(); syncControls(); renderStatus(); renderStats(); fitCanvases();
     hist.stack = []; hist.i = -1; pushHist();
-    setTimeout(() => { state.analysis = spectralBalance(buf); renderBalance(); }, 40);
+    setTimeout(() => { if (state.buffer === buf) { state.analysis = spectralBalance(buf); renderBalance(); } }, 40);
     scheduleMeasure(80);
-    track('track_loaded', { seconds: Math.round(buf.duration) });
-    toast('Track loaded. Press play to hear your master.', 'ok');
-  } catch (e) { toast('Could not read that file. Try MP3, WAV, M4A or MP4.', 'error'); }
+    track('track_loaded', { seconds: Math.round(buf.duration), source: videoFile ? 'video' : 'audio' });
+    setLoadStatus('');
+    toast(videoFile ? 'Soundtrack extracted. Press play to hear your master.' : 'Track loaded. Press play to hear your master.', 'ok');
+  } catch (err) {
+    console.error('[Master Pro] Track UI setup failed after successful decode:', err);
+    setLoadStatus('');
+    toast('Audio decoded, but the editor could not finish setting up. Refresh and try again.', 'error');
+  }
 }
 function computePeaks() {
   const b = state.buffer, bins = 420, out = new Float32Array(bins);
@@ -887,10 +1096,10 @@ async function matchTarget(t) {
     state.dyn.ceil = t.ceil; state.target = t.id;
     const seg = measureWindow(); let reached = null;
     for (let i = 0; i < 4; i++) {
-      state.dyn.loud = clamp(state.dyn.loud, 0, 18);
+      state.dyn.loud = clamp(state.dyn.loud, -12, 18);
       const m = measureRendered(await renderSegment(seg)); reached = m.lufs; if (!isFinite(m.lufs)) break;
       const delta = t.lufs - m.lufs; if (Math.abs(delta) < 0.3) break;
-      const next = clamp(state.dyn.loud + delta, 0, 18); if (next === state.dyn.loud) break; state.dyn.loud = next;
+      const next = clamp(state.dyn.loud + delta, -12, 18); if (next === state.dyn.loud) break; state.dyn.loud = next;
     }
     if (state.profile !== 'custom') { state.profile = 'custom'; renderProfiles(); renderStatus(); }
     syncControls(); applyParams(); scheduleMeasure(0); pushHist(); track('target_matched', { target: t.id });
@@ -1120,31 +1329,56 @@ async function startExport(type) {
    ============================================================ */
 let selectedPlan = CONFIG.DEFAULT_PLAN;
 function renderPaywall() {
-  $('#plans').innerHTML = Object.entries(CONFIG.PLANS).map(([k, p]) => `<div class="plan ${k === selectedPlan ? 'sel' : ''}" role="radio" aria-checked="${k === selectedPlan}" tabindex="0" data-plan="${k}">${p.badge ? `<span class="pb">${p.badge}</span>` : ''}<div class="pn">${p.name}</div><div class="pp">${p.price}</div><div class="pt">${p.per}</div></div>`).join('');
-  const trial = CONFIG.TRIAL_DAYS > 0;
-  $('#pw-cta').innerHTML = `${icon('i-crown')} ${trial ? `Start ${CONFIG.TRIAL_DAYS}-day free trial` : `Continue with ${CONFIG.PLANS[selectedPlan].name}`}`;
-  $('#pw-pack').innerHTML = `Just need one more? <button id="btn-pack">${CONFIG.PACK.label}</button>`;
-  const demo = !CONFIG.CHECKOUT[selectedPlan];
-  $('#pw-fine').innerHTML = demo ? 'Demo mode: no payment is taken. Add your checkout links in <code>CONFIG.CHECKOUT</code> to go live.' : 'Cancel anytime. Secure checkout.';
+  const planKeys = ['monthly', 'yearly', 'lifetime'];
+  $('#plans').innerHTML = planKeys.map(key => {
+    const plan = CONFIG.PLANS[key], active = selectedPlan === key;
+    return `<div class="plan ${active ? 'sel' : ''}" role="radio" aria-checked="${active}" tabindex="0" data-plan="${key}"><span class="pb">${plan.badge}</span><div class="pn">${plan.name}</div><div class="pp">${plan.price}</div><div class="pt">${plan.per}</div></div>`;
+  }).join('');
+  const plan = CONFIG.PLANS[selectedPlan];
+  const ctaPrice = selectedPlan === 'monthly' ? '$9.99/mo' : selectedPlan === 'yearly' ? '$85/yr' : '$146 once';
+  $('#pw-cta').innerHTML = `${icon('i-crown')} Continue with ${plan.name} — ${ctaPrice}`;
+  $('#pw-pack').textContent = selectedPlan === 'lifetime' ? 'One payment. Permanent access. No recurring charges.' : selectedPlan === 'yearly' ? 'Billed $85 once per year. Cancel renewal anytime.' : 'Billed $9.99 monthly. Cancel anytime.';
+  const checkoutUrl = CONFIG.CHECKOUT[selectedPlan];
+  $('#pw-fine').textContent = checkoutUrl
+    ? 'Checkout opens securely. Pro features activate only after payment is verified.'
+    : `Checkout for ${plan.name.toLowerCase()} is not connected yet. Add its Stripe Payment Link in CONFIG.CHECKOUT.${selectedPlan} before launch.`;
 }
 function openPaywall(reason) {
   const copy = {
-    credits: ['You\'ve used your free exports', 'Go Pro for unlimited exports, higher quality formats and video.'],
-    video: ['Video export is a Pro feature', 'Turn your master into a shareable visualizer video with your artwork.'],
-    bits: ['24-bit WAV is a Pro feature', 'Export at full studio resolution for further mixing or distribution.'],
-    kbps: ['320 kbps MP3 is a Pro feature', 'Get the highest quality MP3 for streaming platforms and DJ sets.'],
-    presets: ['Custom presets are a Pro feature', 'Save your signature sound and recall it on any track in one tap.'],
-    default: ['Go Master Pro', 'Everything unlocked, with no limits.']
+    credits: ['You’ve used your free exports', 'Unlock unlimited exports, premium formats and the complete mastering toolkit.'],
+    video: ['Unlock video export', 'Get visualizer video export and every other Pro feature with any Pro plan.'],
+    bits: ['Unlock 24-bit WAV', 'Export higher-resolution WAV files and access every Pro feature with any Pro plan.'],
+    kbps: ['Unlock 320 kbps MP3', 'Export at the highest MP3 bitrate and access every Pro feature with any Pro plan.'],
+    presets: ['Unlock custom presets', 'Save and recall your own mastering chains with Master Pro.'],
+    default: ['Go Master Pro', 'Choose monthly, yearly or lifetime access to unlock the full mastering studio.']
   }[reason || 'default'];
   $('#pw-title').textContent = copy[0]; $('#pw-lead').textContent = copy[1];
-  const rows = [['Live mastering, EQ, loudness meters', 1, 1], ['Exports', '2', 'Unlimited'], ['WAV 24-bit &amp; MP3 320 kbps', 0, 1], ['Visualizer video export', 0, 1], ['Custom presets', 0, 1]];
+  const rows = [
+    ['Live mastering, EQ and loudness tools', 1, 1],
+    ['Exports', '2 free', 'Unlimited'],
+    ['24-bit WAV and 320 kbps MP3', 0, 1],
+    ['Visualizer video export', 0, 1],
+    ['Save custom presets', 0, 1]
+  ];
   const cell = v => v === 1 ? icon('i-check') : v === 0 ? '&ndash;' : v;
   $('#compare').innerHTML = `<div class="h"><span>Feature</span><span class="c">Free</span><span class="c p">Pro</span></div>` + rows.map(r => `<div><span>${r[0]}</span><span class="c">${cell(r[1])}</span><span class="c p">${cell(r[2])}</span></div>`).join('');
+  selectedPlan = CONFIG.DEFAULT_PLAN;
   renderPaywall(); openModal('#paywall'); track('paywall_view', { reason: reason || 'default' });
 }
-function grantPro() { state.pro = true; store.set('pro', true); renderCredits(); closeModal('#paywall'); track('pro_unlocked_demo'); toast('Welcome to Master Pro. Everything is unlocked.', 'ok'); }
-function checkout() { const url = CONFIG.CHECKOUT[selectedPlan]; track('checkout_click', { plan: selectedPlan }); if (url) { window.location.href = url; return; } grantPro(); }
-function buyPack() { const url = CONFIG.CHECKOUT.pack; track('pack_click'); if (url) { window.location.href = url; return; } state.credits += CONFIG.PACK.credits; store.set('credits', state.credits); renderCredits(); closeModal('#paywall'); toast(`Added ${CONFIG.PACK.credits} exports (demo)`, 'ok'); }
+function checkout() {
+  const plan = selectedPlan;
+  const url = CONFIG.CHECKOUT[plan];
+  track('checkout_click', { plan, price: CONFIG.PLANS[plan].price });
+  if (!url) {
+    toast(`Checkout for ${plan} is not connected yet. Add its Stripe Payment Link first.`, 'error');
+    return;
+  }
+  window.location.assign(url);
+}
+function buyPack() {
+  openPaywall('default');
+}
+
 function renderCredits() {
   const pill = $('#credit-pill'), t = $('#credit-text');
   pill.classList.toggle('pro', state.pro); pill.classList.toggle('empty', !state.pro && state.credits <= 0);
@@ -1159,8 +1393,8 @@ function renderCredits() {
 const META = {};
 function reg(path, label, hint, min, max, step, unit, o = {}) { META[path] = { label, hint, min, max, step, unit, ...o }; return path; }
 const G_COMP = [reg('dyn.thr', 'Threshold', 'Level where compression starts', -40, -4, 1, ' dB', { sign: true }), reg('dyn.ratio', 'Ratio', 'How hard it squeezes', 1, 12, 0.5, ':1'), reg('dyn.attack', 'Attack', 'Lets transients punch through', 1, 80, 1, ' ms'), reg('dyn.release', 'Release', 'How fast it recovers', 30, 600, 10, ' ms')];
-const G_LOUD = [reg('dyn.drive', 'Saturation', 'Warm harmonic drive', 0, 10, 0.5, ''), reg('dyn.loud', 'Loudness push', 'Gain into the limiter', 0, 18, 0.5, ' dB', { sign: true })];
-const G_OUT = [reg('dyn.ceil', 'Ceiling', 'Absolute peak limit', -3, 0, 0.1, ' dB', { sign: true })];
+const G_LOUD = [reg('dyn.drive', 'Saturation', 'Warm harmonic drive', 0, 10, 0.5, ''), reg('dyn.loud', 'Loudness push', 'Gain trim into the limiter', -12, 18, 0.5, ' dB', { sign: true })];
+const G_OUT = [reg('dyn.ceil', 'Ceiling', 'Peak ceiling (soft clip safety)', -3, 0, 0.1, ' dB', { sign: true })];
 const G_WIDTH = [reg('dyn.width', 'Stereo width', '100% is unchanged, 0% is mono', 0, 200, 5, '%')];
 const G_TRIM = [reg('trim.start', 'Start', '', 0, 100, 0.01, '', { fmt: fmtTime2 }), reg('trim.end', 'End', '', 0, 100, 0.01, '', { fmt: fmtTime2 })];
 const G_FADE = [reg('fade.in', 'Fade in', '', 0, 10, 0.1, ' s'), reg('fade.out', 'Fade out', '', 0, 10, 0.1, ' s')];
@@ -1200,7 +1434,8 @@ document.addEventListener('input', e => {
   setPath(path, v); syncControl(el);
   if (path.startsWith('trim.')) { $$('input[data-path^="trim."]').forEach(syncControl); renderExportSummary(); }
   else if (path.startsWith('dyn.')) onParamsChanged();
-  else renderExportSummary();
+  else if (path.startsWith('fade.')) { renderExportSummary(); }
+  else { applyParams(); renderExportSummary(); }
 });
 document.addEventListener('change', e => { const el = e.target; if (el.dataset && el.dataset.path && el.dataset.path.startsWith('trim.')) onTrimCommit(); });
 function onTrimCommit() {
@@ -1235,8 +1470,14 @@ function renderTargets() {
 }
 function loadPresets() { return store.get('presets', []); }
 function renderPresets() {
-  const list = loadPresets();
-  $('#presets').innerHTML = list.length ? list.map((p, i) => `<button class="cchip" data-preset="${i}">${p.name.replace(/[<>&"]/g, '')}<span class="x" data-del="${i}" role="button" aria-label="Delete preset">${icon('i-close')}</span></button>`).join('') : '<span class="hint-text">Save your signature sound once, reuse it on every track.</span>';
+  const all = loadPresets().map((p, originalIndex) => ({ ...p, originalIndex }));
+  const q = ($('#preset-search')?.value || '').trim().toLowerCase();
+  const list = all.filter(p => String(p.name || '').toLowerCase().includes(q));
+  const sort = $('#preset-sort')?.value || 'recent';
+  if (sort === 'az') list.sort((a, b) => String(a.name).localeCompare(String(b.name)));
+  else if (sort === 'za') list.sort((a, b) => String(b.name).localeCompare(String(a.name)));
+  else list.sort((a, b) => b.originalIndex - a.originalIndex);
+  $('#presets').innerHTML = list.length ? list.map(p => `<button class="cchip" data-preset="${p.originalIndex}">${String(p.name).replace(/[<>&"]/g, '')}<span class="x" data-del="${p.originalIndex}" role="button" aria-label="Delete preset">${icon('i-close')}</span></button>`).join('') : `<span class="hint-text">${q ? 'No presets match that search.' : 'Save your signature sound once, reuse it on every track.'}</span>`;
 }
 function savePreset() {
   if (!state.pro) { openPaywall('presets'); return; }
@@ -1285,7 +1526,7 @@ function renderExportSummary() {
   el.innerHTML = state.buffer
     ? `<b>${state.profile === 'custom' ? 'Custom master' : PROFILES[state.profile].name}</b> · ${fmtTime(dur)} region · ${state.meas.master && isFinite(state.meas.master.lufs) ? state.meas.master.lufs.toFixed(1) + ' LUFS' : 'measuring…'}${tgt ? ' · ' + tgt.name + ' target' : ''}${state.fade.in || state.fade.out ? ' · fades' : ''}`
     : 'Load a track to see your export summary.';
-  $('#export-note').textContent = state.pro ? 'Pro is active: unlimited exports.' : `Free plan: ${state.credits} export${state.credits === 1 ? '' : 's'} left. 24-bit, 320 kbps and video need Pro.`;
+  $('#export-note').textContent = state.pro ? 'Pro is active: unlimited exports.' : `Free plan: ${state.credits} export${state.credits === 1 ? '' : 's'} left. 24-bit, 320 kbps and visualizer video need Pro.`;
 }
 
 /* ============================================================
@@ -1426,6 +1667,16 @@ function loop() {
   requestAnimationFrame(loop);
 }
 
+
+async function shareMasterPro() {
+  const data = { title: 'Master Pro — Free Online Mastering Studio', text: 'Try Master Pro: master tracks in your browser, compare the original and master live, and keep your audio on your device.', url: location.href };
+  try {
+    if (navigator.share) { await navigator.share(data); track('share', { method: 'native' }); }
+    else if (navigator.clipboard && window.isSecureContext) { await navigator.clipboard.writeText(data.url); toast('Studio link copied — send it to another artist.', 'ok'); track('share', { method: 'clipboard' }); }
+    else { toast('Copy the page address from your browser to share Master Pro.'); }
+  } catch (e) { if (e && e.name !== 'AbortError') toast('Could not open sharing on this device.', 'error'); }
+}
+
 /* ============================================================
    UI WIRING
    ============================================================ */
@@ -1438,6 +1689,8 @@ function goExport() { switchTab('export'); const a = $('.inspector'); if (window
 $$('.tab').forEach(b => b.addEventListener('click', () => switchTab(b.dataset.tab)));
 $('#btn-export-top').addEventListener('click', goExport);
 $('#btn-play').addEventListener('click', togglePlay);
+$('#btn-share').addEventListener('click', shareMasterPro);
+$('#btn-share-footer').addEventListener('click', shareMasterPro);
 $('#btn-restart').addEventListener('click', () => seek(state.trim.start));
 $('#btn-loop').addEventListener('click', () => setLoop(!state.loop));
 $('#btn-loop-edit').addEventListener('click', () => setLoop(!state.loop));
@@ -1459,6 +1712,8 @@ $('#plans').addEventListener('click', e => { const c = e.target.closest('.plan')
 $('#plans').addEventListener('keydown', e => { if ((e.key === 'Enter' || e.key === ' ') && e.target.dataset.plan) { e.preventDefault(); selectedPlan = e.target.dataset.plan; renderPaywall(); } });
 $('#btn-apply-tone').addEventListener('click', applyTone);
 $('#btn-save-preset').addEventListener('click', savePreset);
+$('#preset-sort').addEventListener('change', renderPresets);
+$('#preset-search').addEventListener('input', renderPresets);
 $('#presets').addEventListener('click', e => { const d = e.target.closest('[data-del]'); if (d) { e.stopPropagation(); const l = loadPresets(); l.splice(+d.dataset.del, 1); store.set('presets', l); renderPresets(); return; } const c = e.target.closest('[data-preset]'); if (c) loadPreset(+c.dataset.preset); });
 $('#btn-trim-reset').addEventListener('click', () => { if (!state.buffer) return; state.trim = { start: 0, end: state.buffer.duration }; syncControls(); onTrimCommit(); });
 $('#btn-set-in').addEventListener('click', () => { if (!state.buffer) return; state.trim.start = Math.min(curTime(), state.trim.end - 0.5); syncControls(); onTrimCommit(); });
@@ -1477,7 +1732,11 @@ $('#logo-input').addEventListener('change', e => {
 /* drag & drop anywhere */
 let dragN = 0;
 window.addEventListener('dragenter', e => { e.preventDefault(); dragN++; $('#empty').classList.add('drag'); });
-window.addEventListener('dragleave', e => { e.preventDefault(); if (--dragN <= 0) { dragN = 0; $('#empty').classList.remove('drag'); } });
+window.addEventListener('dragleave', e => {
+  e.preventDefault();
+  dragN = Math.max(0, dragN - 1);
+  if (dragN === 0) $('#empty').classList.remove('drag');
+});
 window.addEventListener('dragover', e => e.preventDefault());
 window.addEventListener('drop', e => { e.preventDefault(); dragN = 0; $('#empty').classList.remove('drag'); const f = e.dataTransfer && e.dataTransfer.files[0]; if (f) loadFile(f); });
 
