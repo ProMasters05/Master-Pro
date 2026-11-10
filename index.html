@@ -364,8 +364,67 @@ body{background:#080808;color:var(--text)}.topbar{background:rgba(8,8,8,.94);bor
 .brevo-consent{display:grid!important;grid-template-columns:20px minmax(0,1fr);align-items:start!important;gap:10px!important;width:100%;line-height:1.55}
 .brevo-consent input{width:18px;height:18px;min-width:18px;margin:1px 0 0!important;justify-self:start;align-self:start;flex:0 0 18px;accent-color:#fff}
 .brevo-sheet .sib-form-block__button{width:100%}
+@media(max-width:650px){.brevo-sheet .sib-form-block__button{min-height:46px}.file-btn{min-height:46px}.file-btn input{font-size:16px}}
 @media(max-width:850px){.home-hero,.home-bottom{grid-template-columns:1fr}.home-art{min-height:250px}.home-benefits{grid-template-columns:1fr}.producer-tool-grid{grid-template-columns:1fr}.home-page{padding-top:24px}}
 @media(max-width:560px){.home-page{padding-left:16px;padding-right:16px}.home-copy h1{font-size:clamp(2.8rem,14vw,4.4rem)}.home-art{min-height:210px;padding:16px}.home-wave{height:110px}.home-proof{gap:10px;font-size:8px}.home-section{padding:48px 0}.brevo-sheet{padding:24px 18px calc(24px + var(--safe-b))}.brevo-consent{grid-template-columns:20px minmax(0,1fr)!important}.brevo-consent span{min-width:0;overflow-wrap:anywhere}}
+
+/* 2026 polish: deliberate mobile header, lighter render loop, safer file jobs */
+.topbar{background:rgba(9,10,13,.96);border-bottom:1px solid #30343e;box-shadow:0 8px 28px rgba(0,0,0,.22)}
+.topbar-in{min-height:64px}
+.brand{flex:0 0 auto;min-width:0}
+.brand-name{white-space:nowrap}
+.site-nav{align-items:center}
+.nav-link{white-space:nowrap}
+@media(max-width:1050px) and (min-width:651px){
+  .topbar-in{height:auto;min-height:62px;padding:10px 16px;gap:9px}
+  .site-nav{order:10;flex:1 0 100%;margin:2px 0 0;justify-content:flex-start;overflow-x:auto;scrollbar-width:none}
+  .site-nav::-webkit-scrollbar{display:none}
+}
+@media(max-width:650px){
+  .topbar{position:sticky;top:0;z-index:120}
+  .topbar-in{display:grid!important;grid-template-columns:minmax(0,1fr) auto auto;grid-template-rows:auto auto;align-items:center;gap:8px;padding:9px 12px!important;height:auto!important;min-height:0}
+  .brand{grid-column:1;grid-row:1;gap:8px;margin:0;min-width:0}
+  .brand-logo{width:34px!important;height:34px!important;border-radius:8px}
+  .brand-name{font-size:9px!important;letter-spacing:.13em;line-height:1.15}
+  .brand-name small{font-size:7px!important;letter-spacing:.28em;margin-top:3px}
+  #account-open{grid-column:2;grid-row:1;height:32px;padding:0 9px;font-size:11px;max-width:112px;overflow:hidden;text-overflow:ellipsis}
+  #credit-pill{grid-column:3;grid-row:1;height:32px;padding:0 9px;font-size:11px}
+  .site-nav{grid-column:1/-1;grid-row:2;order:initial!important;width:100%;margin:0!important;display:flex;flex-wrap:nowrap;gap:5px;overflow-x:auto;overflow-y:hidden;justify-content:flex-start;scrollbar-width:none;padding:2px 0 1px}
+  .site-nav::-webkit-scrollbar{display:none}
+  .nav-link{flex:0 0 auto;padding:8px 11px;font-size:11px;line-height:1}
+  #btn-share,#btn-undo,#btn-redo,#btn-export-top{display:none!important}
+  .info-page{padding-left:15px!important;padding-right:15px!important}
+  .home-page{padding-top:22px!important}
+  .home-hero{gap:24px;padding-bottom:38px}
+  .home-copy h1{font-size:clamp(2.65rem,13vw,4.2rem);line-height:.94;overflow-wrap:anywhere}
+  .home-copy>p{font-size:.9rem;line-height:1.65}
+  .home-actions{display:grid;grid-template-columns:1fr;gap:9px}
+  .home-actions .btn{width:100%;justify-content:center;min-height:46px}
+  .home-proof{display:grid;grid-template-columns:1fr 1fr;gap:9px;font-size:8px}
+  .home-art{min-height:190px;padding:15px}
+  .home-wave{height:92px}
+  .app{padding:10px!important;gap:11px!important}
+  .empty{padding:30px 16px!important;min-height:0}
+  .stage{padding:10px!important}
+  .stage-head{gap:8px;flex-wrap:wrap}
+  .stage-head .nm{min-width:0;max-width:100%}
+  .stage-head .nm b{overflow-wrap:anywhere}
+  .meter-row{gap:8px}
+  .meter-row .mt{min-width:0}
+  .inspector{padding:9px!important}
+  .tabs{gap:3px;padding:4px}
+  .tab{padding:0 10px;min-height:36px}
+  .panel{padding:12px!important}
+  .profiles{grid-template-columns:1fr 1fr}
+  .home-section{padding:42px 0!important}
+  .home-benefits,.producer-tool-grid,.feature-grid,.faq-long,.role-grid{grid-template-columns:1fr!important}
+  .home-bottom{padding:42px 0 60px;gap:20px}
+  .contact-card{padding:16px!important}
+  .sheet{width:min(100% - 20px,560px);max-height:calc(100dvh - 24px);overflow:auto;padding:22px 16px calc(22px + env(safe-area-inset-bottom,0px))}
+  button,.btn,.pill{touch-action:manipulation}
+}
+@media(prefers-reduced-motion:reduce){.hero-title span{animation:none!important}.panel.active{animation:none!important}}
+
 </style>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"SoftwareApplication","name":"Master Pro","applicationCategory":"MultimediaApplication","operatingSystem":"Any modern browser","description":"Browser-based music mastering with live preview, A/B comparison, MP3/WAV export and local MP4 soundtrack import.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD","description":"Free tier includes two exports per browser profile."}}
@@ -441,13 +500,13 @@ body{background:#080808;color:var(--text)}.topbar{background:rgba(8,8,8,.94);bor
       <h1>Make your next release<br><span>feel finished.</span></h1>
       <p>A focused online mastering room for independent artists and producers. Shape the tone, control dynamics, compare before and after, then export from your browser.</p>
       <div class="home-actions"><button class="btn primary" id="enter-studio">Enter studio <span aria-hidden="true">↗</span></button><button class="btn ghost" data-page="producers">Explore Producer Lab</button></div>
-      <div class="home-proof"><span>LOCAL AUDIO PROCESSING</span><span>LIVE A/B COMPARISON</span><span>FREE VIDEO EXPORTS</span></div>
+      <div class="home-proof"><span>LOCAL AUDIO PROCESSING</span><span>LIVE A/B COMPARISON</span><span>BROWSER-BASED VIDEO EXPORT</span></div>
     </div>
     <div class="home-art" aria-label="Master Pro studio interface preview"><div class="home-art-top"><span>MASTER / SESSION 001</span><span class="live-dot">● READY</span></div><div class="home-wave"></div><div class="home-art-bottom"><span>TONAL BALANCE</span><b>CLARITY · CONTROL · IMPACT</b></div></div>
   </section>
   <section class="home-section"><div class="section-intro"><span class="eyebrow">WHY MASTER PRO</span><h2>Serious finishing tools.<br>Without the studio overhead.</h2><p>Built for practical decisions and repeatable results — not mystery buttons or promises that every mix will magically fix itself.</p></div><div class="home-benefits"><article><b>01 / HEAR THE DIFFERENCE</b><h3>Honest A/B listening</h3><p>Switch between the source and processed signal, with level matching to help you judge tone and loudness fairly.</p></article><article><b>02 / YOUR SESSION, YOUR DEVICE</b><h3>Local-first workflow</h3><p>Your audio is decoded and processed in your browser. Large projects depend on your device memory and supported codecs.</p></article><article><b>03 / READY TO SHARE</b><h3>Audio and video exports</h3><p>Export a finished audio file or create a branded visualizer video. Video export is free and does not use audio-master credits.</p></article></div></section>
   <section class="home-bottom"><div><span class="eyebrow">START WITH YOUR ROLE</span><h2>One studio. Two workflows.</h2><p>Artists can get straight to the mastering room. Producers can open a dedicated lab for beat delivery, session prep and repeatable finishing.</p></div><div class="role-grid"><button class="role-card" data-role="artist"><b>ARTIST</b><span>Finish a single, EP or vocal-led track. Open the mastering studio.</span></button><button class="role-card" data-role="producer"><b>PRODUCER</b><span>Open Producer Lab with beat prep and delivery tools.</span></button></div></section>
-</main>
+<section class="home-section creator-section"><div class="section-intro"><span class="eyebrow">MADE FOR THE MUSIC COMMUNITY</span><h2>Built by artists.<br>Shaped with producers.</h2><p>Pro Masters Studio was developed around the real finishing work artists and producers do every day: checking translation, keeping dynamics musical, preparing clean deliveries and making confident decisions before a release.</p></div><div class="home-benefits"><article><b>CREATOR-LED THINKING</b><h3>Tools with a purpose</h3><p>Every control should help you hear, compare or deliver something more clearly — not add clutter to your session.</p></article><article><b>NO MYSTERY PROCESSING</b><h3>You stay in control</h3><p>Preview the chain, level-match your A/B checks and adjust the sound instead of trusting an unexplained one-click result.</p></article><article><b>BUILT TO KEEP IMPROVING</b><h3>Made around feedback</h3><p>We keep refining the workflow around real artist and producer needs, including mobile usability and dependable exports.</p></article></div></section></main>
 <main id="page-producers" class="info-page hide"><div class="page-hero"><span class="eyebrow">PRO MASTERS / PRODUCER LAB</span><h1>Your finishing room,<br>built around the beat.</h1><p>Practical tools for beatmakers, vocal producers and engineers: prepare clean premixes, make repeatable decisions and deliver sessions with confidence.</p><div class="home-actions"><button class="btn primary" data-page="studio">Open mastering studio</button><button class="btn ghost" data-page="faq">Read workflow Q&amp;A</button></div></div>
 <div class="feature-grid producer-grid">
 <article><b>01 / BEAT DELIVERY</b><h3>Client-ready exports</h3><p>Trim dead space, set clean fades, compare the source and master, and export a clearly named audio deliverable.</p></article>
@@ -685,7 +744,7 @@ body{background:#080808;color:var(--text)}.topbar{background:rgba(8,8,8,.94);bor
 </div>
 
 <div class="modal" id="role-modal" role="dialog" aria-modal="true"><div class="sheet"><button class="iconbtn xbtn" data-close="role-modal">×</button><span class="eyebrow">WELCOME TO PRO MASTERS</span><h3>Choose your workspace</h3><p class="lead">Pick the tools you want to see first. You can switch any time.</p><div class="role-grid"><button class="role-card" data-role="artist"><b>ARTIST</b><span>Finish songs, compare masters and create release-ready visuals.</span></button><button class="role-card" data-role="producer"><b>PRODUCER</b><span>Build repeatable chains, work faster and prep beats for clients.</span></button></div></div></div>
-<div class="modal" id="account-modal" role="dialog" aria-modal="true"><div class="sheet"><button class="iconbtn xbtn" data-close="account-modal">×</button><span class="eyebrow">YOUR STUDIO PROFILE</span><h3>Sign in / Create account</h3><p class="lead">A local profile keeps preferences on this device. Secure online accounts and syncing are not enabled in this static build.</p><form id="account-form"><label>Display name<input name="display" required maxlength="50" placeholder="Your artist or producer name"></label><label>Email<input name="email" required type="email" maxlength="120" placeholder="you@example.com"></label><button class="btn primary block">Save local profile</button></form><p class="fine" id="account-status"></p></div></div>
+<div class="modal" id="account-modal" role="dialog" aria-modal="true"><div class="sheet"><button class="iconbtn xbtn" data-close="account-modal">×</button><span class="eyebrow">YOUR STUDIO PROFILE</span><h3>Studio profile</h3><p class="lead">This build saves a profile on this device only. Secure sign-in, password recovery, cloud sync and cross-device accounts require a connected authentication backend and are not active yet.</p><form id="account-form"><label>Display name<input name="display" required maxlength="50" placeholder="Your artist or producer name"></label><label>Email<input name="email" required type="email" maxlength="120" placeholder="you@example.com"></label><button class="btn primary block">Save this device profile</button></form><p class="fine" id="account-status"></p></div></div>
 <div class="modal" id="email-modal" role="dialog" aria-modal="true" aria-labelledby="bonus-title"><div class="sheet brevo-sheet"><button class="iconbtn xbtn" data-close="email-modal" aria-label="Close">×</button><span class="eyebrow">A LITTLE MORE STUDIO TIME</span><h3 id="bonus-title">Get one extra free export.</h3><p class="lead">Join the Pro Masters list for studio updates and exclusive offers. After Brevo accepts your signup, we’ll add one bonus export to this browser.</p>
 <div class="sib-form" style="background:transparent;text-align:left"><div id="sib-form-container" class="sib-form-container">
 <div id="error-message" class="sib-form-message-panel" role="alert"><div class="sib-form-message-panel__text"><span class="sib-form-message-panel__inner-text">Your subscription could not be saved. Please check your email and try again.</span></div></div>
@@ -714,7 +773,7 @@ var AUTOHIDE = Boolean(0);
 <script defer src="https://sibforms.com/forms/end-form/build/main.js"></script>
 <script>
 'use strict';
-const MASTER_PRO_VERSION = '2.1.0';
+const MASTER_PRO_VERSION = '2.2.0';
 
 /* ============================================================
    CONFIG
@@ -1144,7 +1203,15 @@ async function extractVideoAudio(file, ac, requestId) {
     throw err;
   } finally { cleanup(); }
 }
-async function loadFile(file) {
+function loadFile(file) {
+  if (!file) return Promise.resolve();
+  const key = [file.name, file.size, file.lastModified, file.type].join('|');
+  if (activeFileLoads.has(key)) return activeFileLoads.get(key);
+  const job = loadFileInternal(file).finally(() => activeFileLoads.delete(key));
+  activeFileLoads.set(key, job);
+  return job;
+}
+async function loadFileInternal(file) {
   if (!file) return;
   const requestId = ++loadRequestId;
   setLoadStatus('');
@@ -1161,7 +1228,9 @@ async function loadFile(file) {
   try { ac = ensureCtx(); if (ac.state !== 'running') { try { await ac.resume(); } catch (resumeErr) { console.warn('[Master Pro] Audio context resume deferred:', resumeErr); } } }
   catch (err) { console.error('[Master Pro] Audio engine initialization failed:', err); toast('Your browser could not start the audio engine. Use the latest Chrome or Edge.', 'error'); return; }
   toast(videoFile ? 'Extracting video soundtrack…' : 'Loading and decoding audio…');
-  setLoadStatus(videoFile ? 'Preparing local video soundtrack extraction…' : 'Loading audio…');
+  setLoadStatus(videoFile ? 'Preparing local video soundtrack extraction…' : `Reading ${(file.size / 1048576).toFixed(1)} MB locally…`);
+  await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+  if (requestId !== loadRequestId) return;
   let buf;
   try {
     if (videoFile) {
@@ -1413,7 +1482,7 @@ function pickVideoMime() {
 async function renderVideo(job, setProgress) {
   if (!window.MediaRecorder || !HTMLCanvasElement.prototype.captureStream) throw new Error('Video export is not supported in this browser. Try Chrome, Edge or Safari 17+.');
   const mime = pickVideoMime(); if (!mime) throw new Error('No supported video format in this browser.');
-  const ac = ensureCtx(); pause();
+  const ac = ensureCtx(); if (ac.state !== 'running') await ac.resume(); pause();
   const { start, end } = state.trim, dur = end - start;
   const dest = ac.createMediaStreamDestination(), src = ac.createBufferSource(); src.buffer = state.buffer;
   const chain = buildChain(ac, state.eq, state.dyn), fade = ac.createGain(), an = ac.createAnalyser(); an.fftSize = 512; an.smoothingTimeConstant = 0.75;
@@ -1422,7 +1491,8 @@ async function renderVideo(job, setProgress) {
   const stream = cv.captureStream(30); dest.stream.getAudioTracks().forEach(t => stream.addTrack(t));
   const rec = new MediaRecorder(stream, { mimeType: mime, videoBitsPerSecond: 4000000, audioBitsPerSecond: 192000 });
   const chunks = []; rec.ondataavailable = e => { if (e.data && e.data.size) chunks.push(e.data); };
-  const done = new Promise(res => { rec.onstop = res; });
+  let recorderError = null;
+  const done = new Promise((res, rej) => { rec.onstop = res; rec.onerror = e => { recorderError = e.error || new Error('The browser recorder stopped unexpectedly.'); rej(recorderError); }; });
   const freq = new Uint8Array(an.frequencyBinCount), title = state.fileName.replace(/\.[^.]+$/, '');
   let t0 = 0, raf = 0, ended = false;
   function frame() {
@@ -1453,10 +1523,13 @@ async function renderVideo(job, setProgress) {
   src.onended = () => { setTimeout(() => { ended = true; if (rec.state !== 'inactive') rec.stop(); }, 350); };
   rec.start(250); t0 = ac.currentTime + 0.05; scheduleFades(fade, t0, dur); src.start(t0, start, dur); frame();
   const poll = setInterval(() => { if (job.cancel) { ended = true; try { src.onended = null; src.stop(); } catch {} if (rec.state !== 'inactive') rec.stop(); } }, 150);
-  await done; clearInterval(poll); cancelAnimationFrame(raf);
-  try { chain.output.disconnect(); an.disconnect(); } catch {}
+  try { await done; } finally { clearInterval(poll); cancelAnimationFrame(raf); stream.getTracks().forEach(t => { try { t.stop(); } catch {} }); dest.stream.getTracks().forEach(t => { try { t.stop(); } catch {} }); try { src.disconnect(); chain.output.disconnect(); an.disconnect(); } catch {} }
   if (job.cancel) throw new Error('cancelled');
-  return { blob: new Blob(chunks, { type: mime.split(';')[0] }), ext: mime.startsWith('video/mp4') ? 'mp4' : 'webm' };
+  if (!chunks.length) throw new Error('The video recorder produced an empty file. Try Chrome or Edge, then export again.');
+  const actualType = rec.mimeType || mime.split(';')[0];
+  const blob = new Blob(chunks, { type: actualType });
+  const ext = actualType.includes('mp4') ? 'mp4' : 'webm';
+  return { blob, ext };
 }
 function openModal(id) { $(id).classList.add('active'); }
 function closeModal(id) { $(id).classList.remove('active'); }
@@ -1464,10 +1537,11 @@ function gate(type) {
   // Visualizer video exports are free and do not consume audio-master credits.
   if (type === 'wav' && state.fmt.wav === 24 && !state.pro) { openPaywall('bits'); return false; }
   if (type === 'mp3' && state.fmt.mp3 === 320 && !state.pro) { openPaywall('kbps'); return false; }
-  if (!state.pro && state.credits <= 0) { openPaywall('credits'); return false; }
+  if (type !== 'mp4' && !state.pro && state.credits <= 0) { openPaywall('credits'); return false; }
   return true;
 }
 async function startExport(type) {
+  if (state.exporting) return;
   if (!state.buffer) { toast('Load a track first', 'error'); return; }
   if (!gate(type)) return;
   const job = { cancel: false }; state.exporting = job; track('export_start', { type });
@@ -1787,10 +1861,12 @@ function drawWave() {
   g.fillStyle = '#e9ebf0'; g.fillRect(prog * W - dpr, 0, 2 * dpr, H);
   g.fillStyle = '#3f74ff'; [xs, xe].forEach((x, i) => { g.fillRect(x - dpr, 0, 2 * dpr, H); g.fillRect(i === 0 ? x - dpr : x - 9 * dpr, 0, 10 * dpr, 14 * dpr); });
 }
-let specPts = null;
+let specPts = null, specFreqData = null, specPointCache = null;
 function computeSpecPoints(n) {
-  if (!live) return null; const a = live.analyser, d = new Uint8Array(a.frequencyBinCount), nyq = ctx.sampleRate / 2; a.getByteFrequencyData(d);
-  const out = new Float32Array(n); let prev = 0;
+  if (!live) return null; const a = live.analyser, nyq = ctx.sampleRate / 2;
+  if (!specFreqData || specFreqData.length !== a.frequencyBinCount) specFreqData = new Uint8Array(a.frequencyBinCount);
+  if (!specPointCache || specPointCache.length !== n) specPointCache = new Float32Array(n);
+  const d = specFreqData, out = specPointCache; a.getByteFrequencyData(d); let prev = 0;
   for (let j = 0; j < n; j++) {
     const f = EQ_MIN * Math.pow(EQ_MAX / EQ_MIN, j / (n - 1)), k = Math.min(d.length - 1, Math.round(f / nyq * d.length)); let m = 0;
     for (let q = Math.min(prev, k); q <= k; q++) m = Math.max(m, d[q]); out[j] = m / 255; prev = k;
@@ -1841,14 +1917,16 @@ function updateMeters() {
   $('#m-cgr').textContent = c.toFixed(1) + ' dB'; $('#f-cgr').style.width = clamp(-c / 20, 0, 1) * 100 + '%';
   $('#m-lgr').textContent = l.toFixed(1) + ' dB'; $('#f-lgr').style.width = clamp(-l / 20, 0, 1) * 100 + '%';
 }
-function loop() {
-  if (!document.hidden) {
-    const t = curTime(), dur = state.buffer ? state.buffer.duration : 0, active = $('.tab.active').dataset.tab;
-    specPts = live ? computeSpecPoints(120) : null;
+let lastUiFrame = 0;
+function loop(now = 0) {
+  if (!document.hidden && now - lastUiFrame >= 50) {
+    lastUiFrame = now;
+    const t = curTime(), dur = state.buffer ? state.buffer.duration : 0, active = $('.tab.active')?.dataset.tab;
+    specPts = live ? computeSpecPoints(96) : null;
     if (state.buffer) { drawWave(); drawSpectrum(); updateMeters(); }
     if (active === 'tone') drawEq();
-    $('#prog-fill').style.width = dur ? ((t - state.trim.start) / regionLen()) * 100 + '%' : '0%';
-    $('#time-cur').textContent = fmtTime(t);
+    const progress = $('#prog-fill'); if (progress) progress.style.width = dur ? ((t - state.trim.start) / regionLen()) * 100 + '%' : '0%';
+    const time = $('#time-cur'); if (time) time.textContent = fmtTime(t);
   }
   requestAnimationFrame(loop);
 }
@@ -1973,7 +2051,7 @@ $('#enter-studio')?.addEventListener('click',()=>openModal('#role-modal'));
 $('#tempo-tap')?.addEventListener('click',()=>{const now=performance.now();window._mpTempoTaps=window._mpTempoTaps||[];window._mpTempoTaps=window._mpTempoTaps.filter(x=>now-x<4000);window._mpTempoTaps.push(now);if(window._mpTempoTaps.length>1){const gaps=window._mpTempoTaps.slice(1).map((x,i)=>x-window._mpTempoTaps[i]);const avg=gaps.reduce((a,b)=>a+b,0)/gaps.length;const bpm=Math.round(60000/avg);$('#tempo-value').innerHTML=bpm+' <small>BPM</small>';$('#tempo-hint').textContent='Estimate from '+gaps.length+' intervals. Tap steadily for best results.';}});
 $('#tempo-reset')?.addEventListener('click',()=>{window._mpTempoTaps=[];$('#tempo-value').innerHTML='— <small>BPM</small>';$('#tempo-hint').textContent='Tap at least 4 times for a steadier estimate.';});
 $('#copy-checklist')?.addEventListener('click',async()=>{const labels=$$('.delivery-checks label').map(x=>(x.querySelector('input').checked?'[x] ':'[ ] ')+x.textContent.trim());const text='MASTER PRO — PRODUCER DELIVERY CHECKLIST\\n'+labels.join('\\n');try{await navigator.clipboard.writeText(text);$('#checklist-status').textContent='Checklist copied.';}catch{$('#checklist-status').textContent='Clipboard unavailable in this browser.';}});
-$('#account-form').addEventListener('submit',e=>{e.preventDefault();const fd=new FormData(e.currentTarget);const profile={display:String(fd.get('display')).trim(),email:String(fd.get('email')).trim()};store.set('localProfile',profile);$('#account-status').textContent='Local profile saved on this device.';$('#account-open').textContent=profile.display+' · Profile';toast('Profile saved on this device','ok');});
+$('#account-form').addEventListener('submit',e=>{e.preventDefault();const fd=new FormData(e.currentTarget);const profile={display:String(fd.get('display')).trim(),email:String(fd.get('email')).trim()};store.set('localProfile',profile);$('#account-status').textContent='Saved on this device only. This is not a secure online account.';$('#account-open').textContent=profile.display+' · Profile';toast('Device profile saved','ok');});
 $('#contact-form').addEventListener('submit',async e=>{e.preventDefault();const fd=new FormData(e.currentTarget);const message='Subject: Pro Masters Studio — '+fd.get('topic')+'\nName: '+fd.get('name')+'\nEmail: '+fd.get('email')+'\n\n'+fd.get('message');try{await navigator.clipboard.writeText(message);toast('Message copied. Paste it into your email app to send.','ok');}catch{window.prompt('Copy this message into your email app:',message);}});
 // Award the local bonus only after Brevo displays its success state; never on a button click.
 function grantBrevoBonus(){if(store.get('bonusClaimed',false))return;const email=String($('#EMAIL')?.value||'').trim();if(!email)return;store.set('bonusEmail',email);store.set('bonusClaimed',true);state.credits=(Number(state.credits)||0)+1;store.set('credits',state.credits);renderCredits();toast('Brevo accepted your signup — one free export added.','ok');}
