@@ -4,6 +4,8 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <meta name="theme-color" content="#0b0c0f" />
+<meta name="application-name" content="Master Pro" />
+<meta name="referrer" content="strict-origin-when-cross-origin" />
 <meta name="color-scheme" content="dark" />
 <meta name="description" content="Master your music online for free. Real-time audio mastering, MP3/WAV exports, MP4 soundtrack import, visualizer videos and pro mastering tools. Files stay on your device." />
 <meta name="keywords" content="free online audio mastering, music mastering, MP3 mastering, WAV mastering, MP4 audio extractor, music visualizer" />
@@ -13,7 +15,7 @@
 <meta property="og:title" content="Master Pro | Mastering Studio" />
 <meta property="og:description" content="Try the mastering studio free. No account, no upload, and real-time A/B preview. Your audio stays on your device." />
 <meta property="og:type" content="website" />
-<title>Master Pro | Mastering Studio</title>
+<title>Master Pro — Free Online Audio Mastering Studio</title>
 <style>
 :root {
   --bg: #0b0c0f;
@@ -307,6 +309,8 @@ footer { max-width: 1280px; margin: 8px auto 0; padding: 0 16px; font-size: .7re
 .faq-item h3 { font-size:.82rem; margin-bottom:6px; }
 .faq-item p { color:var(--text-2); font-size:.74rem; line-height:1.6; }
 .faq-item strong { color:var(--text); }
+#grp-deess .field { margin-bottom:8px; }
+.stage-head #stage-load-status { max-width:180px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
 .share-cta { display:flex; align-items:center; justify-content:center; gap:10px; flex-wrap:wrap; margin:18px 0 0; color:var(--text-3); font-size:.72rem; }
 .share-cta .btn { height:32px; }
 #btn-share { border-color:rgba(143,176,255,.28); }
@@ -318,7 +322,7 @@ footer { max-width: 1280px; margin: 8px auto 0; padding: 0 16px; font-size: .7re
 
 </style>
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Master Pro","applicationCategory":"MultimediaApplication","operatingSystem":"Any modern browser","description":"Browser-based music mastering with live preview, A/B comparison, MP3/WAV export and local MP4 soundtrack import.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD","description":"Free tier includes two exports."}}
+{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Master Pro","applicationCategory":"MultimediaApplication","operatingSystem":"Any modern browser","description":"Browser-based music mastering with live preview, A/B comparison, MP3/WAV export and local MP4 soundtrack import.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD","description":"Free tier includes two exports per browser profile."}}
 </script>
 </head>
 <body>
@@ -373,7 +377,7 @@ footer { max-width: 1280px; margin: 8px auto 0; padding: 0 16px; font-size: .7re
     <div class="empty" id="empty">
       <div class="big"><svg class="ic"><use href="#i-music"/></svg></div>
       <div class="eyebrow">Browser-based mastering studio</div><h2 class="hero-title"><span>Make every track hit harder.</span></h2>
-      <p>Polish a track, compare the original against your master, and export when it sounds right. Start free — no account and no audio upload.</p>
+      <p>Polish a track, compare the original against your master, and export when it sounds right. Start free — no account, no server upload, and no software to install.</p>
       <div class="hero-points"><span><b>✓</b> 2 free exports</span><span><b>✓</b> Live A/B preview</span><span><b>✓</b> Files stay on your device</span></div>
       <label class="btn primary file-btn"><svg class="ic"><use href="#i-upload"/></svg>Choose a file
         <input type="file" id="file-input" accept="audio/*,video/mp4,video/webm,video/quicktime,.mp3,.wav,.wave,.m4a,.aac,.ogg,.oga,.opus,.flac,.webm,.mp4,.m4v,.mov" aria-label="Choose an audio or video file" />
@@ -458,6 +462,7 @@ footer { max-width: 1280px; margin: 8px auto 0; padding: 0 16px; font-size: .7re
       <!-- DYNAMICS -->
       <div class="panel" id="panel-dynamics">
         <div class="group"><div class="group-h">Compressor</div><div id="grp-comp"></div></div>
+        <div class="group"><div class="group-h">De-esser</div><div id="grp-deess"></div><p class="hint-text">A focused high-frequency compressor helps tame sharp S, SH and cymbal energy. Use lightly; it is not a substitute for fixing a harsh mix.</p></div>
         <div class="group"><div class="group-h">Colour &amp; loudness</div><div id="grp-loud"></div></div>
         <div class="group"><div class="group-h">Output</div><div id="grp-out"></div></div>
       </div>
@@ -480,7 +485,7 @@ footer { max-width: 1280px; margin: 8px auto 0; padding: 0 16px; font-size: .7re
       <!-- FX -->
       <div class="panel" id="panel-fx">
         <div class="group">
-          <div class="group-h">Producer FX <span class="hint-text">Tap or press 1-8</span></div>
+          <div class="group-h">Producer FX <span class="hint-text">Tap or press 1–8</span></div>
           <div class="pads" id="pads"></div>
           <p class="hint-text" style="margin-top:12px">Synthesized live in your browser. No samples to download, no latency. Handy for auditioning drops and transitions against your master.</p>
         </div>
@@ -491,7 +496,7 @@ footer { max-width: 1280px; margin: 8px auto 0; padding: 0 16px; font-size: .7re
         <div class="summary" id="export-summary"></div>
 
         <div class="xcard">
-          <div class="xcard-h"><div class="ico"><svg class="ic"><use href="#i-wave"/></svg></div><div><b>WAV</b><span>Lossless, dithered. Best for distribution.</span></div></div>
+          <div class="xcard-h"><div class="ico"><svg class="ic"><use href="#i-wave"/></svg></div><div><b>WAV</b><span>Uncompressed PCM with export bit-depth options.</span></div></div>
           <div class="xcard-row">
             <div class="seg" id="seg-wav"><button data-v="16" class="on">16-bit</button><button data-v="24">24-bit <span class="tag-pro">PRO</span></button></div>
             <button class="btn primary sm" data-export="wav"><svg class="ic"><use href="#i-download"/></svg>Export WAV</button>
@@ -580,6 +585,7 @@ footer { max-width: 1280px; margin: 8px auto 0; padding: 0 16px; font-size: .7re
 
 <script>
 'use strict';
+const MASTER_PRO_VERSION = '2.1.0';
 
 /* ============================================================
    CONFIG
@@ -751,7 +757,7 @@ const state = {
 };
 function applyProfile(k) {
   const p = PROFILES[k]; state.profile = k; state.base = k;
-  state.eq = BAND_DEFS.map((b, i) => ({ ...b, g: p.g[i] })); state.dyn = { ...p.dyn }; state.target = null;
+  state.eq = BAND_DEFS.map((b, i) => ({ ...b, g: p.g[i] })); state.dyn = { deess: 0, ...p.dyn }; state.target = null;
 }
 applyProfile('balanced');
 let selBand = 2;
@@ -787,6 +793,14 @@ function buildChain(ac, eq, dyn) {
   const inp = ac.createGain(); inp.channelCount = 2; inp.channelCountMode = 'explicit'; inp.channelInterpretation = 'speakers';
   const bands = eq.map(b => { const f = ac.createBiquadFilter(); f.type = b.t; return f; });
   const sat = ac.createWaveShaper(); sat.oversample = '4x';
+  // Complementary 4th-order crossover: compress only the upper band so the
+  // de-esser reacts to sibilance instead of pumping the entire mix.
+  const lo1 = ac.createBiquadFilter(), lo2 = ac.createBiquadFilter();
+  const hi1 = ac.createBiquadFilter(), hi2 = ac.createBiquadFilter();
+  [lo1, lo2].forEach(f => { f.type = 'lowpass'; f.frequency.value = 6200; f.Q.value = Math.SQRT1_2; });
+  [hi1, hi2].forEach(f => { f.type = 'highpass'; f.frequency.value = 6200; f.Q.value = Math.SQRT1_2; });
+  const deessCmp = ac.createDynamicsCompressor(); deessCmp.knee.value = 4; deessCmp.attack.value = 0.003; deessCmp.release.value = 0.085;
+  const deessMix = ac.createGain();
   const cmp = ac.createDynamicsCompressor(); cmp.knee.value = 8;
   const split = ac.createChannelSplitter(2), merge = ac.createChannelMerger(2);
   const mL = ac.createGain(), mR = ac.createGain(), sL = ac.createGain(), sR = ac.createGain();
@@ -801,14 +815,20 @@ function buildChain(ac, eq, dyn) {
   const lim = ac.createDynamicsCompressor(); lim.knee.value = 0; lim.ratio.value = 20; lim.attack.value = 0.002; lim.release.value = 0.08;
   const clip = ac.createWaveShaper(); clip.oversample = '4x';
   let prev = inp; bands.forEach(f => { prev.connect(f); prev = f; });
-  prev.connect(sat); sat.connect(cmp); cmp.connect(split); merge.connect(push); push.connect(lim); lim.connect(clip);
+  prev.connect(sat);
+  sat.connect(lo1); lo1.connect(lo2); lo2.connect(deessMix);
+  sat.connect(hi1); hi1.connect(hi2); hi2.connect(deessCmp); deessCmp.connect(deessMix);
+  deessMix.connect(cmp); cmp.connect(split); merge.connect(push); push.connect(lim); lim.connect(clip);
   const last = { drive: null, ceil: null };
   const chain = {
-    input: inp, output: clip, nodes: { cmp, lim },
+    input: inp, output: clip, nodes: { cmp, lim, deess: deessCmp },
     update(eqs, d, smooth) {
       const t = ac.currentTime, set = (p, v) => smooth ? p.setTargetAtTime(v, t, 0.02) : (p.value = v);
       eqs.forEach((b, i) => { const f = bands[i]; if (f.type !== b.t) f.type = b.t; set(f.frequency, b.f); set(f.gain, b.g); set(f.Q, b.q); });
       set(cmp.threshold, d.thr); set(cmp.ratio, d.ratio); set(cmp.attack, d.attack / 1000); set(cmp.release, d.release / 1000);
+      const ds = clamp(d.deess ?? 0, 0, 100);
+      set(deessCmp.threshold, -8 - ds * 0.34); set(deessCmp.ratio, 1 + ds * 0.07);
+      set(deessMix.gain, 1);
       set(side.gain, d.width / 100); set(push.gain, dbToGain(d.loud)); set(lim.threshold, d.ceil - 3);
       if (last.drive !== d.drive) { sat.curve = makeSatCurve(d.drive); last.drive = d.drive; }
       if (last.ceil !== d.ceil) { clip.curve = makeClipCurve(d.ceil); last.ceil = d.ceil; }
@@ -821,6 +841,7 @@ let ctx = null, live = null;
 function ensureCtx() {
   if (!ctx) {
     const AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC) throw new Error('Web Audio is not supported. Please use a current version of Chrome, Edge, Firefox or Safari.');
     ctx = new AC({ latencyHint: 'interactive' }); live = {};
     live.input = ctx.createGain(); live.chain = buildChain(ctx, state.eq, state.dyn);
     live.dry = ctx.createGain(); live.wet = ctx.createGain(); live.bus = ctx.createGain();
@@ -993,6 +1014,7 @@ async function extractVideoAudio(file, ac, requestId) {
 async function loadFile(file) {
   if (!file) return;
   const requestId = ++loadRequestId;
+  setLoadStatus('');
   const maxBytes = 150 * 1024 * 1024;
   if (!file.size) { toast('That file is empty. Choose a valid file.', 'error'); return; }
   if (file.size > maxBytes) { toast('That file is larger than 150 MB. Try a smaller or compressed file.', 'error'); return; }
@@ -1071,7 +1093,7 @@ function measureOriginal(seg) {
   return (origCache[key] = measureLoudness(chs, sr, i0, i1));
 }
 async function renderSegment(seg) {
-  const b = state.buffer, oc = new OfflineAudioContext(2, Math.max(1, Math.round(seg.dur * b.sampleRate)), b.sampleRate);
+  const b = state.buffer, oc = makeOfflineContext(2, Math.max(1, Math.round(seg.dur * b.sampleRate)), b.sampleRate);
   const src = oc.createBufferSource(); src.buffer = b; const chain = buildChain(oc, state.eq, state.dyn);
   src.connect(chain.input); chain.output.connect(oc.destination); src.start(0, seg.start, seg.dur);
   return oc.startRendering();
@@ -1196,18 +1218,34 @@ function encodeWav(buf, bits) {
   let o = 44;
   for (let i = 0; i < len; i++) for (let c = 0; c < ch; c++) {
     let s = data[c][i];
-    if (bits === 16) { s += (Math.random() - Math.random()) / 32768; s = clamp(s, -1, 1); v.setInt16(o, s < 0 ? s * 0x8000 : s * 0x7FFF, true); o += 2; }
-    else { s = clamp(s, -1, 1); const n = Math.round(s < 0 ? s * 0x800000 : s * 0x7FFFFF); v.setUint8(o, n & 255); v.setUint8(o + 1, (n >> 8) & 255); v.setUint8(o + 2, (n >> 16) & 255); o += 3; }
+    if (bits === 16) { s += (Math.random() - Math.random()) / 32768; s = clamp(s, -1, 1); v.setInt16(o, s < 0 ? Math.round(s * 0x8000) : Math.round(s * 0x7FFF), true); o += 2; }
+    else { s += (Math.random() - Math.random()) / 0x800000; s = clamp(s, -1, 1); const n = Math.round(s < 0 ? s * 0x800000 : s * 0x7FFFFF); v.setUint8(o, n & 255); v.setUint8(o + 1, (n >> 8) & 255); v.setUint8(o + 2, (n >> 16) & 255); o += 3; }
   }
   return new Blob([ab], { type: 'audio/wav' });
 }
 function toInt16(f) { const o = new Int16Array(f.length); for (let i = 0; i < f.length; i++) { const s = clamp(f[i], -1, 1); o[i] = s < 0 ? s * 0x8000 : s * 0x7FFF; } return o; }
+let lameLoadPromise = null;
 function loadLame() {
   if (window.lamejs) return Promise.resolve();
-  return new Promise((res, rej) => { const s = document.createElement('script'); s.src = 'https://cdnjs.cloudflare.com/ajax/libs/lamejs/1.2.1/lame.min.js'; s.onload = res; s.onerror = () => rej(new Error('encoder')); document.head.appendChild(s); });
+  if (lameLoadPromise) return lameLoadPromise;
+  lameLoadPromise = new Promise((res, rej) => {
+    const s = document.createElement('script'); s.src = 'https://cdnjs.cloudflare.com/ajax/libs/lamejs/1.2.1/lame.min.js';
+    s.onload = () => window.lamejs ? res() : rej(new Error('The MP3 encoder script loaded but did not initialize.'));
+    s.onerror = () => { lameLoadPromise = null; rej(new Error('Could not load the MP3 encoder. Check your connection or export WAV instead.')); };
+    document.head.appendChild(s);
+  });
+  return lameLoadPromise;
 }
 async function encodeMp3(buf, kbps, onProgress, job) {
   await loadLame();
+  // lamejs accepts common MPEG sample rates only. Resample uncommon rates
+  // (e.g. 88.2/96/192 kHz) to 44.1 kHz before encoding rather than failing.
+  const supportedRates = [8000,11025,12000,16000,22050,24000,32000,44100,48000];
+  if (!supportedRates.includes(buf.sampleRate)) {
+    const oc = makeOfflineContext(2, Math.max(1, Math.ceil(buf.duration * 44100)), 44100);
+    const src = oc.createBufferSource(); src.buffer = buf; src.connect(oc.destination); src.start(0);
+    buf = await oc.startRendering();
+  }
   const enc = new lamejs.Mp3Encoder(2, buf.sampleRate, kbps), L = toInt16(buf.getChannelData(0)), R = buf.numberOfChannels > 1 ? toInt16(buf.getChannelData(1)) : L, out = [], bs = 1152;
   for (let i = 0, n = 0; i < L.length; i += bs, n++) {
     if (job.cancel) throw new Error('cancelled');
@@ -1222,9 +1260,14 @@ function scheduleFades(g, t0, d) {
   g.gain.setValueAtTime(fi > 0 ? 0 : 1, t0); if (fi > 0) g.gain.linearRampToValueAtTime(1, t0 + fi);
   if (fo > 0) { g.gain.setValueAtTime(1, t0 + d - fo); g.gain.linearRampToValueAtTime(0, t0 + d); }
 }
+function makeOfflineContext(channels, frames, sampleRate) {
+  const OC = window.OfflineAudioContext || window.webkitOfflineAudioContext;
+  if (!OC) throw new Error('Offline audio rendering is not supported in this browser. Try the latest Chrome, Edge or Safari.');
+  return new OC(channels, frames, sampleRate);
+}
 async function renderMaster() {
   const b = state.buffer, { start, end } = state.trim, d = end - start, sr = b.sampleRate;
-  const oc = new OfflineAudioContext(2, Math.max(1, Math.round(d * sr)), sr);
+  const oc = makeOfflineContext(2, Math.max(1, Math.round(d * sr)), sr);
   const src = oc.createBufferSource(); src.buffer = b; const chain = buildChain(oc, state.eq, state.dyn), fade = oc.createGain();
   src.connect(chain.input); chain.output.connect(fade); fade.connect(oc.destination); scheduleFades(fade, 0, d); src.start(0, start, d);
   return oc.startRendering();
@@ -1392,6 +1435,7 @@ function renderCredits() {
    ============================================================ */
 const META = {};
 function reg(path, label, hint, min, max, step, unit, o = {}) { META[path] = { label, hint, min, max, step, unit, ...o }; return path; }
+const G_DEESS = [reg('dyn.deess', 'De-essing amount', 'Dynamic reduction above 6.2 kHz', 0, 100, 1, '%')];
 const G_COMP = [reg('dyn.thr', 'Threshold', 'Level where compression starts', -40, -4, 1, ' dB', { sign: true }), reg('dyn.ratio', 'Ratio', 'How hard it squeezes', 1, 12, 0.5, ':1'), reg('dyn.attack', 'Attack', 'Lets transients punch through', 1, 80, 1, ' ms'), reg('dyn.release', 'Release', 'How fast it recovers', 30, 600, 10, ' ms')];
 const G_LOUD = [reg('dyn.drive', 'Saturation', 'Warm harmonic drive', 0, 10, 0.5, ''), reg('dyn.loud', 'Loudness push', 'Gain trim into the limiter', -12, 18, 0.5, ' dB', { sign: true })];
 const G_OUT = [reg('dyn.ceil', 'Ceiling', 'Peak ceiling (soft clip safety)', -3, 0, 0.1, ' dB', { sign: true })];
@@ -1454,7 +1498,7 @@ function pushHist() {
 }
 function restoreHist(i) {
   if (i < 0 || i >= hist.stack.length) return; hist.lock = true; clearTimeout(histTimer);
-  const o = JSON.parse(hist.stack[i]); state.eq = o.eq; state.dyn = o.dyn; state.profile = o.profile; state.base = o.base; hist.i = i;
+  const o = JSON.parse(hist.stack[i]); state.eq = o.eq; state.dyn = { deess: 0, ...o.dyn }; state.profile = o.profile; state.base = o.base; hist.i = i;
   renderProfiles(); renderStatus(); syncControls(); applyParams(); scheduleMeasure(); renderTargets(); hist.lock = false; updateHistBtns();
 }
 function updateHistBtns() { $('#btn-undo').disabled = hist.i <= 0; $('#btn-redo').disabled = hist.i >= hist.stack.length - 1; }
@@ -1486,7 +1530,7 @@ function savePreset() {
   $('#preset-name').value = ''; renderPresets(); toast('Preset saved', 'ok'); track('preset_saved');
 }
 function loadPreset(i) {
-  const p = loadPresets()[i]; if (!p) return; state.eq = JSON.parse(JSON.stringify(p.eq)); state.dyn = { ...p.dyn }; state.profile = 'custom'; state.base = p.base || 'club'; state.target = null;
+  const p = loadPresets()[i]; if (!p) return; state.eq = JSON.parse(JSON.stringify(p.eq)); state.dyn = { deess: 0, ...p.dyn }; state.profile = 'custom'; state.base = p.base || 'club'; state.target = null;
   renderProfiles(); syncControls(); applyParams(); renderStatus(); renderTargets(); scheduleMeasure(); pushHist(); toast(`Loaded "${p.name}"`);
 }
 function renderBalance() {
@@ -1669,7 +1713,7 @@ function loop() {
 
 
 async function shareMasterPro() {
-  const data = { title: 'Master Pro — Free Online Mastering Studio', text: 'Try Master Pro: master tracks in your browser, compare the original and master live, and keep your audio on your device.', url: location.href };
+  const data = { title: 'Master Pro — Free Online Mastering Studio', text: 'Try Master Pro: preview mastering in your browser, compare the original and master, and keep your audio on your device.', url: location.href };
   try {
     if (navigator.share) { await navigator.share(data); track('share', { method: 'native' }); }
     else if (navigator.clipboard && window.isSecureContext) { await navigator.clipboard.writeText(data.url); toast('Studio link copied — send it to another artist.', 'ok'); track('share', { method: 'clipboard' }); }
@@ -1775,6 +1819,7 @@ window.addEventListener('resize', fitCanvases);
 
 /* ---------- init ---------- */
 $('#grp-comp').innerHTML = G_COMP.map(sliderHTML).join('');
+$('#grp-deess').innerHTML = G_DEESS.map(sliderHTML).join('');
 $('#grp-loud').innerHTML = G_LOUD.map(sliderHTML).join('');
 $('#grp-out').innerHTML = G_OUT.map(sliderHTML).join('');
 $('#grp-width').innerHTML = G_WIDTH.map(sliderHTML).join('');
