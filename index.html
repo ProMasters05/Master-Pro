@@ -576,6 +576,99 @@ input,select,textarea{font-family:var(--font)!important}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
 </style>
 
+<style id="mp-finish">
+/* ===== Pro Masters v3 finish: one premium layer over the studio tokens ===== */
+:root{
+  --gold-hi:#ecd9b0; --gold-lo:#8f7448;
+  --hair:rgba(240,239,233,.075); --hair-2:rgba(240,239,233,.13);
+  --depth:0 30px 80px -24px rgba(0,0,0,.78);
+}
+body{ background:radial-gradient(1100px 520px at 78% -12%, rgba(197,168,120,.07), transparent 62%), #10100f!important; }
+h1,h2,h3,h4{ letter-spacing:-.025em!important; }
+.eyebrow{ font-size:10.5px!important; letter-spacing:.2em!important; font-weight:700!important; color:var(--accent-2)!important; }
+.btn{ transition:background .2s,border-color .2s,transform .15s,box-shadow .25s,color .2s!important; }
+.btn.primary{ background:linear-gradient(180deg,var(--gold-hi) 0%,var(--accent) 55%,#a88a5c 100%)!important; color:#15120a!important; border:1px solid rgba(255,240,210,.35)!important; box-shadow:inset 0 1px 0 rgba(255,255,255,.4),0 10px 26px -12px rgba(197,168,120,.6)!important; font-weight:700!important; }
+.btn.primary:hover:not([disabled]){ filter:brightness(1.06); box-shadow:inset 0 1px 0 rgba(255,255,255,.45),0 14px 30px -12px rgba(197,168,120,.75)!important; }
+.btn:not(.primary):hover:not([disabled]){ border-color:rgba(197,168,120,.5)!important; }
+.btn[disabled]{ opacity:.45!important; }
+.sheet{ background:linear-gradient(180deg,#1b1b18 0%,#131311 100%)!important; border-color:var(--hair-2)!important; box-shadow:var(--depth)!important; }
+.modal{ background:rgba(7,7,6,.74)!important; }
+.plan.sel,.profile.sel{ box-shadow:inset 0 0 0 1px rgba(197,168,120,.55),0 14px 32px -20px rgba(197,168,120,.55)!important; }
+.compare > div{ grid-template-columns:minmax(0,1.7fr) repeat(3,minmax(0,1fr))!important; }
+.compare .c{ font-size:12px; }
+
+/* ----- Hit Potential report ----- */
+#rater .sheet,#notice .sheet{ width:min(660px,calc(100vw - 24px)); max-height:min(92vh,940px); overflow:auto; padding:30px 28px; }
+#notice .sheet{ width:min(440px,calc(100vw - 24px)); text-align:center; }
+#rater h3,#notice h3{ font-size:24px; font-weight:750; margin-top:6px; }
+.rt-hero{ display:grid; grid-template-columns:168px minmax(0,1fr); gap:26px; align-items:center; margin:18px 0 24px; }
+.rt-ring{ position:relative; width:168px; height:168px; }
+.rt-ring svg{ width:100%; height:100%; transform:rotate(-90deg); }
+.rt-ring .trk{ stroke:var(--panel-3); }
+.rt-ring .arc{ transition:stroke-dashoffset 1.1s cubic-bezier(.2,.8,.2,1); }
+.rt-score{ position:absolute; inset:0; display:grid; place-items:center; text-align:center; }
+.rt-score b{ display:block; font-size:54px; font-weight:700; letter-spacing:-.04em; line-height:1; }
+.rt-score small{ display:block; margin-top:6px; font-size:9.5px; color:var(--text-3); letter-spacing:.18em; font-weight:700; }
+.rt-verdict{ font-size:21px; font-weight:700; letter-spacing:-.02em; margin:6px 0 8px; line-height:1.2; }
+.rt-delta{ font-size:12.5px; color:var(--text-2); }
+.rt-delta b{ color:var(--ok); }
+.rt-clip{ display:flex; gap:16px; align-items:center; justify-content:space-between; flex-wrap:wrap; padding:16px 18px; border:1px solid var(--hair-2); border-radius:14px; background:linear-gradient(135deg,rgba(197,168,120,.12),rgba(197,168,120,.02)); }
+.rt-clip .k{ font-size:10.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--accent-2); font-weight:700; }
+.rt-clip .t{ font-size:21px; font-weight:700; font-family:var(--mono); margin-top:4px; }
+.rt-clip .r{ font-size:12.5px; color:var(--text-2); margin-top:2px; }
+.rt-clip .r b{ color:var(--text); }
+.rt-sec{ margin-top:24px; }
+.rt-sec h5{ font-size:10.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--text-3); font-weight:700; margin-bottom:12px; }
+.rt-cat{ display:grid; grid-template-columns:96px minmax(0,1fr) 40px; gap:12px; align-items:center; font-size:12.5px; margin-bottom:11px; }
+.rt-cat .bar{ height:5px; border-radius:3px; background:var(--panel-3); overflow:hidden; }
+.rt-cat .bar i{ display:block; height:100%; border-radius:3px; background:linear-gradient(90deg,var(--accent),var(--accent-2)); }
+.rt-cat .v{ font-family:var(--mono); text-align:right; }
+.rt-met{ display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:1px; background:var(--hair-2); border:1px solid var(--hair-2); border-radius:14px; overflow:hidden; }
+.rt-met div{ background:var(--panel); padding:13px 14px; }
+.rt-met span{ display:block; font-size:10.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--text-3); font-weight:700; }
+.rt-met b{ display:block; font-size:16px; font-weight:650; font-family:var(--mono); margin-top:4px; }
+.rt-ins{ list-style:none; display:grid; gap:8px; padding:0; margin:0; }
+.rt-ins li{ display:grid; grid-template-columns:8px minmax(0,1fr) auto; gap:12px; align-items:start; padding:12px 14px; border:1px solid var(--hair); border-radius:12px; background:var(--panel); }
+.rt-ins .dot{ width:8px; height:8px; border-radius:50%; margin-top:6px; background:var(--warn); }
+.rt-ins li.good .dot{ background:var(--ok); }
+.rt-ins b{ display:block; font-size:13px; }
+.rt-ins p{ font-size:12.5px; color:var(--text-2); margin-top:3px; line-height:1.5; }
+.rt-lock{ margin-top:12px; padding:16px; border-radius:14px; border:1px dashed rgba(197,168,120,.45); text-align:center; background:rgba(197,168,120,.05); }
+.rt-lock p{ font-size:13px; color:var(--text-2); margin-bottom:12px; }
+.rt-disc{ font-size:11.5px; color:var(--text-3); line-height:1.6; margin-top:22px; padding-top:16px; border-top:1px solid var(--hair); }
+.rt-busy{ text-align:center; padding:34px 10px 26px; }
+.rt-progress{ height:4px; background:var(--panel-3); border-radius:2px; overflow:hidden; margin:20px auto 8px; max-width:360px; }
+.rt-progress i{ display:block; height:100%; width:0; background:linear-gradient(90deg,var(--accent),var(--accent-2)); transition:width .25s linear; }
+.rt-actions{ display:flex; gap:10px; justify-content:flex-end; margin-top:20px; flex-wrap:wrap; }
+
+/* ----- notices (payment confirmation, errors) ----- */
+.nt-ring{ width:58px; height:58px; margin:4px auto 16px; border-radius:50%; display:grid; place-items:center; font-size:22px; background:rgba(197,168,120,.1); border:1px solid rgba(197,168,120,.35); color:var(--accent-2); }
+.nt-ring.ok{ color:var(--ok); border-color:rgba(154,181,160,.5); background:rgba(154,181,160,.08); }
+.nt-ring.spin{ animation:mpPulse 1.3s ease-in-out infinite; }
+@keyframes mpPulse{ 0%,100%{ box-shadow:0 0 0 0 rgba(197,168,120,.25); } 50%{ box-shadow:0 0 0 14px rgba(197,168,120,0); } }
+.nt-text{ font-size:13.5px; color:var(--text-2); margin:8px 0 0; line-height:1.55; }
+.nt-stack{ display:grid; gap:8px; margin-top:20px; }
+.opt-check{ display:inline-flex; gap:8px; align-items:center; font-size:12px; color:var(--text-2); cursor:pointer; }
+.opt-check input{ accent-color:var(--accent); width:15px; height:15px; }
+
+@media (max-width:560px){
+  .rt-hero{ grid-template-columns:1fr; justify-items:center; text-align:center; }
+  .rt-met{ grid-template-columns:repeat(2,minmax(0,1fr)); }
+  #rater .sheet{ padding:24px 18px; }
+  .rt-cat{ grid-template-columns:76px minmax(0,1fr) 34px; }
+  .rt-clip{ justify-content:center; text-align:center; }
+}
+
+/* No sideways scrolling on phones: decorative glows may extend past the edge. */
+html,body{overflow-x:hidden!important}
+
+/* Top bar: keep the balance readable when the Hit Potential button is present. */
+#credit-pill{white-space:nowrap;flex-shrink:0;min-width:max-content}
+@media (max-width:1480px){.hide-md{display:none!important}}
+/* Phones: the Hit Potential report lives in the Export tab, so keep the top bar uncluttered. */
+@media (max-width:650px){#btn-rater{display:none!important}#account-open{font-size:11px;padding:0 10px;white-space:nowrap}}
+
+</style>
 </head>
 <body>
 
@@ -619,6 +712,7 @@ input,select,textarea{font-family:var(--font)!important}
     <button class="iconbtn" id="btn-undo" aria-label="Undo" title="Undo (Ctrl/Cmd+Z)" disabled><svg class="ic"><use href="#i-undo"/></svg></button>
     <button class="iconbtn" id="btn-redo" aria-label="Redo" title="Redo (Ctrl/Cmd+Shift+Z)" disabled><svg class="ic"><use href="#i-redo"/></svg></button>
     <button class="pill" id="btn-share" title="Share Master Pro">↗ <span class="hide-sm">Share</span></button>
+    <button class="pill" id="btn-rater" title="Hit Potential report">&#9733; <span class="hide-md">Hit Potential</span></button>
     <button class="pill" id="credit-pill"><span class="dot"></span><span id="credit-text">2 left</span></button>
     <button class="btn primary hide-sm" id="btn-export-top"><svg class="ic"><use href="#i-download"/></svg>Export</button>
   </div>
@@ -803,12 +897,18 @@ input,select,textarea{font-family:var(--font)!important}
           </div>
         </div>
         <div class="xcard">
-          <div class="xcard-h"><div class="ico"><svg class="ic"><use href="#i-film"/></svg></div><div><b>Visualizer video <span class="tag-pro">PRO</span></b><span>Spectrum animation with your artwork, ready to post.</span></div></div>
+          <div class="xcard-h"><div class="ico"><svg class="ic"><use href="#i-film"/></svg></div><div><b>Visualizer video</b><span>Spectrum animation with your artwork, ready to post.</span></div></div>
           <div class="logo-row" style="margin-bottom:12px">
             <div class="logo-thumb" id="logo-thumb"><svg class="ic"><use href="#i-image"/></svg></div>
             <label class="btn sm file-btn">Choose artwork<input type="file" id="logo-input" accept="image/*" aria-label="Choose cover artwork" /></label>
           </div>
+          <div class="seg" id="seg-video" style="width:100%;margin-bottom:10px"><button data-v="square" class="on">Square 1:1</button><button data-v="vertical">Vertical 9:16</button></div>
+          <label class="hint-text" style="display:flex;gap:10px;align-items:center;margin:0 0 12px;cursor:pointer"><input type="checkbox" id="opt-brand" checked> <span>Include &ldquo;Mastered by Pro Masters&rdquo; end card</span></label>
           <button class="btn primary sm block" data-export="mp4"><svg class="ic"><use href="#i-film"/></svg>Export video</button>
+        </div>
+        <div class="xcard">
+          <div class="xcard-h"><div class="ico"><svg class="ic"><use href="#i-glitch"/></svg></div><div><b>Hit Potential report</b><span>Viral-potential score, best 15 seconds to post, and one-tap fixes.</span></div></div>
+          <button class="btn primary sm block" data-open-rater>Run Hit Potential</button>
         </div>
         <p class="hint-text" id="export-note"></p>
       </div>
@@ -848,6 +948,23 @@ input,select,textarea{font-family:var(--font)!important}
 </div>
 
 <!-- EXPORT MODAL -->
+<!-- HIT POTENTIAL REPORT -->
+<div class="modal" id="rater" role="dialog" aria-modal="true" aria-labelledby="rater-title"><div class="sheet">
+  <button class="iconbtn xbtn" data-close="rater" aria-label="Close">×</button>
+  <span class="eyebrow">Hit Potential · Pro Masters</span>
+  <h3 id="rater-title">Song report</h3>
+  <div id="rater-body"></div>
+</div></div>
+
+<!-- NOTICE (payment confirmation and errors) -->
+<div class="modal" id="notice" role="dialog" aria-modal="true" aria-labelledby="notice-title"><div class="sheet">
+  <div class="nt-ring" id="notice-ring"><svg class="ic" id="notice-ic"><use href="#i-check"/></svg></div>
+  <h3 class="nt-title" id="notice-title"></h3>
+  <p class="nt-text" id="notice-text"></p>
+  <div id="notice-html"></div>
+  <div class="nt-stack" id="notice-actions"></div>
+</div></div>
+
 <div class="modal" id="export-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
   <div class="sheet center">
     <div class="ring spin" id="ring"><svg class="ic" id="ring-ic"><use href="#i-bolt"/></svg></div>
@@ -902,6 +1019,388 @@ window.translation = {common:{selectedList:'{quantity} list selected',selectedLi
 var AUTOHIDE = Boolean(0);
 </script>
 <script defer src="https://sibforms.com/forms/end-form/build/main.js"></script>
+<script id="mp-dsp">
+/*!
+ * Master Pro DSP: K-weighted loudness (ITU-R BS.1770), FFT, tonal balance and
+ * the Hit Potential analysis. Pure functions, no DOM. Runs in the browser and Node.
+ */
+(function (root) {
+'use strict';
+const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+function fft(re, im) {
+  const n = re.length;
+  for (let i = 1, j = 0; i < n; i++) {
+    let bit = n >> 1; for (; j & bit; bit >>= 1) j ^= bit; j ^= bit;
+    if (i < j) { let t = re[i]; re[i] = re[j]; re[j] = t; t = im[i]; im[i] = im[j]; im[j] = t; }
+  }
+  for (let len = 2; len <= n; len <<= 1) {
+    const ang = -2 * Math.PI / len, wr = Math.cos(ang), wi = Math.sin(ang), h = len >> 1;
+    for (let i = 0; i < n; i += len) {
+      let cr = 1, ci = 0;
+      for (let j = 0; j < h; j++) {
+        const a = i + j, b = a + h;
+        const vr = re[b] * cr - im[b] * ci, vi = re[b] * ci + im[b] * cr;
+        re[b] = re[a] - vr; im[b] = im[a] - vi; re[a] += vr; im[a] += vi;
+        const nr = cr * wr - ci * wi; ci = cr * wi + ci * wr; cr = nr;
+      }
+    }
+  }
+}
+/* ITU-R BS.1770 K-weighting, coefficients derived for any sample rate */
+function kCoeffs(fs) {
+  const G = 3.999843853973347, Q1 = 0.7071752369554196, fc1 = 1681.9744509555319;
+  let K = Math.tan(Math.PI * fc1 / fs); const Vh = Math.pow(10, G / 20), Vb = Math.pow(Vh, 0.4996667741545416);
+  let a0 = 1 + K / Q1 + K * K;
+  const s1 = { b: [(Vh + Vb * K / Q1 + K * K) / a0, 2 * (K * K - Vh) / a0, (Vh - Vb * K / Q1 + K * K) / a0], a: [2 * (K * K - 1) / a0, (1 - K / Q1 + K * K) / a0] };
+  const Q2 = 0.5003270373253953, fc2 = 38.13547087613982;
+  K = Math.tan(Math.PI * fc2 / fs); a0 = 1 + K / Q2 + K * K;
+  const s2 = { b: [1, -2, 1], a: [2 * (K * K - 1) / a0, (1 - K / Q2 + K * K) / a0] };
+  return [s1, s2];
+}
+/* Integrated loudness (LUFS) with absolute + relative gating, plus sample peak */
+function measureLoudness(chs, sr, i0, i1) {
+  const chunk = Math.round(sr * 0.1), n = Math.floor((i1 - i0) / chunk);
+  let peak = 0;
+  if (n < 4) { for (const x of chs) for (let i = i0; i < i1; i++) { const v = Math.abs(x[i]); if (v > peak) peak = v; } return { lufs: -Infinity, peak: peak > 0 ? 20 * Math.log10(peak) : -Infinity }; }
+  const [s1, s2] = kCoeffs(sr), e = new Float64Array(n), w = chs.length === 1 ? 2 : 1;
+  const b10 = s1.b[0], b11 = s1.b[1], b12 = s1.b[2], a11 = s1.a[0], a12 = s1.a[1];
+  const b20 = s2.b[0], b21 = s2.b[1], b22 = s2.b[2], a21 = s2.a[0], a22 = s2.a[1];
+  for (const x of chs) {
+    let x1 = 0, x2 = 0, y1 = 0, y2 = 0, u1 = 0, u2 = 0, v1 = 0, v2 = 0;
+    for (let c = 0; c < n; c++) {
+      let acc = 0; const s = i0 + c * chunk;
+      for (let i = s; i < s + chunk; i++) {
+        const v = x[i], ap = v < 0 ? -v : v; if (ap > peak) peak = ap;
+        const y = b10 * v + b11 * x1 + b12 * x2 - a11 * y1 - a12 * y2; x2 = x1; x1 = v; y2 = y1; y1 = y;
+        const z = b20 * y + b21 * u1 + b22 * u2 - a21 * v1 - a22 * v2; u2 = u1; u1 = y; v2 = v1; v1 = z;
+        acc += z * z;
+      }
+      e[c] += acc * w;
+    }
+  }
+  const blocks = []; for (let c = 0; c + 4 <= n; c++) blocks.push((e[c] + e[c + 1] + e[c + 2] + e[c + 3]) / (4 * chunk));
+  const L = z => -0.691 + 10 * Math.log10(z);
+  const abs = blocks.filter(z => z > 0 && L(z) > -70);
+  const pk = peak > 0 ? 20 * Math.log10(peak) : -Infinity;
+  if (!abs.length) return { lufs: -Infinity, peak: pk };
+  const rel = L(abs.reduce((a, b) => a + b, 0) / abs.length) - 10;
+  const g = abs.filter(z => L(z) > rel);
+  return { lufs: L((g.length ? g : abs).reduce((a, b) => a + b, 0) / (g.length || abs.length)), peak: pk };
+}
+const BAL_BANDS = [['Sub', 30, 80, 3], ['Low', 80, 200, 5], ['Low-mid', 200, 500, 3], ['Mid', 500, 2000, 0], ['High-mid', 2000, 5000, -3], ['High', 5000, 10000, -7], ['Air', 10000, 16000, -12]];
+function spectralBalance(buf) {
+  const N = 4096, nb = N / 2, sr = buf.sampleRate;
+  if (buf.length < N * 2) return null;
+  const a = buf.getChannelData(0), b = buf.numberOfChannels > 1 ? buf.getChannelData(1) : a;
+  const win = new Float64Array(N); for (let i = 0; i < N; i++) win[i] = 0.5 - 0.5 * Math.cos(2 * Math.PI * i / (N - 1));
+  const count = Math.min(64, Math.floor(buf.length / N)), hop = count > 1 ? Math.floor((buf.length - N) / (count - 1)) : 0;
+  const p = new Float64Array(nb), re = new Float64Array(N), im = new Float64Array(N);
+  for (let w = 0; w < count; w++) {
+    const s = w * hop; for (let i = 0; i < N; i++) { re[i] = (a[s + i] + b[s + i]) * 0.5 * win[i]; im[i] = 0; }
+    fft(re, im); for (let k = 0; k < nb; k++) p[k] += re[k] * re[k] + im[k] * im[k];
+  }
+  const binHz = sr / N;
+  const lv = BAL_BANDS.map(([n, lo, hi, ref]) => {
+    let e = 0; const k0 = Math.max(1, Math.round(lo / binHz)), k1 = Math.min(nb - 1, Math.round(hi / binHz));
+    for (let k = k0; k < k1; k++) e += p[k];
+    return { n, db: 10 * Math.log10(e / Math.log2(hi / lo) + 1e-20), ref };
+  });
+  const mid = lv[3].db, bands = lv.map(l => ({ n: l.n, dev: (l.db - mid) - l.ref }));
+  const sg = d => clamp(Math.round(-d * 0.6 * 2) / 2, -4, 4);
+  const suggest = [sg((bands[0].dev + bands[1].dev) / 2), sg(bands[2].dev), sg(bands[4].dev), sg((bands[5].dev + bands[6].dev) / 2)];
+  const pts = 96, over = new Float32Array(pts);
+  for (let j = 0; j < pts; j++) {
+    const f0 = 20 * Math.pow(1000, j / pts), f1 = 20 * Math.pow(1000, (j + 1) / pts);
+    const k0 = Math.max(1, Math.floor(f0 / binHz)), k1 = Math.min(nb, Math.max(k0 + 1, Math.ceil(f1 / binHz)));
+    let e = 0; for (let k = k0; k < k1; k++) e += p[k]; over[j] = 10 * Math.log10(e / (k1 - k0) + 1e-20);
+  }
+  return { bands, suggest, over };
+}
+
+/* ============================================================
+   HIT POTENTIAL ANALYSIS
+   A rule-based index built from measurable traits of the audio.
+   It is NOT trained on streaming or sales data and cannot predict
+   whether a song will succeed. Treat it as a quality checklist.
+   ============================================================ */
+const NOTE_NAMES = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
+const DEFAULT_RATER = {
+  weights: { sound: 0.26, rhythm: 0.24, hook: 0.30, viral: 0.20 },
+  sub: {
+    sound:  { loudness: 0.35, dynamics: 0.20, balance: 0.25, peak: 0.20 },
+    rhythm: { groove: 0.60, tempo: 0.40 },
+    hook:   { repetition: 0.40, intro: 0.25, arc: 0.15, length: 0.20 },
+    viral:  { clip: 0.50, opening: 0.30, mono: 0.20 }
+  },
+  analyzeSeconds: 300,
+  clipSeconds: 15
+};
+const lin = (x, x0, y0, x1, y1) => y0 + (y1 - y0) * clamp((x - x0) / (x1 - x0), 0, 1);
+const meanOf = a => { let s = 0; for (let i = 0; i < a.length; i++) s += a[i]; return a.length ? s / a.length : 0; };
+function pctile(arr, p) {
+  const a = Array.from(arr).sort((x, y) => x - y); if (!a.length) return 0;
+  const i = (a.length - 1) * p, lo = Math.floor(i), hi = Math.ceil(i); return a[lo] + (a[hi] - a[lo]) * (i - lo);
+}
+function mergeRater(o) {
+  const d = JSON.parse(JSON.stringify(DEFAULT_RATER)); if (!o) return d;
+  if (o.weights) Object.assign(d.weights, o.weights);
+  if (o.sub) for (const k of Object.keys(o.sub)) d.sub[k] = Object.assign(d.sub[k] || {}, o.sub[k]);
+  ['analyzeSeconds', 'clipSeconds'].forEach(k => { if (typeof o[k] === 'number') d[k] = o[k]; });
+  return d;
+}
+function hannWin(n) { const w = new Float64Array(n); for (let i = 0; i < n; i++) w[i] = 0.5 - 0.5 * Math.cos(2 * Math.PI * i / (n - 1)); return w; }
+function frameCount(len, size, hop) { return len < size ? 0 : Math.floor((len - size) / hop) + 1; }
+function stftEach(x, size, hop, cb) {
+  const win = hannWin(size), re = new Float64Array(size), im = new Float64Array(size), n = frameCount(x.length, size, hop);
+  for (let f = 0; f < n; f++) {
+    const s = f * hop; for (let i = 0; i < size; i++) { re[i] = x[s + i] * win[i]; im[i] = 0; }
+    fft(re, im); cb(re, im, f);
+  }
+  return n;
+}
+function monoMix(chs, n) {
+  const out = new Float32Array(n);
+  if (chs.length === 1) out.set(chs[0].subarray(0, n)); else { const a = chs[0], b = chs[1]; for (let i = 0; i < n; i++) out[i] = (a[i] + b[i]) * 0.5; }
+  return out;
+}
+
+/* Spectral-flux onset envelope (detrended, rectified, unit variance) */
+function onsetEnvelope(x, sr) {
+  const size = 1024, hop = 512, fps = sr / hop, kmax = Math.min(size / 2 - 1, Math.floor(9000 / (sr / size)));
+  const prev = new Float64Array(kmax + 1), raw = new Float32Array(frameCount(x.length, size, hop));
+  stftEach(x, size, hop, (re, im, f) => {
+    let flux = 0;
+    for (let k = 1; k <= kmax; k++) { const m = Math.log(1 + 1000 * Math.sqrt(re[k] * re[k] + im[k] * im[k]) / size), d = m - prev[k]; if (d > 0) flux += d; prev[k] = m; }
+    raw[f] = f === 0 ? 0 : flux;
+  });
+  const n = raw.length, cs = new Float64Array(n + 1); for (let i = 0; i < n; i++) cs[i + 1] = cs[i] + raw[i];
+  const h = Math.max(2, Math.round(fps * 0.25)), env = new Float32Array(n); let sq = 0;
+  for (let t = 0; t < n; t++) { const a = Math.max(0, t - h), b = Math.min(n, t + h + 1), avg = (cs[b] - cs[a]) / (b - a), v = Math.max(0, raw[t] - avg); env[t] = v; sq += v * v; }
+  const sd = Math.sqrt(sq / (n || 1)) || 1; for (let t = 0; t < n; t++) env[t] /= sd;
+  return { env, fps };
+}
+/* Tempo by autocorrelation with a log-Gaussian prior around 120 BPM */
+function estimateTempo(envIn, fps) {
+  const n = envIn.length; if (n < fps * 8) return null;
+  /* light smoothing so onsets that straddle frame boundaries still correlate at fractional lags */
+  const env = new Float32Array(n); let mu = 0; for (let t = 0; t < n; t++) { env[t] = 0.25 * (envIn[t - 1] || 0) + 0.5 * envIn[t] + 0.25 * (envIn[t + 1] || 0); mu += env[t]; }
+  mu /= n; for (let t = 0; t < n; t++) env[t] -= mu; /* zero-mean so strength measures periodicity, not average level */
+  const lagMin = Math.max(3, Math.floor(60 * fps / 200)), lagMax = Math.ceil(60 * fps / 55), L = Math.min(n - 2, lagMax * 4 + 4), ac = new Float64Array(L + 2);
+  for (let l = 0; l <= L; l++) { let s = 0; for (let t = 0; t + l < n; t++) s += env[t] * env[t + l]; ac[l] = s / (n - l); }
+  if (!(ac[0] > 0)) return null;
+  const pk = (l, r = 1) => { let m = 0; for (let i = Math.max(1, l - r); i <= Math.min(L, l + r); i++) if (ac[i] > m) m = ac[i]; return m; };
+  let best = -1, bs = -Infinity;
+  for (let l = lagMin; l <= lagMax && 2 * l <= L; l++) {
+    const bpm = 60 * fps / l, w = Math.exp(-0.5 * Math.pow(Math.log2(bpm / 120) / 0.9, 2)), s = (pk(l) + 0.5 * pk(2 * l, 2)) * w;
+    if (s > bs) { bs = s; best = l; }
+  }
+  if (best < 0) return null;
+  /* refine: locate the autocorrelation peak near k*best for k = 1..4, divide by k, take the median */
+  const est = [];
+  for (let k = 1; k <= 4 && k * best + k + 1 <= L; k++) {
+    const c = k * best; let l = c, m = -Infinity; for (let i = c - k - 1; i <= c + k + 1; i++) if (i > 1 && ac[i] > m) { m = ac[i]; l = i; }
+    const y0 = ac[l - 1], y1 = ac[l], y2 = ac[l + 1], den = y0 - 2 * y1 + y2; let d = 0; if (den < 0) { d = 0.5 * (y0 - y2) / den; if (Math.abs(d) >= 1) d = 0; }
+    est.push((l + d) / k);
+  }
+  est.sort((a, b) => a - b); const lag = est[Math.floor(est.length / 2)];
+  return { bpm: 60 * fps / lag, strength: clamp(pk(best) / ac[0], 0, 1) };
+}
+/* Nearest beat to time t, aligned locally so tempo rounding cannot drift */
+function nearestBeat(env, fps, bpm, t) {
+  const P = 60 * fps / bpm, tf = t * fps; let bestO = 0, bs = -Infinity;
+  for (let o = 0; o < P; o += 0.5) {
+    const anchor = tf - P / 2 + o; let s = 0;
+    for (let k = -4; k <= 4; k++) { const idx = Math.round(anchor + k * P); if (idx >= 0 && idx < env.length) s += env[idx]; }
+    if (s > bs) { bs = s; bestO = anchor; }
+  }
+  return (bestO + Math.round((tf - bestO) / P) * P) / fps;
+}
+/* Per-frame chroma + band energies at 4096-pt resolution */
+const BAND_EDGES = [[40, 150], [150, 500], [500, 1500], [1500, 4000], [4000, 8000], [8000, 16000]];
+function spectralFrames(x, sr) {
+  const size = 4096, hop = 4096, nF = frameCount(x.length, size, hop), binHz = sr / size, nyq = sr / 2;
+  const chroma = new Float32Array(nF * 12), bands = new Float32Array(nF * 6), energy = new Float32Array(nF), chromaSum = new Float64Array(12);
+  const kLo = Math.max(2, Math.ceil(65 / binHz)), kHi = Math.min(size / 2 - 2, Math.floor(2100 / binHz)), kTop = Math.min(size / 2 - 1, Math.floor(Math.min(16000, nyq) / binHz));
+  const mag = new Float64Array(size / 2); let cNum = 0, cDen = 0;
+  stftEach(x, size, hop, (re, im, f) => {
+    let mx = 0, tot = 0;
+    for (let k = 1; k <= kTop; k++) { const m = Math.sqrt(re[k] * re[k] + im[k] * im[k]); mag[k] = m; tot += m; cNum += m * k * binHz; cDen += m; if (k >= kLo && k <= kHi && m > mx) mx = m; }
+    energy[f] = tot;
+    BAND_EDGES.forEach(([lo, hi], b) => {
+      let e = 0; const k0 = Math.max(1, Math.round(lo / binHz)), k1 = Math.min(kTop, Math.round(hi / binHz));
+      for (let k = k0; k <= k1; k++) e += mag[k] * mag[k]; bands[f * 6 + b] = 10 * Math.log10(e / (size * size) + 1e-12);
+    });
+    if (mx <= 0) return;
+    let cs = 0; const row = f * 12;
+    for (let k = kLo; k <= kHi; k++) {
+      const m = mag[k]; if (m < mx * 0.02 || m < mag[k - 1] || m < mag[k + 1]) continue;
+      const midi = 69 + 12 * Math.log2(k * binHz / 440), pc = ((Math.round(midi) % 12) + 12) % 12; chroma[row + pc] += m; cs += m;
+    }
+    if (cs > 0) { for (let i = 0; i < 12; i++) { chroma[row + i] /= cs; chromaSum[i] += chroma[row + i] * tot; } }
+  });
+  return { nF, hopSec: hop / sr, chroma, bands, energy, chromaSum, centroid: cDen > 0 ? cNum / cDen : 0 };
+}
+const KS_MAJ = [6.35, 2.23, 3.48, 2.33, 4.38, 4.09, 2.52, 5.19, 2.39, 3.66, 2.29, 2.88];
+const KS_MIN = [6.33, 2.68, 3.52, 5.38, 2.60, 3.53, 2.54, 4.75, 3.98, 2.69, 3.34, 3.17];
+function pearson(a, b) {
+  const n = a.length, ma = meanOf(a), mb = meanOf(b); let sab = 0, saa = 0, sbb = 0;
+  for (let i = 0; i < n; i++) { const x = a[i] - ma, y = b[i] - mb; sab += x * y; saa += x * x; sbb += y * y; }
+  return saa > 0 && sbb > 0 ? sab / Math.sqrt(saa * sbb) : 0;
+}
+function detectKey(chroma) {
+  let tot = 0; for (let i = 0; i < 12; i++) tot += chroma[i]; if (!(tot > 0)) return null;
+  const res = [];
+  for (let t = 0; t < 12; t++) {
+    const rMaj = new Array(12), rMin = new Array(12); for (let i = 0; i < 12; i++) { rMaj[i] = KS_MAJ[(i - t + 12) % 12]; rMin[i] = KS_MIN[(i - t + 12) % 12]; }
+    res.push({ tonic: t, mode: 'major', c: pearson(chroma, rMaj) }, { tonic: t, mode: 'minor', c: pearson(chroma, rMin) });
+  }
+  res.sort((a, b) => b.c - a.c); const b = res[0], rel = b.mode === 'major' ? { tonic: (b.tonic + 9) % 12, mode: 'minor' } : { tonic: (b.tonic + 3) % 12, mode: 'major' };
+  return { name: NOTE_NAMES[b.tonic] + ' ' + b.mode, alt: NOTE_NAMES[rel.tonic] + ' ' + rel.mode, corr: b.c, confidence: lin(b.c, 0.4, 20, 0.85, 100) };
+}
+/* Self-similarity of 4-second windows: how much of the song comes back later */
+function repetitionMap(sp) {
+  const nSeg = Math.floor(sp.nF * sp.hopSec), W = 4, GAP = 8; if (nSeg < 24) return null;
+  const dim = 18, feat = new Float64Array(nSeg * dim), cnt = new Float64Array(nSeg);
+  for (let f = 0; f < sp.nF; f++) {
+    const s = Math.min(nSeg - 1, Math.floor(f * sp.hopSec)); cnt[s]++;
+    for (let i = 0; i < 12; i++) feat[s * dim + i] += sp.chroma[f * 12 + i];
+    for (let b = 0; b < 6; b++) feat[s * dim + 12 + b] += sp.bands[f * 6 + b];
+  }
+  for (let s = 0; s < nSeg; s++) if (cnt[s]) for (let d = 0; d < dim; d++) feat[s * dim + d] /= cnt[s];
+  for (let s = 0; s < nSeg; s++) { let n2 = 0; for (let i = 0; i < 12; i++) n2 += feat[s * dim + i] ** 2; n2 = Math.sqrt(n2) || 1; for (let i = 0; i < 12; i++) feat[s * dim + i] /= n2; }
+  for (let b = 0; b < 6; b++) {
+    let mu = 0; for (let s = 0; s < nSeg; s++) mu += feat[s * dim + 12 + b]; mu /= nSeg; let v = 0; for (let s = 0; s < nSeg; s++) v += (feat[s * dim + 12 + b] - mu) ** 2; const sd = Math.sqrt(v / nSeg) || 0;
+    for (let s = 0; s < nSeg; s++) feat[s * dim + 12 + b] = sd > 1e-6 ? (feat[s * dim + 12 + b] - mu) / sd * 0.45 : 0;
+  }
+  const nW = nSeg - W + 1, vd = dim * W, vec = new Float64Array(nW * vd);
+  for (let i = 0; i < nW; i++) { let n2 = 0; for (let w = 0; w < W; w++) for (let d = 0; d < dim; d++) { const v = feat[(i + w) * dim + d]; vec[i * vd + w * dim + d] = v; n2 += v * v; } n2 = Math.sqrt(n2) || 1; for (let d = 0; d < vd; d++) vec[i * vd + d] /= n2; }
+  const best = new Float32Array(nW).fill(-1);
+  for (let i = 0; i < nW; i++) for (let j = i + GAP; j < nW; j++) {
+    let dot = 0; const a = i * vd, b = j * vd; for (let d = 0; d < vd; d++) dot += vec[a + d] * vec[b + d];
+    if (dot > best[i]) best[i] = dot; if (dot > best[j]) best[j] = dot;
+  }
+  for (let i = 0; i < nW; i++) if (best[i] < 0) best[i] = 0;
+  let strong = 0; for (let i = 0; i < nW; i++) if (best[i] >= 0.9) strong++;
+  return { best, nW, mean: meanOf(best), strongFrac: strong / nW };
+}
+function verdictFor(score) {
+  if (score >= 90) return { id: 'breakout', label: 'Breakout potential' };
+  if (score >= 80) return { id: 'strong', label: 'Strong contender' };
+  if (score >= 68) return { id: 'promising', label: 'Promising' };
+  if (score >= 52) return { id: 'developing', label: 'Developing' };
+  return { id: 'draft', label: 'Early draft' };
+}
+
+/* --- individual scorers (0-100) --- */
+const scoreLoudness = l => !isFinite(l) ? 0 : l >= -9 ? lin(l, -9, 100, -4, 55) : l >= -13 ? lin(l, -13, 88, -9, 100) : lin(l, -26, 10, -13, 88);
+const scoreDynamics = plr => !isFinite(plr) ? 50 : plr < 8 ? lin(plr, 3, 30, 8, 100) : plr <= 14 ? 100 : lin(plr, 14, 100, 22, 55);
+const scorePeak = (pk, clipFrac) => clipFrac > 0.001 ? 40 : pk > -0.1 ? 72 : pk > -0.5 ? 88 : 100;
+const scoreLength = d => d < 60 ? 55 : d < 90 ? lin(d, 60, 55, 90, 80) : d < 120 ? lin(d, 90, 80, 120, 100) : d <= 220 ? 100 : d <= 300 ? lin(d, 220, 100, 300, 70) : 50;
+const scoreTempo = b => b >= 80 && b <= 170 ? 100 : (b >= 70 && b < 80) || (b > 170 && b <= 185) ? 85 : 65;
+const scoreMono = c => c === null ? 80 : lin(c, -0.2, 30, 0.6, 100);
+
+function lvDb(p) { return 10 * Math.log10(p + 1e-12); }
+
+async function analyzeTrack(chs, sr, opts = {}) {
+  const prog = opts.onProgress || (() => {}), yieldNow = opts.yield || (() => new Promise(r => setTimeout(r, 0))), cfg = mergeRater(opts.rater);
+  const total = chs[0].length, dur = total / sr, n = Math.min(total, Math.floor(sr * cfg.analyzeSeconds));
+  if (dur < 10) return { tooShort: true, duration: dur };
+  const chans = chs.slice(0, 2).map(c => c.subarray(0, n)), stereo = chans.length > 1;
+  prog(0.03, 'Measuring loudness and peaks'); await yieldNow();
+  const loud = measureLoudness(chans, sr, 0, n);
+  let clipped = 0, sLL = 0, sRR = 0, sLR = 0;
+  for (let c = 0; c < chans.length; c++) { const a = chans[c]; for (let i = 0; i < n; i++) if (a[i] >= 0.999 || a[i] <= -0.999) clipped++; }
+  if (stereo) { const a = chans[0], b = chans[1]; for (let i = 0; i < n; i++) { sLL += a[i] * a[i]; sRR += b[i] * b[i]; sLR += a[i] * b[i]; } }
+  const corr = stereo && sLL > 0 && sRR > 0 ? sLR / Math.sqrt(sLL * sRR) : null, clipFrac = clipped / (n * chans.length);
+  const mono = monoMix(chans, n);
+
+  prog(0.15, 'Detecting tempo and groove'); await yieldNow();
+  const { env, fps } = onsetEnvelope(mono, sr), tempo = estimateTempo(env, fps);
+
+  prog(0.38, 'Finding key and tonal balance'); await yieldNow();
+  const sp = spectralFrames(mono, sr), key = detectKey(sp.chromaSum);
+  const bal = spectralBalance({ length: n, sampleRate: sr, numberOfChannels: chans.length, getChannelData: i => chans[i] });
+
+  prog(0.58, 'Mapping hook and repetition'); await yieldNow();
+  const rep = repetitionMap(sp);
+
+  prog(0.78, 'Finding your best viral clip'); await yieldNow();
+  const half = Math.floor(sr * 0.5), nHalf = Math.floor(n / half), pw = new Float64Array(nHalf);
+  for (let w = 0; w < nHalf; w++) { let s = 0; for (let i = w * half; i < (w + 1) * half; i++) s += mono[i] * mono[i]; pw[w] = s / half; }
+  const nSec = Math.floor(nHalf / 2), secDb = new Float64Array(nSec), secPw = new Float64Array(nSec);
+  for (let i = 0; i < nSec; i++) { secPw[i] = (pw[2 * i] + pw[2 * i + 1]) / 2; secDb[i] = lvDb(secPw[i]); }
+  const sm = new Float64Array(Math.max(0, nHalf - 1)); for (let i = 0; i < sm.length; i++) sm[i] = lvDb((pw[i] + pw[i + 1]) / 2);
+  const ref = pctile(sm, 0.75); let introIdx = sm.findIndex(v => v >= ref - 6); if (introIdx < 0) introIdx = sm.length; const introSec = introIdx * 0.5;
+  const openN = Math.min(6, nHalf), opening = lvDb(meanOf(pw.subarray(0, openN))) - ref;
+  const arc = pctile(secDb, 0.9) - pctile(secDb, 0.2);
+  const act = new Float64Array(nSec); for (let i = 0; i < nSec; i++) { let s = 0, c = 0; for (let t = Math.floor(i * fps); t < Math.min(env.length, Math.floor((i + 1) * fps)); t++) { s += env[t]; c++; } act[i] = c ? s / c : 0; }
+  const repSec = new Float64Array(nSec); for (let i = 0; i < nSec; i++) repSec[i] = rep ? rep.best[Math.min(rep.nW - 1, i)] : 0;
+  const L = Math.min(nSec, cfg.clipSeconds), cand = Math.max(1, nSec - L + 1), ew = new Float64Array(cand), aw = new Float64Array(cand), rw = new Float64Array(cand);
+  for (let i = 0; i < cand; i++) { let e = 0, a = 0, r = 0; for (let j = i; j < i + L; j++) { e += secDb[j]; a += act[j]; r += repSec[j]; } ew[i] = e / L; aw[i] = a / L; rw[i] = r / L; }
+  const zs = arr => { const m = meanOf(arr); let v = 0; for (const x of arr) v += (x - m) ** 2; const sd = Math.sqrt(v / arr.length); return arr.map(x => sd > 1e-9 ? (x - m) / sd : 0); };
+  const zE = zs(ew), zA = zs(aw), zR = zs(rw); let bi = 0, bsc = -Infinity;
+  for (let i = 0; i < cand; i++) { const s = 0.5 * zE[i] + 0.3 * zA[i] + 0.2 * (rep ? zR[i] : 0); if (s > bsc) { bsc = s; bi = i; } }
+  let cs = bi; if (tempo && tempo.strength > 0.08) cs = nearestBeat(env, fps, tempo.bpm, bi);
+  const clipLen = Math.min(L, dur); cs = clamp(cs, 0, Math.max(0, dur - clipLen));
+  let pwSum = 0; for (let j = bi; j < bi + L; j++) pwSum += secPw[j]; const clipRms = lvDb(pwSum / L), actAvg = meanOf(act) || 1;
+  const clipScore = 0.5 * lin(clipRms, -26, 20, -11, 100) + 0.25 * lin(aw[bi] / actAvg, 0.8, 50, 1.4, 100) + 0.25 * (rep ? lin(rw[bi], 0.8, 40, 0.96, 100) : 60);
+
+  prog(0.92, 'Scoring'); await yieldNow();
+  const bandDevAbs = bal ? meanOf(bal.bands.map(b => Math.abs(b.dev))) : null, plr = isFinite(loud.peak) && isFinite(loud.lufs) ? loud.peak - loud.lufs : NaN;
+  const sc = {
+    loudness: scoreLoudness(loud.lufs), dynamics: scoreDynamics(plr), balance: bal ? clamp(100 - 5 * bandDevAbs, 25, 100) : null, peak: scorePeak(loud.peak, clipFrac),
+    groove: tempo ? lin(tempo.strength, 0.03, 20, 0.25, 100) : null, tempo: tempo && tempo.strength >= 0.08 ? scoreTempo(tempo.bpm) : null,
+    repetition: rep ? lin(rep.mean, 0.78, 35, 0.95, 100) : null, intro: lin(introSec, 4, 100, 25, 30), arc: arc < 1.5 ? 40 : arc < 3 ? lin(arc, 1.5, 40, 3, 90) : arc <= 9 ? 100 : lin(arc, 9, 100, 16, 70), length: scoreLength(dur),
+    clip: clipScore, opening: lin(opening, -14, 30, -3, 100), mono: scoreMono(corr)
+  };
+  const cat = {};
+  for (const c of Object.keys(cfg.sub)) { let s = 0, w = 0; for (const [k, wt] of Object.entries(cfg.sub[c])) if (sc[k] !== null && sc[k] !== undefined) { s += sc[k] * wt; w += wt; } cat[c] = w ? s / w : 0; }
+  let overall = 0, tw = 0; for (const [c, wt] of Object.entries(cfg.weights)) { overall += cat[c] * wt; tw += wt; } overall = overall / (tw || 1);
+  const metrics = {
+    bpm: tempo ? Math.round(tempo.bpm * 10) / 10 : null, tempoStrength: tempo ? tempo.strength : null, key: key ? key.name : null, keyAlt: key ? key.alt : null, keyConfidence: key ? key.confidence : null,
+    lufs: loud.lufs, peak: loud.peak, plr, clipFrac, stereoCorr: corr, introSec, opening, arc, repetition: rep ? rep.mean : null, strongRepeat: rep ? rep.strongFrac : null, durationSec: dur, brightness: sp.centroid
+  };
+  const clipInfo = { start: cs, dur: clipLen, end: cs + clipLen, score: clipScore };
+  const report = {
+    ok: true, duration: dur, analyzedSeconds: n / sr, metrics, scores: sc, categories: cat, overall, verdict: verdictFor(overall), clip: clipInfo, curve: Array.from(secDb, v => Math.round(v * 10) / 10),
+    viral: cat.viral >= 78 ? 'High' : cat.viral >= 62 ? 'Medium' : 'Low', balance: bal ? bal.bands : null,
+    confidence: dur < 30 ? 'Low' : tempo && tempo.strength > 0.15 && rep ? 'Medium' : 'Low'
+  };
+  report.insights = buildInsights(report); prog(1, 'Done');
+  return report;
+}
+
+/* Plain-language findings with an optional one-tap fix inside Master Pro */
+function buildInsights(r) {
+  const m = r.metrics, s = r.scores, out = [], f1 = v => (Math.round(v * 10) / 10).toFixed(1);
+  const add = (id, score, title, good, bad, action) => out.push({ id, score, title, text: score >= 78 ? good : bad, good: score >= 78, action: score >= 78 ? null : action || null });
+  add('loudness', s.loudness, 'Loudness', `${f1(m.lufs)} LUFS integrated is competitive with current releases.`,
+    m.lufs > -7 ? `${f1(m.lufs)} LUFS is very hot. Over-limiting flattens punch. Pull the loudness push back a couple of dB.` : `${f1(m.lufs)} LUFS is quieter than most releases (about -14 to -8). Raise it with a loudness target.`, m.lufs > -7 ? 'profile:streaming' : 'target:club');
+  add('dynamics', s.dynamics, 'Dynamics', `Peak-to-loudness of ${f1(m.plr)} dB keeps punch and polish in balance.`,
+    m.plr < 8 ? `Peak-to-loudness is only ${f1(m.plr)} dB, so the mix is heavily compressed. Ease the compressor or the loudness push.` : `Peak-to-loudness of ${f1(m.plr)} dB is very dynamic. More compression will make it feel finished.`, m.plr < 8 ? 'profile:streaming' : 'target:spotify');
+  if (s.balance !== null) {
+    const w = r.balance.reduce((a, b) => Math.abs(b.dev) > Math.abs(a.dev) ? b : a);
+    add('balance', s.balance, 'Tonal balance', 'Frequency balance sits close to a typical modern release.', `${w.n} is about ${f1(Math.abs(w.dev))} dB ${w.dev > 0 ? 'hotter' : 'weaker'} than a typical release. Auto tone can nudge it back.`, 'auto-tone');
+  }
+  add('peak', s.peak, 'Peaks and clipping', 'Peaks have safe headroom.', m.clipFrac > 0.001 ? 'Samples are hard-clipping, which sounds harsh after streaming encodes. Lower the ceiling.' : `Peaks reach ${f1(m.peak)} dBFS, leaving no room for codec overshoot. Use a -1 dB ceiling.`, 'target:spotify');
+  if (s.groove !== null) add('groove', s.groove, 'Groove clarity', 'The pulse is clear and easy to lock onto.', 'The beat is hard to lock onto. Tighten kick and snare timing so listeners feel the pulse immediately.');
+  if (s.tempo !== null) add('tempo', s.tempo, 'Tempo', `${f1(m.bpm)} BPM sits in a proven range for dance and short-form content.`, `${f1(m.bpm)} BPM is outside the most common range. Fine if intentional, but it narrows playlist fit.`);
+  if (s.repetition !== null) add('repetition', s.repetition, 'Hook repetition', 'Key material returns, which is how hooks get stuck in heads.', 'Little of the song comes back. Repeating a short, memorable motif at least three times helps listeners learn it.');
+  add('intro', s.intro, 'Opening', `Energy arrives within ${f1(m.introSec)} s, quick enough for short-form attention spans.`, `Full energy takes ${f1(m.introSec)} s to arrive. Many listeners skip within 10 s. Start closer to the hook.`, 'trim:clip');
+  add('arc', s.arc, 'Energy arc', 'Verses and choruses have clear contrast.', 'Energy stays flat. Contrast between sections makes the chorus feel bigger.');
+  add('length', s.length, 'Length', `${Math.floor(m.durationSec / 60)}:${String(Math.floor(m.durationSec % 60)).padStart(2, '0')} fits current listening habits.`, m.durationSec > 240 ? 'Long tracks lose skip-prone listeners. Consider a tighter edit.' : 'Very short tracks can feel unfinished unless built for loops.');
+  add('clip', s.clip, 'Viral clip', 'Your best 15 seconds hits hard and repeats well.', 'Your strongest 15 seconds are modest. A punchier hook section will carry short-form posts.', 'trim:clip');
+  add('opening', s.opening, 'First 3 seconds', 'The first seconds already have impact.', 'The first 3 seconds are much quieter than the rest. Short-form viewers decide fast, so open with energy.', 'trim:clip');
+  add('mono', s.mono, 'Phone-speaker safety', 'Mix holds up in mono, as on phone speakers.', 'Left and right partly cancel in mono, so it can sound thin on phones. Narrow the stereo width.', 'width:100');
+  return out.sort((a, b) => a.score - b.score);
+}
+
+const api = { fft, kCoeffs, measureLoudness, spectralBalance, onsetEnvelope, estimateTempo, nearestBeat, detectKey, analyzeTrack, verdictFor, DEFAULT_RATER, NOTE_NAMES };
+if (typeof module !== 'undefined' && module.exports) module.exports = api;
+root.MPDSP = api;
+})(typeof window !== 'undefined' ? window : globalThis);
+
+</script>
 <script>
 'use strict';
 const MASTER_PRO_VERSION = '2.2.0';
@@ -921,6 +1420,7 @@ const CONFIG = {
     lifetime: '', // Stripe one-time Payment Link: $146
     single: '' // Stripe one-time Payment Link: $3.99 per master
   },
+  VERIFY_URL: '/api/verify', CONTACT_EMAIL: 'promasters@gmail.com', SITE_URL: '', DEMO_MODE: false,
   PLANS: {
     monthly: { name: 'Monthly', price: '$9.99', per: 'per month', badge: 'FLEXIBLE' },
     yearly: { name: 'Yearly', price: '$85', per: 'per year · save 29%', badge: 'BEST VALUE' },
@@ -1069,13 +1569,13 @@ const TARGETS = [
   { id: 'club',    name: 'Loud / Club', lufs: -9,  ceil: -0.3 }
 ];
 const state = {
-  credits: Math.max(0, Math.min(999, Number(store.get('credits', CONFIG.FREE_CREDITS)) || 0)), pro: false, // Pro access must be verified server-side.
+  credits: Math.max(0, Math.min(999, Number(store.get('credits', CONFIG.FREE_CREDITS)) || 0)), pro: false, premium: Math.max(0, Math.min(99, Number(store.get('premium', 0)) || 0)), proSession: store.get('proSession', null), pendingVia: null, file: null, // Pro is verified server-side (api/verify.js).
   profile: 'balanced', base: 'balanced', eq: [], dyn: {}, target: null,
   buffer: null, fileName: '', peaks: null, analysis: null,
   trim: { start: 0, end: 0 }, fade: { in: 0, out: 0 }, loop: false,
   playing: false, offset: 0, startedAt: 0, src: null,
   bypass: false, levelMatch: false, logo: null, exporting: null,
-  fmt: { wav: 16, mp3: 192 },
+  fmt: { wav: 16, mp3: 192, video: 'square', branding: true },
   meas: { orig: null, master: null, pending: false }
 };
 function applyProfile(k) {
@@ -1334,6 +1834,7 @@ async function extractVideoAudio(file, ac, requestId) {
     throw err;
   } finally { cleanup(); }
 }
+const activeFileLoads = new Map();
 function loadFile(file) {
   if (!file) return Promise.resolve();
   const key = [file.name, file.size, file.lastModified, file.type].join('|');
@@ -1380,7 +1881,7 @@ async function loadFileInternal(file) {
   if (requestId !== loadRequestId) return;
   try {
     pause(); stopSource();
-    state.buffer = buf; state.fileName = file.name; state.analysis = null; peakHold = 0;
+    state.buffer = buf; state.fileName = file.name; state.file = file; state.analysis = null; peakHold = 0;
     state.trim = { start: 0, end: buf.duration }; state.offset = 0;
     state.fade = { in: 0, out: 0 }; state.meas = { orig: null, master: null, pending: true }; origCache = {};
     state.bypass = false; setBypass(false);
@@ -1611,6 +2112,7 @@ function pickVideoMime() {
   return list.find(m => window.MediaRecorder && MediaRecorder.isTypeSupported(m)) || '';
 }
 async function renderVideo(job, setProgress) {
+  const BRAND = state.fmt.branding !== false;
   if (!window.MediaRecorder || !HTMLCanvasElement.prototype.captureStream) throw new Error('Video export is not supported in this browser. Try Chrome, Edge or Safari 17+.');
   const mime = pickVideoMime(); if (!mime) throw new Error('No supported video format in this browser.');
   const ac = ensureCtx(); if (ac.state !== 'running') await ac.resume(); pause();
@@ -1618,14 +2120,14 @@ async function renderVideo(job, setProgress) {
   const dest = ac.createMediaStreamDestination(), src = ac.createBufferSource(); src.buffer = state.buffer;
   const chain = buildChain(ac, state.eq, state.dyn), fade = ac.createGain(), an = ac.createAnalyser(); an.fftSize = 512; an.smoothingTimeConstant = 0.75;
   src.connect(chain.input); chain.output.connect(fade); fade.connect(an); an.connect(dest);
-  const W = 720, H = 720, cv = document.createElement('canvas'); cv.width = W; cv.height = H; const g = cv.getContext('2d');
+  const VF = VIDEO_FORMATS[state.fmt.video] || VIDEO_FORMATS.square, W = VF.w, H = VF.h, cv = document.createElement('canvas'); cv.width = W; cv.height = H; const g = cv.getContext('2d');
   const stream = cv.captureStream(30); dest.stream.getAudioTracks().forEach(t => stream.addTrack(t));
   const rec = new MediaRecorder(stream, { mimeType: mime, videoBitsPerSecond: 4000000, audioBitsPerSecond: 192000 });
   const chunks = []; rec.ondataavailable = e => { if (e.data && e.data.size) chunks.push(e.data); };
   let recorderError = null;
   const done = new Promise((res, rej) => { rec.onstop = res; rec.onerror = e => { recorderError = e.error || new Error('The browser recorder stopped unexpectedly.'); rej(recorderError); }; });
   const freq = new Uint8Array(an.frequencyBinCount), title = state.fileName.replace(/\.[^.]+$/, '');
-  let t0 = 0, raf = 0, ended = false;
+  let t0 = 0, raf = 0, ended = false, cardAt = 0;
   function frame() {
     an.getByteFrequencyData(freq);
     const bass = freq.slice(0, 6).reduce((a, b) => a + b, 0) / 6 / 255;
@@ -1644,14 +2146,15 @@ async function renderVideo(job, setProgress) {
     g.lineWidth = 3; g.strokeStyle = 'rgba(143,176,255,.85)'; g.beginPath(); g.arc(cx, cy, R, 0, Math.PI * 2); g.stroke();
     g.textAlign = 'center'; g.textBaseline = 'alphabetic'; g.fillStyle = '#e9ebf0'; g.font = '700 30px system-ui, sans-serif';
     let tt = title; while (g.measureText(tt).width > W - 120 && tt.length > 4) tt = tt.slice(0, -2); if (tt !== title) tt += '…';
-    g.fillText(tt, cx, H - 92); g.fillStyle = '#6f7686'; g.font = '600 16px system-ui, sans-serif'; g.fillText('MASTERED WITH MASTER PRO', cx, H - 62);
+    g.fillText(tt, cx, H - 92); if (BRAND) { g.fillStyle = '#6f7686'; g.font = '600 16px system-ui, sans-serif'; g.fillText('MASTERED BY PRO MASTERS', cx, H - 62); }
     // Permanent studio identity watermark, independent of optional cover artwork.
-    g.save(); g.globalAlpha = 0.92; g.fillStyle = '#fff'; g.font = '800 18px system-ui, sans-serif'; g.textAlign = 'right'; g.fillText('PRO MASTERS STUDIO', W - 34, 42); g.restore();
+    if (BRAND) { g.save(); g.globalAlpha = 0.92; g.fillStyle = '#fff'; g.font = '800 18px system-ui, sans-serif'; g.textAlign = 'right'; g.fillText('PRO MASTERS STUDIO', W - 34, 42); g.restore(); }
+    if (cardAt) drawEndCard(g, W, H, clamp((performance.now() - cardAt) / 450, 0, 1));
     const prog = clamp((ac.currentTime - t0) / dur, 0, 1);
     g.fillStyle = '#222733'; g.fillRect(60, H - 34, W - 120, 4); g.fillStyle = '#8fb0ff'; g.fillRect(60, H - 34, (W - 120) * prog, 4); setProgress(prog);
     if (!ended) raf = requestAnimationFrame(frame);
   }
-  src.onended = () => { setTimeout(() => { ended = true; if (rec.state !== 'inactive') rec.stop(); }, 350); };
+  src.onended = () => { setTimeout(() => { if (BRAND) cardAt = performance.now(); }, 350); setTimeout(() => { ended = true; if (rec.state !== 'inactive') rec.stop(); }, 350 + (BRAND ? 2800 : 0)); };
   rec.start(250); t0 = ac.currentTime + 0.05; scheduleFades(fade, t0, dur); src.start(t0, start, dur); frame();
   const poll = setInterval(() => { if (job.cancel) { ended = true; try { src.onended = null; src.stop(); } catch {} if (rec.state !== 'inactive') rec.stop(); } }, 150);
   try { await done; } finally { clearInterval(poll); cancelAnimationFrame(raf); stream.getTracks().forEach(t => { try { t.stop(); } catch {} }); dest.stream.getTracks().forEach(t => { try { t.stop(); } catch {} }); try { src.disconnect(); chain.output.disconnect(); an.disconnect(); } catch {} }
@@ -1664,13 +2167,6 @@ async function renderVideo(job, setProgress) {
 }
 function openModal(id) { $(id).classList.add('active'); }
 function closeModal(id) { $(id).classList.remove('active'); }
-function gate(type) {
-  // Visualizer video exports are free and do not consume audio-master credits.
-  if (type === 'wav' && state.fmt.wav === 24 && !state.pro) { openPaywall('bits'); return false; }
-  if (type === 'mp3' && state.fmt.mp3 === 320 && !state.pro) { openPaywall('kbps'); return false; }
-  if (type !== 'mp4' && !state.pro && state.credits <= 0) { openPaywall('credits'); return false; }
-  return true;
-}
 async function startExport(type) {
   if (state.exporting) return;
   if (!state.buffer) { toast('Load a track first', 'error'); return; }
@@ -1696,7 +2192,7 @@ async function startExport(type) {
       }
     }
     setP(1);
-    if (!state.pro && type !== 'mp4') { state.credits = Math.max(0, state.credits - 1); store.set('credits', state.credits); renderCredits(); }
+    if (state.pendingVia) consumeExport(state.pendingVia);
     const url = URL.createObjectURL(blob), base = (state.fileName.replace(/\.[^.]+$/, '') || 'master').replace(/["<>]/g, '');
     ring.className = 'ring done'; $('#ring-ic').innerHTML = '<use href="#i-check"/>';
     $('#modal-title').textContent = 'Your master is ready'; $('#modal-sub').textContent = `${(blob.size / 1048576).toFixed(1)} MB · ${ext.toUpperCase()}`;
@@ -1711,65 +2207,6 @@ async function startExport(type) {
 /* ============================================================
    PAYWALL
    ============================================================ */
-let selectedPlan = CONFIG.DEFAULT_PLAN;
-function renderPaywall() {
-  const planKeys = ['single', 'monthly', 'yearly', 'lifetime'];
-  $('#plans').innerHTML = planKeys.map(key => {
-    const plan = CONFIG.PLANS[key], active = selectedPlan === key;
-    return `<div class="plan ${active ? 'sel' : ''}" role="radio" aria-checked="${active}" tabindex="0" data-plan="${key}"><span class="pb">${plan.badge}</span><div class="pn">${plan.name}</div><div class="pp">${plan.price}</div><div class="pt">${plan.per}</div></div>`;
-  }).join('');
-  const plan = CONFIG.PLANS[selectedPlan];
-  const ctaPrice = selectedPlan === 'single' ? '$3.99 once' : selectedPlan === 'monthly' ? '$9.99/mo' : selectedPlan === 'yearly' ? '$85/yr' : '$146 once';
-  $('#pw-cta').innerHTML = `${icon('i-crown')} Continue with ${plan.name} — ${ctaPrice}`;
-  $('#pw-pack').textContent = selectedPlan === 'single' ? 'One-time payment for one finished master. No subscription.' : selectedPlan === 'lifetime' ? 'One payment. Permanent access. No recurring charges.' : selectedPlan === 'yearly' ? 'Billed $85 once per year. Cancel renewal anytime.' : 'Billed $9.99 monthly. Cancel anytime.';
-  const checkoutUrl = CONFIG.CHECKOUT[selectedPlan];
-  $('#pw-fine').textContent = checkoutUrl
-    ? 'Checkout opens securely. Pro features activate only after payment is verified.'
-    : `Checkout for ${plan.name.toLowerCase()} is not connected yet. Add its Stripe Payment Link in CONFIG.CHECKOUT.${selectedPlan} before launch.`;
-}
-function openPaywall(reason) {
-  const copy = {
-    credits: ['You’ve used your free exports', 'Unlock unlimited exports, premium formats and the complete mastering toolkit.'],
-    video: ['Unlock video export', 'Get visualizer video export and every other Pro feature with any Pro plan.'],
-    bits: ['Unlock 24-bit WAV', 'Export higher-resolution WAV files and access every Pro feature with any Pro plan.'],
-    kbps: ['Unlock 320 kbps MP3', 'Export at the highest MP3 bitrate and access every Pro feature with any Pro plan.'],
-    presets: ['Unlock custom presets', 'Save and recall your own mastering chains with Master Pro.'],
-    default: ['Go Master Pro', 'Choose a $3.99 single master or a studio access plan.']
-  }[reason || 'default'];
-  $('#pw-title').textContent = copy[0]; $('#pw-lead').textContent = copy[1];
-  const rows = [
-    ['Live mastering, EQ and loudness tools', 1, 1],
-    ['Exports', '2 free', 'Unlimited'],
-    ['24-bit WAV and 320 kbps MP3', 0, 1],
-    ['Visualizer video export with studio logo', 1, 1],
-    ['Save custom presets', 0, 1]
-  ];
-  const cell = v => v === 1 ? icon('i-check') : v === 0 ? '&ndash;' : v;
-  $('#compare').innerHTML = `<div class="h"><span>Feature</span><span class="c">Free</span><span class="c p">Pro</span></div>` + rows.map(r => `<div><span>${r[0]}</span><span class="c">${cell(r[1])}</span><span class="c p">${cell(r[2])}</span></div>`).join('');
-  selectedPlan = CONFIG.DEFAULT_PLAN;
-  renderPaywall(); openModal('#paywall'); track('paywall_view', { reason: reason || 'default' });
-}
-function checkout() {
-  const plan = selectedPlan;
-  const url = CONFIG.CHECKOUT[plan];
-  track('checkout_click', { plan, price: CONFIG.PLANS[plan].price });
-  if (!url) {
-    toast(`Secure checkout for ${plan} is not connected yet. Add its Stripe Payment Link before accepting payments.`, 'error');
-    return;
-  }
-  window.location.assign(url);
-}
-function buyPack() {
-  openPaywall('default');
-}
-
-function renderCredits() {
-  const pill = $('#credit-pill'), t = $('#credit-text');
-  pill.classList.toggle('pro', state.pro); pill.classList.toggle('empty', !state.pro && state.credits <= 0);
-  if (state.pro) { t.textContent = 'PRO'; pill.setAttribute('aria-label', 'Master Pro active'); }
-  else { t.textContent = `${state.credits} left`; pill.setAttribute('aria-label', `${state.credits} free exports left. Open upgrade options`); }
-  renderExportSummary();
-}
 // Keep the visible balance synchronized when another tab changes the same browser profile.
 window.addEventListener('storage', e => {
   if (e.key === 'masterpro.credits' && e.newValue !== null) {
@@ -1917,7 +2354,7 @@ function renderExportSummary() {
   el.innerHTML = state.buffer
     ? `<b>${state.profile === 'custom' ? 'Custom master' : PROFILES[state.profile].name}</b> · ${fmtTime(dur)} region · ${state.meas.master && isFinite(state.meas.master.lufs) ? state.meas.master.lufs.toFixed(1) + ' LUFS' : 'measuring…'}${tgt ? ' · ' + tgt.name + ' target' : ''}${state.fade.in || state.fade.out ? ' · fades' : ''}`
     : 'Load a track to see your export summary.';
-  $('#export-note').textContent = state.pro ? 'Pro is active: unlimited exports.' : `Free plan: ${state.credits} export${state.credits === 1 ? '' : 's'} left. 24-bit, 320 kbps and visualizer video need Pro.`;
+  renderCreditNote();
 }
 
 /* ============================================================
@@ -2098,9 +2535,7 @@ $('#file-input').addEventListener('change', e => { loadFile(e.target.files[0]); 
 $('#file-replace').addEventListener('change', e => { loadFile(e.target.files[0]); e.target.value = ''; });
 $('#credit-pill').addEventListener('click', () => { if (!state.pro) openPaywall(state.credits <= 0 ? 'credits' : 'default'); });
 $('#pw-close').addEventListener('click', () => closeModal('#paywall'));
-$('#pw-cta').addEventListener('click', checkout);
 $('#open-discount').addEventListener('click',()=>openModal('#discount-modal'));
-$('#pw-pack').addEventListener('click', e => { if (e.target.id === 'btn-pack') buyPack(); });
 $('#profiles').addEventListener('click', e => { const c = e.target.closest('.profile'); if (c) selectProfile(c.dataset.profile); });
 $('#profiles').addEventListener('keydown', e => { if ((e.key === 'Enter' || e.key === ' ') && e.target.dataset.profile) { e.preventDefault(); selectProfile(e.target.dataset.profile); } });
 $('#targets').addEventListener('click', e => { const c = e.target.closest('[data-target]'); if (c) matchTarget(TARGETS.find(t => t.id === c.dataset.target)); });
@@ -2117,8 +2552,8 @@ $('#btn-set-out').addEventListener('click', () => { if (!state.buffer) return; s
 $('#pads').addEventListener('pointerdown', e => { const b = e.target.closest('.pad'); if (b) { e.preventDefault(); triggerPad(b.dataset.pad); } });
 $('#pads').addEventListener('click', e => { const b = e.target.closest('.pad'); if (b && e.detail === 0) triggerPad(b.dataset.pad); });
 $$('[data-export]').forEach(b => b.addEventListener('click', () => startExport(b.dataset.export)));
-$('#seg-wav').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; const v = +b.dataset.v; if (v === 24 && !state.pro) { openPaywall('bits'); return; } state.fmt.wav = v; $$('#seg-wav button').forEach(x => x.classList.toggle('on', x === b)); });
-$('#seg-mp3').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; const v = +b.dataset.v; if (v === 320 && !state.pro) { openPaywall('kbps'); return; } state.fmt.mp3 = v; $$('#seg-mp3 button').forEach(x => x.classList.toggle('on', x === b)); });
+$('#seg-wav').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; const v = +b.dataset.v; state.fmt.wav = v; $$('#seg-wav button').forEach(x => x.classList.toggle('on', x === b)); });
+$('#seg-mp3').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; const v = +b.dataset.v; state.fmt.mp3 = v; $$('#seg-mp3 button').forEach(x => x.classList.toggle('on', x === b)); });
 $('#logo-input').addEventListener('change', e => {
   const f = e.target.files[0]; if (!f) return; const img = new Image();
   img.onload = () => { state.logo = img; const t = $('#logo-thumb'); t.innerHTML = ''; t.appendChild(img.cloneNode()); toast('Artwork added', 'ok'); };
@@ -2204,6 +2639,392 @@ $('#grp-width').innerHTML = G_WIDTH.map(sliderHTML).join('');
 $('#grp-trim').innerHTML = G_TRIM.map(sliderHTML).join('');
 $('#grp-fade').innerHTML = G_FADE.map(sliderHTML).join('');
 $('#pads').innerHTML = PADS.map((p, i) => `<button class="pad" data-pad="${p.id}" aria-label="${p.label}">${icon(p.ic)}<span>${p.label}</span><span class="key">${i + 1}</span></button>`).join('');
+/* ---------- entitlements: what each export costs ----------
+   Free: 2 audio exports (16-bit WAV, 192 kbps MP3). Video is unlimited and always carries the end card.
+   Single master ($3.99): one export with any premium option (24-bit, 320 kbps, clean video).
+   Pro: everything, unlimited. */
+function planExport(type) {
+  const needsPremium = (type === 'wav' && state.fmt.wav === 24) || (type === 'mp3' && state.fmt.mp3 === 320) || (type === 'mp4' && state.fmt.branding === false);
+  if (state.pro) return 'pro';
+  if (type === 'mp4' && !needsPremium) return 'video-free';
+  if (needsPremium) {
+    if (state.premium > 0) return 'premium';
+    openPaywall(type === 'wav' ? 'bits' : type === 'mp3' ? 'kbps' : 'branding');
+    return null;
+  }
+  if (state.credits > 0) return 'free';
+  if (state.premium > 0) return 'premium';
+  openPaywall('credits');
+  return null;
+}
+function consumeExport(via) {
+  if (via === 'free') { state.credits = Math.max(0, state.credits - 1); store.set('credits', state.credits); }
+  if (via === 'premium') { state.premium = Math.max(0, state.premium - 1); store.set('premium', state.premium); }
+  renderCredits();
+}
+function gate(type) {
+  const via = planExport(type);
+  state.pendingVia = via;
+  return !!via;
+}
+
+let selectedPlan = CONFIG.DEFAULT_PLAN;
+const PLAN_KEYS = ['single', 'monthly', 'yearly', 'lifetime'];
+const planLive = k => !!(CONFIG.CHECKOUT && CONFIG.CHECKOUT[k]);
+const liveMode = () => PLAN_KEYS.some(planLive);
+const PLAN_NOTE = {
+  single: 'One payment for one finished export in full quality. No subscription.',
+  monthly: 'Billed monthly. Cancel anytime.',
+  yearly: 'Billed $85 once per year. Save 29% against monthly.',
+  lifetime: 'One payment. Permanent access. No recurring charges.'
+};
+const PW_COPY = {
+  credits: ['You’ve used your free exports', 'Get one full-quality export for $3.99, or unlock unlimited exports with Pro.'],
+  bits: ['24-bit WAV is a premium export', 'Unlock studio resolution with a $3.99 single master or any Pro plan.'],
+  kbps: ['320 kbps MP3 is a premium export', 'Get the highest MP3 quality with a $3.99 single master or any Pro plan.'],
+  branding: ['Remove the end card', 'Clean video, without the “Mastered by Pro Masters” card, is included with a single master or Pro.'],
+  video: ['Unlock clean video', 'Export without the end card with a single master or any Pro plan.'],
+  report: ['See the full Hit Potential report', 'Every finding, with one-tap fixes, is included with a single master or Pro.'],
+  presets: ['Custom presets are a Pro feature', 'Save your signature chain and recall it on any track in one tap.'],
+  default: ['Choose your plan', 'A single master for one release, or Pro for unlimited exports.']
+};
+const PREMIUM_REASONS = ['credits', 'bits', 'kbps', 'branding', 'video', 'report'];
+function renderPaywall() {
+  const keys = liveMode() ? PLAN_KEYS.filter(planLive) : PLAN_KEYS;
+  if (!keys.includes(selectedPlan)) selectedPlan = keys.includes(CONFIG.DEFAULT_PLAN) ? CONFIG.DEFAULT_PLAN : keys[0];
+  $('#plans').innerHTML = keys.map(key => {
+    const p = CONFIG.PLANS[key], on = selectedPlan === key;
+    return `<div class="plan ${on ? 'sel' : ''}" role="radio" aria-checked="${on}" tabindex="0" data-plan="${key}">${p.badge ? `<span class="pb">${p.badge}</span>` : ''}<div class="pn">${p.name}</div><div class="pp">${p.price}</div><div class="pt">${p.per}</div></div>`;
+  }).join('');
+  const p = CONFIG.PLANS[selectedPlan], ready = planLive(selectedPlan) || CONFIG.DEMO_MODE;
+  $('#pw-cta').innerHTML = ready ? `${icon('i-crown')} Continue with ${p.name} · ${p.price}` : 'Checkout not connected yet';
+  $('#pw-cta').disabled = !ready;
+  $('#pw-pack').textContent = PLAN_NOTE[selectedPlan] || '';
+  $('#pw-fine').textContent = liveMode()
+    ? 'Secure checkout by Stripe. Pro and premium exports unlock only after our server confirms your payment.'
+    : 'Payments are not connected yet. Add your Stripe Payment Links in the CONFIG block (see README).';
+}
+function openPaywall(reason, plan) {
+  const copy = PW_COPY[reason] || PW_COPY.default;
+  selectedPlan = plan || (PREMIUM_REASONS.includes(reason) && planLive('single') ? 'single' : CONFIG.DEFAULT_PLAN);
+  $('#pw-title').textContent = copy[0]; $('#pw-lead').textContent = copy[1];
+  const rows = [
+    ['Audio exports', '2 free', '1 export', 'Unlimited'],
+    ['24-bit WAV and 320 kbps MP3', '–', '✓', '✓'],
+    ['Clean video, no end card', '–', '✓', '✓'],
+    ['Full Hit Potential report', 'Top 2 findings', '✓', '✓'],
+    ['Custom presets', '–', '–', '✓']
+  ];
+  $('#compare').innerHTML = `<div class="h"><span>Feature</span><span class="c">Free</span><span class="c">Single</span><span class="c p">Pro</span></div>` +
+    rows.map(r => `<div><span>${r[0]}</span><span class="c">${r[1]}</span><span class="c">${r[2]}</span><span class="c p">${r[3]}</span></div>`).join('');
+  renderPaywall(); openModal('#paywall'); track('paywall_view', { reason: reason || 'default' });
+}
+async function startCheckout(plan) {
+  track('checkout_click', { plan });
+  if (!planLive(plan)) {
+    if (CONFIG.DEMO_MODE) { grantDemo(plan); return; }
+    toast('Checkout is not connected yet.', 'error'); return;
+  }
+  await mpSaveProject();                       // the buyer returns to the same master
+  window.location.assign(CONFIG.CHECKOUT[plan]);
+}
+function grantDemo(plan) {
+  if (plan === 'single') { state.premium++; store.set('premium', state.premium); }
+  else { state.pro = true; store.set('pro', true); }
+  closeModal('#paywall'); renderCredits(); toast('Demo mode: unlocked on this device. No payment taken.', 'ok');
+}
+
+function renderCredits() {
+  const pill = $('#credit-pill'), t = $('#credit-text'), left = state.credits + state.premium;
+  pill.classList.toggle('pro', state.pro); pill.classList.toggle('empty', !state.pro && left <= 0);
+  if (state.pro) { t.textContent = 'PRO'; pill.setAttribute('aria-label', 'Master Pro is active'); }
+  else { t.textContent = `${left} export${left === 1 ? '' : 's'} left`; pill.setAttribute('aria-label', `${left} exports left. Open plans`); }
+  renderExportSummary(); renderCreditNote();
+}
+function renderCreditNote() {
+  const el = $('#export-note'); if (!el) return;
+  el.textContent = state.pro ? 'Pro is active: unlimited exports in every format.'
+    : state.premium > 0 ? `You have ${state.premium} premium export${state.premium === 1 ? '' : 's'} ready and ${state.credits} free audio export${state.credits === 1 ? '' : 's'}.`
+    : `Free plan: ${state.credits} audio export${state.credits === 1 ? '' : 's'} left. Video is unlimited and includes the Pro Masters end card. 24-bit, 320 kbps and clean video need a purchase.`;
+}
+
+const canPremium = () => !!(state.pro || state.premium > 0);
+
+/* ============================================================
+   PAYMENTS: return from Stripe, server verification, project restore
+   ============================================================ */
+const mpIdb = (() => {
+  const open = () => new Promise((res, rej) => {
+    if (!window.indexedDB) return rej(new Error('no indexedDB'));
+    const r = indexedDB.open('masterpro', 1);
+    r.onupgradeneeded = () => r.result.createObjectStore('kv');
+    r.onsuccess = () => res(r.result); r.onerror = () => rej(r.error);
+  });
+  const run = (mode, fn) => open().then(db => new Promise((res, rej) => {
+    const tx = db.transaction('kv', mode), rq = fn(tx.objectStore('kv'));
+    tx.oncomplete = () => { db.close(); res(rq && rq.result); };
+    tx.onerror = tx.onabort = () => { db.close(); rej(tx.error); };
+  }));
+  return { set: (k, v) => run('readwrite', s => s.put(v, k)), get: k => run('readonly', s => s.get(k)), del: k => run('readwrite', s => s.delete(k)) };
+})();
+async function mpSaveProject() {
+  if (!state.buffer || !state.file || state.file.size > 350 * 1048576) return false;
+  try {
+    await mpIdb.set('project', { file: state.file, savedAt: Date.now(), settings: JSON.parse(JSON.stringify({ eq: state.eq, dyn: state.dyn, profile: state.profile, base: state.base, trim: state.trim, fade: state.fade, fmt: state.fmt })) });
+    return true;
+  } catch { return false; }
+}
+async function mpRestoreProject() {
+  let p = null; try { p = await mpIdb.get('project'); } catch { return false; }
+  if (!p || !p.file) return false;
+  try { await loadFile(p.file); } catch { return false; }
+  if (!state.buffer) return false;
+  const st = p.settings || {};
+  if (st.eq && st.dyn) { state.eq = st.eq; state.dyn = st.dyn; state.profile = st.profile || 'custom'; state.base = st.base || 'balanced'; }
+  if (st.trim && st.trim.end <= state.buffer.duration + 0.01) state.trim = st.trim;
+  if (st.fade) state.fade = st.fade;
+  if (st.fmt) state.fmt = { ...state.fmt, ...st.fmt };
+  state.target = null; setupTrimSliders(); renderProfiles(); syncControls(); applyParams(); renderStatus(); renderTargets(); scheduleMeasure(); pushHist();
+  $$('#seg-wav button').forEach(b => b.classList.toggle('on', +b.dataset.v === state.fmt.wav));
+  $$('#seg-mp3 button').forEach(b => b.classList.toggle('on', +b.dataset.v === state.fmt.mp3));
+  $$('#seg-video button').forEach(b => b.classList.toggle('on', b.dataset.v === state.fmt.video));
+  $('#opt-brand').checked = state.fmt.branding !== false;
+  try { await mpIdb.del('project'); } catch { }
+  return true;
+}
+function deviceNonce() {
+  let n = store.get('nonce', null);
+  if (!n) {
+    const a = new Uint8Array(18); crypto.getRandomValues(a);
+    n = 'n' + Array.from(a, b => b.toString(16).padStart(2, '0')).join(''); store.set('nonce', n);
+  }
+  return n;
+}
+async function verifyPurchase(sid) {
+  try {
+    const r = await fetch(`${CONFIG.VERIFY_URL}?session_id=${encodeURIComponent(sid)}&n=${encodeURIComponent(deviceNonce())}`, { cache: 'no-store' });
+    const j = await r.json().catch(() => null);
+    return j && typeof j === 'object' ? j : { ok: false, reason: 'server_error' };
+  } catch { return { ok: false, reason: 'network' }; }
+}
+function showNotice({ spin = false, icon: ic = 'i-check', ok = false, title, text = '', html = '', actions = [] }) {
+  const ring = $('#notice-ring'); ring.className = 'nt-ring' + (spin ? ' spin' : '') + (ok ? ' ok' : '');
+  $('#notice-ic').innerHTML = `<use href="#${ic}"/>`;
+  $('#notice-title').textContent = title; $('#notice-text').textContent = text; $('#notice-html').innerHTML = html;
+  const box = $('#notice-actions'); box.innerHTML = '';
+  actions.forEach(a => {
+    const b = document.createElement('button');
+    b.className = 'btn block' + (a.primary ? ' primary' : a.ghost ? ' ghost' : '');
+    b.innerHTML = a.label;
+    b.onclick = () => { closeModal('#notice'); if (a.onClick) a.onClick(); };
+    box.appendChild(b);
+  });
+  openModal('#notice');
+}
+const VERIFY_REVOKE = ['not_found', 'not_complete', 'not_paid', 'subscription_inactive', 'refunded', 'unknown_product'];
+const VERIFY_TEXT = {
+  already_redeemed: 'This single-master purchase was already used in another browser.',
+  not_paid: 'Stripe has not marked this payment as paid yet. Reload in a minute.',
+  not_complete: 'This checkout was not completed.',
+  refunded: 'This purchase was refunded.',
+  subscription_inactive: 'That subscription is no longer active.',
+  not_found: 'We could not find that purchase.',
+  unknown_product: 'That purchase is not for this site.',
+  bad_session: 'That link is not valid.',
+  server_not_configured: 'Payment verification is not set up on this site yet. Contact the studio.',
+  network: 'We could not reach the server. Check your connection, then reload this page.',
+  server_error: 'The server had a problem. Reload this page to try again.',
+  stripe_error: 'Stripe could not be reached. Reload this page in a moment.',
+  could_not_record: 'We could not record your purchase yet. Reload this page to try again.'
+};
+async function handleReturn() {
+  const sid = new URL(location.href).searchParams.get('session_id');
+  if (!sid || !/^cs_[A-Za-z0-9_]{10,}$/.test(sid)) return;
+  showNotice({ spin: true, icon: 'i-shield', title: 'Confirming your payment…', text: 'This only takes a moment.' });
+  const r = await verifyPurchase(sid);
+  if (!r.ok) {
+    showNotice({ icon: 'i-close', title: 'We could not confirm that purchase', text: VERIFY_TEXT[r.reason] || 'Something went wrong.', html: `<p class="nt-text">Need help? Email <a href="mailto:${CONFIG.CONTACT_EMAIL}">${CONFIG.CONTACT_EMAIL}</a> with your Stripe receipt.</p>`, actions: [{ label: 'Close', ghost: true }] });
+    track('verify_fail', { reason: r.reason });
+    return;
+  }
+  const seen = store.get('redeemed', []), proj = await mpRestoreProject();
+  const label = proj ? 'Back to your master' : 'Start mastering';
+  if (r.kind === 'single') {
+    if (!seen.includes(sid)) {                 // credit once per browser
+      state.premium++; store.set('premium', state.premium);
+      seen.push(sid); store.set('redeemed', seen.slice(-50));
+    }
+    renderCredits(); track('purchase_verified', { kind: 'single' });
+    showNotice({ ok: true, title: 'Your premium export is ready', text: 'Payment confirmed. Your next export can be 24-bit, 320 kbps or clean video.', actions: [{ label, primary: true }] });
+  } else {
+    state.pro = true; state.proSession = sid; store.set('pro', true); store.set('proSession', sid);
+    renderCredits(); track('purchase_verified', { kind: r.kind });
+    showNotice({ ok: true, title: 'Welcome to Pro', text: 'Everything is unlocked on this device. Bookmark this page to restore Pro on another device.', actions: [{ label, primary: true }] });
+  }
+}
+async function revalidatePro() {
+  if (!state.pro || !liveMode()) return;
+  if (!state.proSession) { state.pro = false; store.set('pro', false); renderCredits(); return; }   // unverified flag
+  const r = await verifyPurchase(state.proSession);
+  if (!r.ok && VERIFY_REVOKE.includes(r.reason)) {
+    state.pro = false; store.set('pro', false); store.set('proSession', null); state.proSession = null;
+    renderCredits(); toast('Your Pro plan is no longer active.', 'error');
+  }
+}
+
+/* ============================================================
+   HIT POTENTIAL REPORT (uses js/dsp analysis, inlined above)
+   ============================================================ */
+const RT = { cache: new Map(), busy: false, current: null };
+const VERDICT_COLOR = { breakout: '#9ab5a0', strong: '#9ab5a0', promising: '#dfc69d', developing: '#ffb547', draft: '#ff7b7b' };
+const VERDICT_LINE = {
+  breakout: 'Built to break out. Strong hook, clean sound and tight rhythm.',
+  strong: 'A strong contender. A few refinements could make it land harder.',
+  promising: 'Promising. The core is there. Sharpen the hook and the opening.',
+  developing: 'Still developing. Focus on the first 10 seconds and the chorus contrast.',
+  draft: 'Early draft. Fix the basics before you promote it.'
+};
+const CAT_LABEL = { sound: 'Sound', rhythm: 'Rhythm', hook: 'Hook', viral: 'Short-form' };
+const rtKey = () => JSON.stringify([state.fileName, state.buffer ? state.buffer.length : 0, state.eq, state.dyn, state.trim]);
+const yieldTick = () => new Promise(r => setTimeout(r, 0));
+function rtBusy(text, p) {
+  const s = $('#rt-status'), b = $('#rt-bar');
+  if (s) s.textContent = text;
+  if (b) b.style.width = Math.round(clamp(p, 0, 1) * 100) + '%';
+}
+async function runRater(force) {
+  if (!state.buffer) { toast('Load a track first', 'error'); return; }
+  if (RT.busy) return;
+  const key = rtKey();
+  openModal('#rater');
+  if (!force && RT.cache.has(key)) { RT.current = RT.cache.get(key); renderRater(RT.current); return; }
+  RT.busy = true;
+  $('#rater-body').innerHTML = `<div class="rt-busy"><div class="nt-ring spin">${icon('i-bolt')}</div><p class="nt-text" id="rt-status">Preparing…</p><div class="rt-progress"><i id="rt-bar"></i></div><p class="hint-text" style="margin-top:12px">Scoring up to the first five minutes of your track.</p></div>`;
+  try {
+    const b = state.buffer, sr = b.sampleRate, s0 = Math.floor(state.trim.start * sr), s1 = Math.floor(state.trim.end * sr);
+    const origChs = [];
+    for (let c = 0; c < Math.min(2, b.numberOfChannels); c++) origChs.push(b.getChannelData(c).subarray(s0, s1));
+    const orig = await MPDSP.analyzeTrack(origChs, sr, { onProgress: (p, m) => rtBusy('Original · ' + m, p * 0.45), yield: yieldTick });
+    rtBusy('Rendering your master…', 0.46); await yieldTick();
+    const r = await renderMaster();
+    const mChs = [r.getChannelData(0), r.getChannelData(r.numberOfChannels > 1 ? 1 : 0)];
+    const master = await MPDSP.analyzeTrack(mChs, r.sampleRate, { onProgress: (p, m) => rtBusy('Mastered · ' + m, 0.5 + p * 0.5), yield: yieldTick });
+    const res = { orig, master, trimStart: state.trim.start };
+    RT.cache.set(key, res); if (RT.cache.size > 8) RT.cache.delete(RT.cache.keys().next().value);
+    RT.current = res; renderRater(res);
+    track('rater_run', { score: master.ok ? Math.round(master.overall) : null });
+  } catch (e) {
+    $('#rater-body').innerHTML = `<p class="nt-text">We could not score this track${e && e.message ? ': ' + e.message : '.'} Try again after reloading the page.</p>`;
+  } finally { RT.busy = false; }
+}
+function renderRater(res) {
+  const m = res.master, o = res.orig;
+  if (!m || !m.ok) { $('#rater-body').innerHTML = `<p class="nt-text">This track is too short to score reliably. Use at least 10 seconds.</p>`; return; }
+  const score = Math.round(m.overall), v = m.verdict, C = 2 * Math.PI * 70, off = C * (1 - score / 100);
+  const delta = o && o.ok ? Math.round(m.overall - o.overall) : null;
+  const clipStart = res.trimStart + m.clip.start, clipEnd = clipStart + m.clip.dur;
+  const paid = canPremium(), ins = m.insights || [], shown = paid ? ins : ins.slice(0, 2), locked = ins.length - shown.length;
+  const cats = ['sound', 'rhythm', 'hook', 'viral'].filter(k => m.categories[k] != null);
+  const met = m.metrics, f1 = x => (x == null || !isFinite(x)) ? '—' : (Math.round(x * 10) / 10).toFixed(1);
+  $('#rater-body').innerHTML = `
+    <div class="rt-hero">
+      <div class="rt-ring"><svg viewBox="0 0 168 168" aria-hidden="true"><circle class="trk" cx="84" cy="84" r="70" fill="none" stroke-width="8"/><circle class="arc" cx="84" cy="84" r="70" fill="none" stroke="${VERDICT_COLOR[v.id]}" stroke-width="8" stroke-linecap="round" stroke-dasharray="${C.toFixed(1)}" stroke-dashoffset="${off.toFixed(1)}"/></svg>
+        <div class="rt-score"><div><b class="num">${score}</b><small>HIT POTENTIAL</small></div></div></div>
+      <div>
+        <span class="eyebrow">${v.label}</span>
+        <h4 class="rt-verdict">${VERDICT_LINE[v.id]}</h4>
+        ${delta !== null ? `<p class="rt-delta">Original <b class="num" style="color:var(--text)">${Math.round(o.overall)}</b> → mastered <b class="num">${score}</b>${delta ? ` (<b class="num">${delta > 0 ? '+' : ''}${delta}</b>)` : ''}</p>` : ''}
+      </div>
+    </div>
+    <div class="rt-clip">
+      <div><span class="k">Best 15 seconds to post</span><div class="t num">${fmtTime(clipStart)} – ${fmtTime(clipEnd)}</div><div class="r">Short-form readiness: <b>${m.viral}</b></div></div>
+      <button class="btn primary sm" data-rt="trim">Trim to this clip</button>
+    </div>
+    <div class="rt-sec"><h5>Scorecard</h5>${cats.map(k => `<div class="rt-cat"><span>${CAT_LABEL[k]}</span><div class="bar"><i style="width:${Math.round(m.categories[k])}%"></i></div><span class="v num">${Math.round(m.categories[k])}</span></div>`).join('')}</div>
+    <div class="rt-sec"><h5>Measured</h5><div class="rt-met">
+      <div><span>Tempo</span><b>${met.bpm ? met.bpm + ' BPM' : '—'}</b></div>
+      <div><span>Key</span><b>${met.key || '—'}</b></div>
+      <div><span>Loudness</span><b>${f1(met.lufs)} LUFS</b></div>
+      <div><span>Dynamics</span><b>${f1(met.plr)} dB</b></div>
+      <div><span>Hook repeats</span><b>${met.repetition != null ? Math.round(met.repetition * 100) + '%' : '—'}</b></div>
+      <div><span>Full energy at</span><b>${f1(met.introSec)} s</b></div>
+    </div></div>
+    <div class="rt-sec"><h5>${paid ? 'Full report' : 'Top findings'}</h5>
+      <ul class="rt-ins">${shown.map(i => `<li class="${i.good ? 'good' : ''}"><span class="dot"></span><div><b>${i.title}</b><p>${i.text}</p></div>${paid && i.action ? `<button class="btn sm" data-rt="fix" data-action="${i.action}">Fix</button>` : '<span></span>'}</li>`).join('')}</ul>
+      ${locked > 0 ? `<div class="rt-lock"><p>${locked} more finding${locked === 1 ? '' : 's'}, with one-tap fixes, are in the full report.</p><button class="btn primary sm" data-paywall="report">Unlock full report</button></div>` : ''}
+    </div>
+    <p class="rt-disc">Hit Potential is a rule-based quality index built from measured traits: loudness, dynamics, tonal balance, rhythm, repetition and the energy of your best 15 seconds. No tool can predict streams or virality, so use it to find weak spots, not as a guarantee. Scores use up to the first five minutes of audio.</p>
+    <div class="rt-actions"><button class="btn sm ghost" data-rt="rescore">Re-score</button><button class="btn sm" data-close="rater">Done</button></div>`;
+}
+function setTrimToClip() {
+  const res = RT.current;
+  if (!res || !res.master || !res.master.ok || !state.buffer) return;
+  const c = res.master.clip, d = state.buffer.duration;
+  const start = clamp(res.trimStart + c.start, 0, Math.max(0, d - 0.5)), end = clamp(start + c.dur, start + 0.5, d);
+  state.trim = { start, end }; syncControls(); onTrimCommit(); closeModal('#rater');
+  toast(`Region set to the best 15 seconds (${fmtTime(start)}–${fmtTime(end)}).`, 'ok');
+}
+function applyInsightAction(a) {
+  const [k, v] = String(a || '').split(':');
+  if (k === 'profile' && PROFILES[v]) selectProfile(v);
+  else if (k === 'target') { const t = TARGETS.find(x => x.id === v); if (t) matchTarget(t); }
+  else if (k === 'auto-tone') applyTone();
+  else if (k === 'trim') { setTrimToClip(); return; }
+  else { toast('Adjust that control in the Dynamics or Tone tab, then re-score.'); return; }
+  closeModal('#rater'); toast('Applied. Re-score to see the difference.', 'ok');
+}
+
+/* ============================================================
+   VIDEO: "Mastered by Pro Masters" end card and formats
+   ============================================================ */
+const VIDEO_FORMATS = { vertical: { w: 720, h: 1280, cy: 0.40, R: 150 }, square: { w: 720, h: 720, cy: 0.42, R: 128 } };
+function rrectPath(g, x, y, w, h, r) { g.beginPath(); g.moveTo(x + r, y); g.arcTo(x + w, y, x + w, y + h, r); g.arcTo(x + w, y + h, x, y + h, r); g.arcTo(x, y + h, x, y, r); g.arcTo(x, y, x + w, y, r); g.closePath(); }
+function drawEndCard(g, W, H, a) {
+  g.save(); g.globalAlpha = a; g.fillStyle = '#0b0b0a'; g.fillRect(0, 0, W, H);
+  const glow = g.createRadialGradient(W / 2, H / 2, 10, W / 2, H / 2, Math.min(W, H) * 0.65);
+  glow.addColorStop(0, 'rgba(197,168,120,.22)'); glow.addColorStop(1, 'rgba(197,168,120,0)'); g.fillStyle = glow; g.fillRect(0, 0, W, H);
+  const s = 150, cx = W / 2, cy = H / 2 - 70;
+  g.fillStyle = '#c5a878'; rrectPath(g, cx - s / 2, cy - s / 2, s, s, s * 0.24); g.fill();
+  g.fillStyle = '#16130b';
+  [0.32, 0.58, 0.9, 0.56, 0.3].forEach((h, i) => { const bw = s * 0.09, bh = s * h * 0.6, x = cx - s * 0.31 + i * s * 0.155 - bw / 2; rrectPath(g, x, cy - bh / 2, bw, bh, bw / 2); g.fill(); });
+  g.textAlign = 'center'; g.textBaseline = 'alphabetic';
+  g.fillStyle = '#8f8a7b'; g.font = '700 22px system-ui, sans-serif'; g.fillText('MASTERED BY', W / 2, cy + s / 2 + 70);
+  g.fillStyle = '#f0efe9'; g.font = '800 58px system-ui, sans-serif'; g.fillText('PRO MASTERS', W / 2, cy + s / 2 + 140);
+  const site = (CONFIG.SITE_URL || (location.protocol.startsWith('http') ? location.host : '')).replace(/^https?:\/\//, '').replace(/\/$/, '');
+  if (site) { g.fillStyle = '#dfc69d'; g.font = '600 24px system-ui, sans-serif'; g.fillText(site, W / 2, cy + s / 2 + 190); }
+  g.restore();
+}
+
+/* ============================================================
+   WIRING
+   ============================================================ */
+$('#btn-rater').addEventListener('click', () => runRater(false));
+$$('[data-open-rater]').forEach(b => b.addEventListener('click', () => runRater(false)));
+$('#rater').addEventListener('click', e => {
+  const b = e.target.closest('[data-rt],[data-paywall]'); if (!b) return;
+  if (b.dataset.paywall) { closeModal('#rater'); openPaywall(b.dataset.paywall); return; }
+  const a = b.dataset.rt;
+  if (a === 'trim') setTrimToClip();
+  else if (a === 'rescore') runRater(true);
+  else if (a === 'fix') applyInsightAction(b.dataset.action);
+});
+$('#seg-video').addEventListener('click', e => {
+  const b = e.target.closest('button'); if (!b) return;
+  state.fmt.video = b.dataset.v; $$('#seg-video button').forEach(x => x.classList.toggle('on', x === b));
+});
+$('#opt-brand').addEventListener('change', e => {
+  if (!e.target.checked && !canPremium()) { e.target.checked = true; openPaywall('branding'); return; }
+  state.fmt.branding = e.target.checked;
+});
+$('#pw-cta').addEventListener('click', () => startCheckout(selectedPlan));
+$('#notice').addEventListener('click', e => { if (e.target.id === 'notice' && !$('#notice-ring').classList.contains('spin')) closeModal('#notice'); });
+renderCredits();
+$$('#seg-video button').forEach(b => b.classList.toggle('on', b.dataset.v === state.fmt.video));
+$('#opt-brand').checked = state.fmt.branding !== false;
+handleReturn().catch(() => showNotice({ icon: 'i-close', title: 'Something went wrong', text: 'Reload this page to try again.', actions: [{ label: 'Close', ghost: true }] }));
+revalidatePro();
+
+
 renderProfiles(); renderTargets(); renderPresets(); renderBalance(); renderStats(); syncControls(); renderCredits(); syncPlayUI(); pushHist();
 requestAnimationFrame(loop);
 </script>
