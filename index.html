@@ -4060,6 +4060,11 @@ function loadFile(file) {
   activeFileLoads.set(key, job);
   return job;
 }
+/* Reads a file into memory. FileReader is the fallback for older iPhone Safari versions. */
+function readFileBytes(file) {
+  if (typeof file.arrayBuffer === 'function') return file.arrayBuffer();
+  return new Promise((res, rej) => { const r = new FileReader(); r.onload = () => res(r.result); r.onerror = () => rej(r.error || new Error('Could not read the file.')); r.readAsArrayBuffer(file); });
+}
 async function loadFileInternal(file) {
   if (!file) return;
   const requestId = ++loadRequestId;
@@ -4082,11 +4087,13 @@ async function loadFileInternal(file) {
   if (requestId !== loadRequestId) return;
   let buf;
   try {
-    if (videoFile) {
-      buf = await extractVideoAudio(file, ac, requestId);
-    } else {
-      const data = await file.arrayBuffer();
+    const data = await readFileBytes(file);
+    try {
       buf = await ac.decodeAudioData(data.slice(0));
+    } catch (directErr) {
+      if (!videoFile) throw new Error(`This browser cannot read “${file.name}”. Try an MP3, WAV or M4A file.`);
+      try { buf = await extractVideoAudio(file, ac, requestId); }
+      catch (extractErr) { throw new Error(`The audio in “${file.name}” could not be read on this device. Export the soundtrack as M4A, MP3 or WAV from your video app, then upload that.`); }
     }
     if (!buf || !buf.length || !Number.isFinite(buf.duration) || buf.duration <= 0) throw new Error('The browser returned an empty audio buffer.');
   } catch (err) {
