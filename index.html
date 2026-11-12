@@ -3632,10 +3632,10 @@ const CONFIG = {
   FREE_CREDITS: 2,
   DISCOUNT_CODES: { "STUDIO10": { percent: 10, label: "10% off" }, "WELCOME15": { percent: 15, label: "15% off" } },
   CHECKOUT: {
-    monthly: ' price_1Ual8uEYGcDPUIcz3TOEYfx8',  //: $9.99/month
-    yearly: 'price_1UalASEYGcDPUIczGIMZ8SRr',   // : $85/year
-    lifetime: 'price_1UalC1EYGcDPUIczhlhQjaQF', // : $146
-    single: 'price_1Ual6nEYGcDPUIcz9vR2gpHQ' // : $3.99 per master
+    monthly: 'https://buy.stripe.com/4gM7sLfhLaa3e623lc4ZG02',  // Stripe subscription Payment Link: $9.99/month
+    yearly: 'https://buy.stripe.com/9B63cv2uZ2HB0fc6xo4ZG03',   // Stripe subscription Payment Link: $85/year
+    lifetime: 'https://buy.stripe.com/28EaEX1qV6XR9PM5tk4ZG01', // Stripe one-time Payment Link: $146
+    single: 'https://buy.stripe.com/3cI7sLfhLeqj9PM7Bs4ZG00' // Stripe one-time Payment Link: $3.99 per master
   },
   VERIFY_URL: '/api/verify', CONTACT_EMAIL: 'promasters@gmail.com', SITE_URL: '', DEMO_MODE: false,
   PLANS: {
@@ -4894,7 +4894,8 @@ function gate(type) {
 
 let selectedPlan = CONFIG.DEFAULT_PLAN;
 const PLAN_KEYS = ['single', 'monthly', 'yearly', 'lifetime'];
-const planLive = k => !!(CONFIG.CHECKOUT && CONFIG.CHECKOUT[k]);
+const STRIPE_LINK = /^https:\/\/buy\.stripe\.com\/[A-Za-z0-9_\-\/]+$/;
+const planLive = k => STRIPE_LINK.test(((CONFIG.CHECKOUT && CONFIG.CHECKOUT[k]) || '').trim());
 const liveMode = () => PLAN_KEYS.some(planLive);
 const PLAN_NOTE = {
   single: 'One payment for one finished export in full quality. No subscription.',
@@ -4921,8 +4922,11 @@ function renderPaywall() {
     return `<div class="plan ${on ? 'sel' : ''}" role="radio" aria-checked="${on}" tabindex="0" data-plan="${key}">${p.badge ? `<span class="pb">${p.badge}</span>` : ''}<div class="pn">${p.name}</div><div class="pp">${p.price}</div><div class="pt">${p.per}</div></div>`;
   }).join('');
   const p = CONFIG.PLANS[selectedPlan], ready = planLive(selectedPlan) || CONFIG.DEMO_MODE;
-  $('#pw-cta').innerHTML = ready ? `${icon('i-crown')} Continue with ${p.name} · ${p.price}` : 'Checkout not connected yet';
-  $('#pw-cta').disabled = !ready;
+  const hasLink = !!((CONFIG.CHECKOUT && CONFIG.CHECKOUT[selectedPlan]) || '').trim();
+  // A link that is present but malformed stays clickable, so the buyer sees exactly what to fix.
+  const clickable = ready || hasLink;
+  $('#pw-cta').innerHTML = ready ? `${icon('i-crown')} Continue with ${p.name} · ${p.price}` : (hasLink ? 'Checkout link needs fixing' : 'Checkout not connected yet');
+  $('#pw-cta').disabled = !clickable;
   $('#pw-pack').textContent = PLAN_NOTE[selectedPlan] || '';
   $('#pw-fine').textContent = liveMode()
     ? 'Secure checkout by Stripe. Pro and premium exports unlock only after our server confirms your payment.'
@@ -4947,10 +4951,11 @@ async function startCheckout(plan) {
   track('checkout_click', { plan });
   if (!planLive(plan)) {
     if (CONFIG.DEMO_MODE) { grantDemo(plan); return; }
-    toast('Checkout is not connected yet.', 'error'); return;
+    const raw = ((CONFIG.CHECKOUT && CONFIG.CHECKOUT[plan]) || '').trim();
+    toast(raw ? 'That checkout link is not a valid Stripe Payment Link. It must start with https://buy.stripe.com/ and be copied from Stripe.' : 'Checkout is not connected yet.', 'error'); return;
   }
   await mpSaveProject();                       // the buyer returns to the same master
-  window.location.assign(CONFIG.CHECKOUT[plan]);
+  window.location.assign(CONFIG.CHECKOUT[plan].trim());
 }
 function grantDemo(plan) {
   if (plan === 'single') { state.premium++; store.set('premium', state.premium); }
